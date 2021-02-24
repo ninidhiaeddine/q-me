@@ -1,0 +1,37 @@
+input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 4px 30px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  background: none;
+}
+
+.primary-input {
+  border-bottom: 3px solid grey;
+  transition: 500ms;
+}
+
+.primary-input:hover {
+  border-bottom: 4px solid var(--secondary-color);
+}
+
+.primary-input:focus {
+  border-bottom: 6px solid var(--primary-color);
+  outline-width: 0;
+}
+
+.secondary-input {
+  border-bottom: 3px solid grey;
+  transition: 500ms;
+}
+
+.secondary-input:hover {
+  border-bottom: 4px solid var(--primary-color);
+}
+
+.secondary-input:focus {
+  border-bottom: 6px solid var(--secondary-color);
+  outline-width: 0;
+}

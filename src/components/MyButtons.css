@@ -1,0 +1,129 @@
+.rounded-btn {
+  width: 30%;
+  padding: 10px 50px;
+  margin: 5px;
+  border-radius: 50px;
+  font-weight: bold;
+}
+
+.primary-btn {
+  background-color: var(--primary-color);
+  border: none;
+  color: white;
+  transition: 500ms;
+}
+
+.secondary-btn {
+  background-color: var(--secondary-color);
+  border: none;
+  color: white;
+  transition: 500ms;
+}
+
+.primary-btn:hover {
+  background: none;
+  border: 3px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.secondary-btn:hover {
+  background: none;
+  border: 3px solid var(--secondary-color);
+  color: var(--secondary-color);
+}
+
+.primary-btn-border {
+  background: none;
+  border: 3px solid var(--primary-color);
+  color: var(--primary-color);
+  transition: 500ms;
+}
+
+.secondary-btn-border {
+  background: none;
+  border: 3px solid var(--secondary-color);
+  color: var(--secondary-color);
+  transition: 500ms;
+}
+
+.primary-btn-border:hover {
+  background: var(--primary-color);
+  border: 3px solid var(--primary-color);
+  color: white;
+}
+
+.secondary-btn-border:hover {
+  background: var(--secondary-color);
+  border: 3px solid var(--secondary-color);
+  color: white;
+}
+
+.primary-btn-gradient {
+  position: relative;
+  background-image: linear-gradient(
+    to bottom right,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  border: none;
+  color: white;
+  z-index: 1;
+}
+
+.primary-btn-gradient::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 50px;
+  background-image: linear-gradient(
+    to top left,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  color: white;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 200ms linear;
+}
+
+.primary-btn-gradient:hover::before {
+  opacity: 1;
+}
+
+.secondary-btn-gradient {
+  position: relative;
+  background-image: linear-gradient(
+    to right,
+    var(--secondary-color),
+    var(--other-color)
+  );
+  border: none;
+  color: white;
+  z-index: 1;
+}
+
+.secondary-btn-gradient::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 50px;
+  background-image: linear-gradient(
+    to left,
+    var(--secondary-color),
+    var(--other-color)
+  );
+  color: white;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 200ms linear;
+}
+
+.secondary-btn-gradient:hover::before {
+  opacity: 1;
+}

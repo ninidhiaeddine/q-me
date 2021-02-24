@@ -1,0 +1,29 @@
+.custom-control-input:focus ~ .custom-control-label::before {
+  /* when the button is toggled off  
+  it is still in focus and a violet border will appear */
+  border-color: var(--primary-color) !important;
+  /* box shadow is blue by default 
+  but we do not want any shadow hence we have set  
+  all the values as 0 */
+  box-shadow: var(--primary-color) !important;
+}
+
+/*sets the background color of 
+          switch to violet when it is checked*/
+.custom-control-input:checked ~ .custom-control-label::before {
+  border-color: var(--primary-color) !important;
+  background-color: var(--primary-color) !important;
+}
+
+/*sets the background color of 
+          switch to violet when it is active*/
+.custom-control-input:active ~ .custom-control-label::before {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+/*sets the border color of switch 
+          to violet when it is not checked*/
+.custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
+  border-color: var(--primary-color) !important;
+}
