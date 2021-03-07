@@ -154,7 +154,7 @@ class SignUp extends Component {
     };
 
     // send request to sign up:
-    fetch("http://127.0.0.1:5000/auth/register_guest", requestOptions);
+    fetch("http://127.0.0.1:5050/auth/register_guest", requestOptions);
   };
 
   render() {

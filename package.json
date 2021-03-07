@@ -18,7 +18,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-flask-api": "cd api && venv\\Scripts\\flask.exe run --port=5050",
+    "start-flask-api": "cd api && set FLASK_APP=api.py && venv\\Scripts\\flask.exe run --port=5050",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
