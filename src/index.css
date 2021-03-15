@@ -4,11 +4,8 @@ body {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: linear-gradient(
-    to bottom right,
-    var(--primary-color-bg),
-    var(--secondary-color-bg)
-  );
+  /* background-color: #000000; */
+  background-image: linear-gradient(to bottom,var(--primary-color-bg) 0%,var(--secondary-color-bg) 100%);
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
@@ -23,12 +20,16 @@ code {
   --secondary-color: #1b9aaa;
   --other-color: #dddbcb;
 
-  --primary-color: rgb(149, 16, 238);
-  --secondary-color: #1b41aa;
-  --other-color: #dddbcb;
+  --primary-color: rgb(248, 4, 248);
+  --secondary-color: #02f5cc;
+  --other-color: #cbddce;
 
-  --primary-color-bg: #05050549;
-  --secondary-color-bg: #1b99aa3b;
+  --primary-color-bg: #202020;
+  --secondary-color-bg: #101010;
+  
+  --primary-font: "Lucida Handwriting";
+  --secondary-font: "Calibri Light";
+  --nav-color: slategray;
 }
 
 .fade-enter {

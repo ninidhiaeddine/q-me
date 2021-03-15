@@ -14,8 +14,9 @@ class MyNavBar extends Component {
   render() {
     return (
       <Navbar className="my-nav-bar" variant="dark">
+        
         <Navbar.Brand href="/" component={Home}>
-          Home
+          <span class="Q">Q</span><span class="Me">Me!</span>
         </Navbar.Brand>
         <Nav className="mr-auto">
           <Nav.Link href="/login" component={LogIn}>

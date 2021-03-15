@@ -27,7 +27,7 @@ class LogIn extends Component {
           <br />
           <br />
           <MyButton
-            class="rounded-btn secondary-btn"
+            class="rounded-btn secondary-btn-gradient"
             value="Sign In"
           ></MyButton>
         </div>
@@ -45,7 +45,7 @@ class LogIn extends Component {
           <br />
           <br />
           <MyButton
-            class="rounded-btn secondary-btn"
+            class="rounded-btn secondary-btn-gradient"
             value="Sign In"
           ></MyButton>
         </div>
@@ -57,13 +57,13 @@ class LogIn extends Component {
     return (
       <div style={{ textAlign: "center" }}>
         <MyButton
-          class="rounded-btn primary-btn"
+          class="rounded-btn primary-btn-gradient"
           value="Log In as Client"
           onClick={this.handleClientClick}
         />
         <br />
         <MyButton
-          class="rounded-btn primary-btn"
+          class="rounded-btn primary-btn-gradient"
           value="Log In as Guest"
           onClick={this.handleGuestClick}
         />

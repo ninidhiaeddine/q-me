@@ -3,6 +3,7 @@ h1 {
   color: var(--primary-color);
   transition: 500ms;
   font-weight: bolder;
+  font-family: var(--primary-font);
 }
 
 h1:hover {
@@ -13,7 +14,32 @@ h2 {
   color: var(--secondary-color);
   transition: 500ms;
   font-weight: bolder;
+  font-family: var(--secondary-font);
 }
 
-h2:hover {
+.primaryColor {
+  color: var(--primary-color);
 }
+
+.secondaryColor {
+  color: var(--secondary-color);
+}
+
+a.logo:link {
+  text-decoration: none;
+}
+
+a.logo:visited {
+  text-decoration: none;
+}
+
+a.logo:hover {
+  text-decoration: none;  
+}
+
+a.logo:active {
+  text-decoration: none; 
+}
+
+/* h2:hover {
+} */
