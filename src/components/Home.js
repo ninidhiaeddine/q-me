@@ -17,11 +17,11 @@ class Home extends Component {
         <br />
         <br />
         <Link to="/login">
-          <MyButton class="rounded-btn primary-btn" value="Log In" />
+          <MyButton class="rounded-btn primary-btn-gradient" value="Log In" />
         </Link>
         <br />
         <Link to="/signup">
-          <MyButton class="rounded-btn secondary-btn" value="Sign Up" />
+          <MyButton class="rounded-btn secondary-btn-gradient" value="Sign Up" />
         </Link>
       </div>
     );

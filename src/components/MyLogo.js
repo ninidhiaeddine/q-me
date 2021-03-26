@@ -5,7 +5,7 @@ class MyLogo extends Component {
   render() {
     return (
       <div>
-        <h1>Q Me!</h1>
+        <a class="logo" href="http://localhost:3000/"><h1><span class="primaryColor">Q</span><span class="secondaryColor">Me!</span></h1></a>
         <h2>Online Queue Maker</h2>
       </div>
     );

@@ -1,0 +1,6 @@
+p.primaryFont{
+    font-family: var(--primary-font);
+}
+p.secondaryFont{
+    font-family: var(--secondary-font);
+}

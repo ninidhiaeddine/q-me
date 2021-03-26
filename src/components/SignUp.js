@@ -80,7 +80,7 @@ class SignUp extends Component {
           </div>
           <br />
           <MyButton
-            class="rounded-btn secondary-btn"
+            class="rounded-btn secondary-btn-gradient"
             value="Sign Up"
           ></MyButton>
         </div>
@@ -104,7 +104,7 @@ class SignUp extends Component {
           <br />
           <br />
           <MyButton
-            class="rounded-btn secondary-btn"
+            class="rounded-btn secondary-btn-gradient"
             value="Sign Up"
             onClick={this.handleGuestSignUp}
           ></MyButton>
@@ -120,13 +120,13 @@ class SignUp extends Component {
         <br />
         <br />
         <MyButton
-          class="rounded-btn secondary-btn"
+          class="rounded-btn secondary-btn-gradient"
           value="Sign Up as Client"
           onClick={this.handleClientClick}
         />
         <br />
         <MyButton
-          class="rounded-btn secondary-btn"
+          class="rounded-btn secondary-btn-gradient"
           value="Sign Up as Guest"
           onClick={this.handleGuestClick}
         />
