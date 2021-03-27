@@ -1,0 +1,18 @@
+div.absolute {
+    position: absolute;
+    top: 180px;
+    left: -350px;
+    width: 1200px;
+    height: 100px;
+}
+
+h1{
+    size: 10px;
+    font-family: var(--secondary-font);
+    color: var(--primary-color);
+}
+
+h2{
+    color: aliceblue;
+    font-family: var(--secondary-font);
+}

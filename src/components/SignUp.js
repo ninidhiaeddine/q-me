@@ -2,112 +2,159 @@ import React, { Component } from "react";
 import MyButton from "./MyButton";
 import MyLogo from "./MyLogo";
 import Form from "react-bootstrap/Form";
+import MyNavBar from "./MyNavBar";
 import "./my-inputs.css";
 import "./my-switches.css";
+import "./my-dropdown.css";
+import $ from 'jquery';
+
 
 class SignUp extends Component {
+
+
+
+
   state = {
     showForm: false,
-    isClient: false,
-    guestFullName: "",
-    guestPhoneNumber: "",
+    isHost: false,
   };
 
-  handleNameChange = (event) => {
-    this.setState({ guestFullName: event.target.value });
-  };
+  // formatRadioButtons() {
+  //   let result = [];
+  //   for (var i = 0; i < this.props.typesOfEstablishments.length; i++) {
+  //     result.push(
+  //       <div style={{ marginTop: "10px", marginBottom: "10px" }}>
+  //         <Form.Check
+  //           className="my-switch"
+  //           type="switch"
+  //           id={"custom-switch" + i}
+  //           label={this.props.typesOfEstablishments[i]}
+  //         />
+  //       </div>
+  //     );
+  //   }
+  //   return result;
+  // }
 
-  handlePhoneNumberChange = (event) => {
-    this.setState({ guestPhoneNumber: event.target.value });
-  };
+  /* When the user clicks on the button, 
+  toggle between hiding and showing the dropdown content */
+  myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+  }
 
-  formatRadioButtons() {
-    let result = [];
-    for (var i = 0; i < this.props.typesOfEstablishments.length; i++) {
-      result.push(
-        <div style={{ marginTop: "10px", marginBottom: "10px" }}>
-          <Form.Check
-            className="my-switch"
-            type="switch"
-            id={"custom-switch" + i}
-            label={this.props.typesOfEstablishments[i]}
-          />
-        </div>
-      );
+  hostPost() {
+    var settings = {
+      "url": "q-me.azurewebsites.net/establishments",
+      "method": "POST",
+      "timeout": 0,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cookie": "ARRAffinity=bffb580df78d7165f60f8296e74f37e8d5a5ef15cfd49e51bf0d3e3f75c7c66d"
+      },
+      "data": JSON.stringify({
+        "name": "classic",
+        "type": 0,
+        "email": "classic@hotmail.com",
+        "password": "classic123"
+      }),
+    };
+
+    $.ajax(settings).done(function (response) {
+      console.log(response);
+    });
+  }
+
+  // Close the dropdown if the user clicks outside of it
+  formatDropDown() {
+    window.onclick = function (event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
     }
-    return result;
   }
 
   formatForm() {
-    if (this.state.isClient) {
+
+    if (this.state.isHost) {
       return (
         <div style={{ textAlign: "center" }}>
           <br />
           <input
             class="secondary-input"
-            type="name"
+            type="text"
+            name="name"
+            id="name"
             placeholder="Name of Establishment"
           />
           <br />
           <input
             class="secondary-input"
             type="email"
+            name="email"
+            id="email"
             placeholder="Email Address"
           />
           <br />
           <input
             class="secondary-input"
             type="password"
+            name="password"
+            id="password"
             placeholder="New Password"
           />
           <br />
-          <input
+          {/* <input
             class="secondary-input"
             type="password"
             placeholder="Confirm New Password"
-          />
+          /> */}
+
           <br />
-          <div
-            style={{
-              textAlign: "left",
-              marginTop: "15px",
-              marginBotton: "15px",
-              marginLeft: "45%",
-              marginRight: "45%",
-            }}
-          >
-            {this.formatRadioButtons()}
+          <div>
+            <label class="etype" for="establishments">Establishment Type:</label>
+
+            <select name="establishments" id="establishments" class="search_categories">
+              <option value="Restaurant">Restaurant</option>
+              <option value="Hotel">Hotel</option>
+              <option value="Bank">Bank</option>
+              <option value="Supermarket">Supermarket</option>
+            </select>
           </div>
           <br />
           <MyButton
-            class="rounded-btn secondary-btn-gradient"
+            class="rounded-btn secondary-btn"
             value="Sign Up"
+            onClick={SignUp.hostPost}
+            id="epost"
           ></MyButton>
         </div>
       );
-    } else {
+    }
+    
+    else {
       return (
         <div style={{ textAlign: "center" }}>
-          <input
-            class="secondary-input"
-            type="name"
-            placeholder="Full Name"
-            onChange={this.handleNameChange}
-          />
+          <input class="secondary-input" type="name" placeholder="Full Name" />
           <br />
           <input
             class="secondary-input"
             type="tel"
             placeholder="Phone Number"
-            onChange={this.handlePhoneNumberChange}
           />
           <br />
           <br />
           <MyButton
-            class="rounded-btn secondary-btn-gradient"
+            class="rounded-btn primary-btn"
             value="Sign Up"
-            onClick={this.handleGuestSignUp}
           ></MyButton>
+          
         </div>
       );
     }
@@ -121,8 +168,8 @@ class SignUp extends Component {
         <br />
         <MyButton
           class="rounded-btn secondary-btn-gradient"
-          value="Sign Up as Client"
-          onClick={this.handleClientClick}
+          value="Sign Up as Host"
+          onClick={this.handleHostClick}
         />
         <br />
         <MyButton
@@ -134,32 +181,19 @@ class SignUp extends Component {
     );
   }
 
-  handleClientClick = () => {
-    this.setState({ showForm: true, isClient: true });
+  
+  handleHostClick = () => {
+    this.setState({ showForm: true, isHost: true });
   };
 
   handleGuestClick = () => {
-    this.setState({ showForm: true, isClient: false });
-  };
-
-  handleGuestSignUp = () => {
-    // create POST request with Guest JSON:
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: this.state.guestFullName,
-        phoneNumber: this.state.guestPhoneNumber,
-      }),
-    };
-
-    // send request to sign up:
-    fetch("http://127.0.0.1:5050/auth/register_guest", requestOptions);
+    this.setState({ showForm: true, isHost: false });
   };
 
   render() {
     return (
       <div style={{ textAlign: "center" }}>
+        <MyNavBar />
         <br />
         <br />
         <br />
@@ -167,6 +201,7 @@ class SignUp extends Component {
         {this.state.showForm == false
           ? this.formatButtons()
           : this.formatForm()}
+        <br />
       </div>
     );
   }

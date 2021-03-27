@@ -1,0 +1,7 @@
+label.etype{
+    color:aliceblue;
+    font-family: var(--secondary-font);
+    width:max-content;
+    position:inherit;
+    margin-right: 10px;
+}

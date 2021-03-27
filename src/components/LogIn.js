@@ -2,15 +2,16 @@ import React, { Component } from "react";
 import MyButton from "./MyButton";
 import "./my-inputs.css";
 import MyLogo from "./MyLogo";
+import MyNavBar from "./MyNavBar";
 
 class LogIn extends Component {
   state = {
     showForm: false,
-    isClient: false,
+    isHost: false,
   };
 
   formatForm() {
-    if (this.state.isClient) {
+    if (this.state.isHost) {
       return (
         <div style={{ textAlign: "center" }}>
           <input
@@ -27,7 +28,7 @@ class LogIn extends Component {
           <br />
           <br />
           <MyButton
-            class="rounded-btn secondary-btn-gradient"
+            class="rounded-btn primary-btn"
             value="Sign In"
           ></MyButton>
         </div>
@@ -45,7 +46,7 @@ class LogIn extends Component {
           <br />
           <br />
           <MyButton
-            class="rounded-btn secondary-btn-gradient"
+            class="rounded-btn secondary-btn"
             value="Sign In"
           ></MyButton>
         </div>
@@ -57,13 +58,13 @@ class LogIn extends Component {
     return (
       <div style={{ textAlign: "center" }}>
         <MyButton
-          class="rounded-btn primary-btn-gradient"
-          value="Log In as Client"
+          class="rounded-btn primary-btn"
+          value="Log In as Host"
           onClick={this.handleClientClick}
         />
         <br />
         <MyButton
-          class="rounded-btn primary-btn-gradient"
+          class="rounded-btn secondary-btn"
           value="Log In as Guest"
           onClick={this.handleGuestClick}
         />
@@ -72,17 +73,17 @@ class LogIn extends Component {
   }
 
   handleClientClick = () => {
-    this.setState({ showForm: true, isClient: true });
+    this.setState({ showForm: true, isHost: true });
   };
 
   handleGuestClick = () => {
-    this.setState({ showForm: true, isClient: false });
+    this.setState({ showForm: true, isHost: false });
   };
 
   render() {
     return (
       <div style={{ textAlign: "center" }}>
-        <br />
+        <MyNavBar />
         <br />
         <br />
         <MyLogo />

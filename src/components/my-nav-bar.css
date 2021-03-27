@@ -2,6 +2,9 @@
   background-color: transparent;
 }
 
+span.brand{
+  font-size: 40px;
+}
 
 .Q {
   font-family: var(--primary-font);
@@ -12,3 +15,46 @@
   font-family: var(--primary-font);
   color: var(--secondary-color);
 }
+
+/* .pr-6,
+.px-6 {
+  padding-right: 5rem !important;
+}
+
+.pb-6,
+.py-6 {
+  padding-bottom: 5rem !important;
+} */
+
+.pl-6,
+.px-6 {
+  padding-left: 15rem !important;
+}
+
+/* .pl-7,
+.px-7 {
+  padding-left: 8rem !important;
+} */
+
+.ml-7,
+.mx-7 {
+  padding-left: 15rem !important;
+}
+
+.ml-8,
+.mx-8 {
+  padding-left: 7rem !important;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus {
+  color: var(--primary-color)  !important;
+}
+
+.navbar-dark .navbar-nav .nav-link:active, .navbar-dark .navbar-nav .nav-link:focus {
+  color: var(--secondary-color) !important;
+}
+
+.navbar-dark .navbar-nav .nav-link{ 
+  font-family: var(--secondary-font);
+}
+
