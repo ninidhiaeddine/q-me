@@ -8,6 +8,11 @@ import SignUp from "./components/SignUp";
 import Features from "./components/Features";
 import About from "./components/About";
 import ContactUs from "./components/ContactUs";
+import Establishment from "./components/Establishment"
+import Branches from "./components/Branches";
+import Notifications from "./components/Notifications";
+import Profile from "./components/Profile";
+
 
 function App() {
   let location = useLocation();
@@ -29,6 +34,11 @@ function App() {
           <Route path="/features" component={Features} />
           <Route path="/about" component={About} />
           <Route path="/contactus" component={ContactUs} />
+          <Route path="/establishment" component={Establishment} />
+          <Route path="/branches" component={Branches} />
+          <Route path="/notifications" component={Notifications} />
+          <Route path="/profile" component={Profile} />
+
         </Switch>
       </CSSTransition>
     </TransitionGroup>

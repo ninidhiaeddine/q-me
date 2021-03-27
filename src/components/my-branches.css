@@ -1,0 +1,12 @@
+
+th {
+    text-align: inherit;
+    text-align: -webkit-match-parent;
+    color: aqua !important;
+}
+
+
+.pr-7, .px-7 {
+    padding-right: 8.4rem !important;
+    text-align: center;
+}
