@@ -5,7 +5,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* background-color: #000000; */
-  background-image: linear-gradient(to bottom,var(--primary-color-bg) 0%,var(--secondary-color-bg) 100%);
+  background-image: linear-gradient(
+    to bottom,
+    var(--primary-color-bg) 0%,
+    var(--secondary-color-bg) 100%
+  );
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
@@ -16,17 +20,13 @@ code {
 }
 
 :root {
-  --primary-color: rgb(35, 34, 37);
-  --secondary-color: #1b9aaa;
+  --primary-color: #ff3098;
+  --secondary-color: #00ffc5;
   --other-color: #dddbcb;
-
-  --primary-color: rgb(248, 4, 248);
-  --secondary-color: #02f5cc;
-  --other-color: #cbddce;
 
   --primary-color-bg: #202020;
   --secondary-color-bg: #101010;
-  
+
   --primary-font: "Lucida Handwriting";
   --secondary-font: "Calibri Light";
   --nav-color: slategray;
