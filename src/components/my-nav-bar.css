@@ -6,14 +6,13 @@ span.brand{
   font-size: 40px;
 }
 
-.Q {
+.QMe {
   font-family: var(--primary-font);
   color: var(--primary-color);
 }
 
-.Me {
-  font-family: var(--primary-font);
-  color: var(--secondary-color);
+.is-active{
+  color: blueviolet;
 }
 
 /* .pr-6,
@@ -38,7 +37,7 @@ span.brand{
 
 .ml-7,
 .mx-7 {
-  padding-left: 15rem !important;
+  padding-left: 5rem !important;
 }
 
 .ml-8,
@@ -58,3 +57,10 @@ span.brand{
   font-family: var(--secondary-font);
 }
 
+.navbar-dark .navbar-nav .nav-link:active, .navbar-dark .navbar-nav .nav-link:focus {
+  color: var(--secondary-color) !important;
+}
+
+.right{
+  float:right;
+}

@@ -17,24 +17,24 @@ class MyNavBar extends Component {
     return (
       <Navbar className="my-nav-bar" variant="dark">
         <Navbar.Brand className="my-nav-bar pt-2" href="/" component={Home}>
-          <span class="Q brand">Q</span><span class="Me brand">Me!</span>
+          <span class="QMe brand">QMe!</span>
         </Navbar.Brand>
-        <Nav className="mr-auto mx-7">
-          <Nav.Link className="mt-2 mx-4" href="/login" component={LogIn}>
+        <Nav className="mr-auto ml-7">
+          <Nav.Link className="text-nowrap mt-2 mx-4 ml-5" activeClassName="is-active" href="/login" component={LogIn}>
             Log In
           </Nav.Link>
-          <Nav.Link className="mt-2 mx-4" href="/features" component={Features}>
+          <Nav.Link className="text-nowrap mt-2 mx-4" href="/features" component={Features}>
             Features
           </Nav.Link>
-          <Nav.Link className="mt-2 mx-4" href="/about" component={About}>
+          <Nav.Link className="text-nowrap mt-2 mx-4" href="/about" component={About}>
             About
           </Nav.Link>
-          <Nav.Link className="mt-2 mx-4" href="/contactus" component={ContactUs}>
+          <Nav.Link className="text-nowrap mt-2 mx-4" href="/contactus" component={ContactUs}>
             Contact Us
           </Nav.Link>
         </Nav>
-        <Nav.Link className="my-nav-bar my-2" href="/signup" component={SignUp}>
-            <MyButton class="thin-rounded-btn primary-btn-gradient" value="Get Started" />
+        <Nav.Link className="my-nav-bar right my-2" href="/signup" component={SignUp}>
+            <MyButton class="thin-rounded-btn primary-btn" value="Get Started" />
         </Nav.Link>
       </Navbar>
     );

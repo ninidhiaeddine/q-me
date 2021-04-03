@@ -5,26 +5,79 @@ import MyNavBar from "./MyNavBar";
 import "./my-inputs.css";
 import "./my-switches.css";
 import "./my-dropdown.css";
+import { AlternateEmail, PhoneAndroid, Visibility, VisibilityOff, Person, Business } from "@material-ui/icons";
+import { styled } from '@material-ui/styles';
+// import InputAdornment from '@material-ui/core/InputAdornment';
+// import IconButton from "@material-ui/core/IconButton";
+// import { TextField } from "@material-ui/core";
+
+const MyVisibility = styled(VisibilityOff)({
+  color: "gray"
+});
+
+const MyAlternateEmail = styled(AlternateEmail)({
+  color: "gray"
+});
+
+const MyPhone = styled(PhoneAndroid)({
+  color: "gray"
+});
+
+const MyPerson = styled(Person)({
+  color: "gray"
+});
+
+const MyBusiness = styled(Business)({
+  color: "gray"
+});
 
 class SignUp extends Component {
-  state = {
-    showForm: false,
-    isEstablishment: false,
 
-    guestForm: {
-      name: "",
-      phoneNumber: "",
-    },
+  constructor(props) {
+    super(props);
+    this.state = {
+      showButton: true,
+      showForm: false,
+      isEstablishment: false,
 
-    establishmentForm: {
-      name: "",
-      type: 0,
-      email: "",
-      password: "",
-      confirmedPassowrd: "",
-      phoneNumber: "",
-    },
+      guestForm: {
+        name: "",
+        phoneNumber: "",
+      },
+
+      establishmentForm: {
+        name: "",
+        type: 0,
+        email: "",
+        password: "",
+        confirmedPassowrd: "",
+        phoneNumber: "",
+      },
+
+    };
+  }
+  toggleButton = () => {
+    this.setState({ showButton: !this.state.showButton });
   };
+
+  // state = {
+  //   showForm: false,
+  //   isEstablishment: false,
+
+  //   guestForm: {
+  //     name: "",
+  //     phoneNumber: "",
+  //   },
+
+  //   establishmentForm: {
+  //     name: "",
+  //     type: 0,
+  //     email: "",
+  //     password: "",
+  //     confirmedPassowrd: "",
+  //     phoneNumber: "",
+  //   },
+  // };
 
   // formatRadioButtons() {
   //   let result = [];
@@ -56,18 +109,18 @@ class SignUp extends Component {
     var data =
       this.state.establishmentForm.phoneNumber == ""
         ? {
-            name: this.state.establishmentForm.name,
-            type: this.state.establishmentForm.type,
-            email: this.state.establishmentForm.email,
-            password: password,
-          }
+          name: this.state.establishmentForm.name,
+          type: this.state.establishmentForm.type,
+          email: this.state.establishmentForm.email,
+          password: password,
+        }
         : {
-            name: this.state.establishmentForm.name,
-            type: this.state.establishmentForm.type,
-            email: this.state.establishmentForm.email,
-            password: password,
-            phone_number: this.state.establishmentForm.phoneNumber,
-          };
+          name: this.state.establishmentForm.name,
+          type: this.state.establishmentForm.type,
+          email: this.state.establishmentForm.email,
+          password: password,
+          phone_number: this.state.establishmentForm.phoneNumber,
+        };
 
     if (password == confirmedPassowrd) {
       // Simple POST request with a JSON body using fetch
@@ -190,47 +243,54 @@ class SignUp extends Component {
     if (this.state.isEstablishment) {
       return (
         <div style={{ textAlign: "center" }}>
+          <p class="welcome" >Host Registration</p>
+          <h2>Welcome! Sign up to get started.</h2>
           <br />
           <input
-            class="secondary-input"
+            class="secondary-input mx-2"
             type="text"
             name="name"
             id="name"
             placeholder="Name of Establishment"
             onChange={this.handleEstablishmentNameChange}
           />
+          <MyBusiness />
           <br />
           <input
-            class="secondary-input"
+            class="secondary-input mx-2"
             type="email"
             name="email"
             id="email"
             placeholder="Email Address"
             onChange={this.handleEstablishmentEmailChange}
           />
+          <MyAlternateEmail />
           <br />
           <input
-            class="secondary-input"
+            class="secondary-input mx-2"
             type="password"
             name="password"
             id="password"
             placeholder="New Password"
             onChange={this.handleEstablishmentPasswordChange}
           />
+          <MyVisibility />
           <br />
           <input
-            class="secondary-input"
+            class="secondary-input mx-2"
             type="password"
             placeholder="Confirm New Password"
             onChange={this.handleEstablishmentConfirmedPasswordChange}
           />
+          <MyVisibility />
           <br />
           <input
-            class="secondary-input"
+            class="secondary-input mx-2"
             type="tel"
             placeholder="Phone Number (Optional)"
             onChange={this.handleEstablishmentPhoneNumberChange}
           />
+          <MyPhone />
           <br />
           <br />
           <div>
@@ -251,7 +311,7 @@ class SignUp extends Component {
           </div>
           <br />
           <MyButton
-            class="rounded-btn secondary-btn"
+            class="rounded-btn primary-btn-gradient"
             value="Sign Up as an Establishment"
             onClick={this.handleEsablishmentSignUp}
             id="epost"
@@ -261,23 +321,28 @@ class SignUp extends Component {
     } else {
       return (
         <div style={{ textAlign: "center" }}>
+          <p class="welcome" >Guest Registration</p>
+          <h2>Welcome! Sign up to get started.</h2>
+          <br />
           <input
-            class="secondary-input"
+            class="secondary-input mx-2"
             type="name"
             placeholder="Full Name"
             onChange={this.handleGuestNameChange}
           />
+          <MyPerson />
           <br />
           <input
-            class="secondary-input"
+            class="secondary-input mx-2"
             type="tel"
             placeholder="Phone Number"
             onChange={this.handleGuestPhoneNumberChange}
           />
+          <MyPhone />
           <br />
           <br />
           <MyButton
-            class="rounded-btn primary-btn"
+            class="rounded-btn primary-btn-gradient"
             value="Sign Up as a Guest"
             onClick={this.handleGuestSignUp}
           ></MyButton>
@@ -295,13 +360,13 @@ class SignUp extends Component {
         <MyButton
           class="rounded-btn secondary-btn-gradient"
           value="Register as Establishment"
-          onClick={this.handleEstablishmentClick}
+          onClick={() => { this.toggleButton(); this.handleEstablishmentClick(); }}
         />
         <br />
         <MyButton
           class="rounded-btn secondary-btn-gradient"
           value="Register as Guest"
-          onClick={this.handleGuestClick}
+          onClick={() => { this.toggleButton(); this.handleGuestClick(); }}
         />
       </div>
     );
@@ -316,13 +381,14 @@ class SignUp extends Component {
   };
 
   render() {
+    const { showButton } = this.state;
     return (
       <div style={{ textAlign: "center" }}>
         <MyNavBar />
         <br />
         <br />
         <br />
-        <MyLogo />
+        {showButton ? <MyLogo /> : null}
         {this.state.showForm == false
           ? this.formatButtons()
           : this.formatForm()}

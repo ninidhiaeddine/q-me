@@ -1,0 +1,28 @@
+h3.team-members {
+    float:left;
+    text-decoration: underline;
+    font-family: var(--secondary-font);
+    color: aliceblue;
+    padding-left: 20rem;
+}
+
+ul.team-members {
+    float: left;
+    text-align: left;
+    color:aliceblue;
+    padding-left: 21rem;
+}
+
+h3.technologies {
+    float:right;
+    text-decoration: underline;
+    font-family: var(--secondary-font);
+    color: aliceblue;
+    padding-right: 22rem;
+}
+
+ul.technologies {
+    float:right;
+    color:aliceblue;
+    padding-right: 22.5rem;
+}
