@@ -28,10 +28,10 @@ class ENavBar extends Component {
           <Nav.Link className="text-nowrap mt-4 mx-4 px-4" href="/notifications" component={Notifications}>
             My Notifications
           </Nav.Link>
-          <Nav.Link className="my-nav-bar my-2 ml-7" href="/" component={Home}>
-            <MyButton class="thin-rounded-btn primary-btn-gradient" value="Sign Out" />
-          </Nav.Link>
         </Nav>
+          <Nav.Link className="right my-2" href="/" component={Home}>
+            <MyButton class="thin-rounded-btn primary-btn" value="Sign Out" />
+          </Nav.Link>
       </Navbar>
     );
   }

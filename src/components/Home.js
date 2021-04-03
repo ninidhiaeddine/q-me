@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import MyNavBar from "./MyNavBar";
 import MyButton from "./MyButton";
 import MyLogo from "./MyLogo";
-import FrontImage from "./what-is-queue-management.png";
+import queue from './queue.png';
 import "./my-home.css";
 import { Link } from "react-router-dom";
 
@@ -31,6 +31,7 @@ class Home extends Component {
             <MyButton class="rounded-btn primary-btn" value="Sign Up" />
           </Link>
         </div>
+        <img class=" photo border-gradient border-gradient-purple" src={queue} />
       </div>
     );
     // function Header() {

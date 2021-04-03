@@ -20,8 +20,8 @@ code {
 }
 
 :root {
-  --primary-color: #ff3098;
-  --secondary-color: #00ffc5;
+  --primary-color: rgb(248, 4, 106);
+  --secondary-color: #b807af;
   --other-color: #dddbcb;
 
   --primary-color-bg: #202020;

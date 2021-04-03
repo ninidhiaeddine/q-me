@@ -3,45 +3,96 @@ import MyButton from "./MyButton";
 import "./my-inputs.css";
 import MyLogo from "./MyLogo";
 import MyNavBar from "./MyNavBar";
+import { AlternateEmail, PhoneAndroid, Visibility, VisibilityOff, Person } from "@material-ui/icons";
+import { styled } from '@material-ui/styles';
+// import InputAdornment from '@material-ui/core/InputAdornment';
+// import IconButton from "@material-ui/core/IconButton";
+// import { TextField } from "@material-ui/core";
+
+
+const MyVisibility = styled(VisibilityOff)({
+  color: "gray"
+});
+
+const MyAlternateEmail = styled(AlternateEmail)({
+  color: "gray"
+});
+
+const MyPhone = styled(PhoneAndroid)({
+  color: "gray"
+});
+
+const MyPerson = styled(Person)({
+  color: "gray"
+});
 
 class LogIn extends Component {
-  state = {
-    showForm: false,
-    isEstablishment: false,
 
-    guestForm: {
-      name: "",
-      phoneNumber: "",
-    },
+  constructor(props) {
+    super(props);
+    this.state = {
+      showButton: true,
+      showForm: false,
+      isEstablishment: false,
 
-    establishmentForm: {
-      email: "",
-      password: "",
-    },
+      guestForm: {
+        name: "",
+        phoneNumber: "",
+      },
+
+      establishmentForm: {
+        email: "",
+        password: "",
+      },
+    };
+  }
+
+  toggleButton = () => {
+    this.setState({ showButton: !this.state.showButton });
   };
+
+  // state = {
+  //   showForm: false,
+  //   isEstablishment: false,
+
+  //   guestForm: {
+  //     name: "",
+  //     phoneNumber: "",
+  //   },
+
+  //   establishmentForm: {
+  //     email: "",
+  //     password: "",
+  //   },
+  // };
 
   formatForm() {
     if (this.state.isEstablishment) {
       return (
         <div style={{ textAlign: "center" }}>
+          <p class="welcome" >Host Login</p>
+          <h2>Welcome back! You've been missed!</h2>
+          <br/>
           <input
-            class="secondary-input"
+            class="secondary-input mx-2"
             type="email"
             placeholder="Email Address"
             onChange={this.handleEstablishmentEmailChange}
           />
+          <MyAlternateEmail />
           <br />
           <input
-            class="secondary-input"
+            class="secondary-input mx-2"
             type="password"
             placeholder="Password"
             onChange={this.handleEstablishmentPasswordChange}
           />
+          <MyVisibility />
           <br />
           <br />
           <MyButton
-            class="rounded-btn primary-btn"
-            value="Sign In as Establishment"
+            class="circular-btn primary-btn-gradient"
+            value="→"
             onClick={this.handleEstablishmentSignIn}
           ></MyButton>
         </div>
@@ -49,24 +100,29 @@ class LogIn extends Component {
     } else {
       return (
         <div style={{ textAlign: "center" }}>
+          <p class="welcome" >Guest Login</p>
+          <h2>Welcome back! You've been missed!</h2>
+          <br/>
           <input
-            class="secondary-input"
+            class="secondary-input mx-2"
             type="name"
             placeholder="Full Name"
             onChange={this.handleGuestNameChange}
           />
+          <MyPerson />
           <br />
           <input
-            class="secondary-input"
+            class="secondary-input mx-2"
             type="tel"
             placeholder="Phone Number"
             onChange={this.handleGuestPhoneNumberChange}
           />
+          <MyPhone />
           <br />
           <br />
           <MyButton
-            class="rounded-btn secondary-btn"
-            value="Sign In as Guest"
+            class="circular-btn primary-btn-gradient"
+            value="→"
             onClick={this.handleGuestSignIn}
           ></MyButton>
         </div>
@@ -80,13 +136,13 @@ class LogIn extends Component {
         <MyButton
           class="rounded-btn primary-btn"
           value="Log In as Establishment"
-          onClick={this.handleEstablishmentClick}
+          onClick={() => { this.toggleButton(); this.handleEstablishmentClick(); }}
         />
         <br />
         <MyButton
-          class="rounded-btn secondary-btn"
+          class="rounded-btn primary-btn"
           value="Log In as Guest"
-          onClick={this.handleGuestClick}
+          onClick={() => { this.toggleButton(); this.handleGuestClick(); }}
         />
       </div>
     );
@@ -164,14 +220,13 @@ class LogIn extends Component {
   };
 
   render() {
+    const { showButton} = this.state;
     return (
       <div style={{ textAlign: "center" }}>
         <MyNavBar />
         <br />
         <br />
-        <MyLogo />
-        <br />
-        <br />
+        {showButton ? <MyLogo /> : null}
         <br />
         {this.state.showForm == false
           ? this.formatButtons()

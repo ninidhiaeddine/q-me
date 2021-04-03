@@ -58,4 +58,6 @@
     font-family: var(--secondary-font);
   }
   
-  
+  .right{
+    float:right;
+  }
