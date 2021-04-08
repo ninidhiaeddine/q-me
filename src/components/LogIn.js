@@ -3,31 +3,48 @@ import MyButton from "./MyButton";
 import "./my-inputs.css";
 import MyLogo from "./MyLogo";
 import MyNavBar from "./MyNavBar";
-import { AlternateEmail, PhoneAndroid, Visibility, VisibilityOff, Person } from "@material-ui/icons";
-import { styled } from '@material-ui/styles';
+import {
+  AlternateEmail,
+  PhoneAndroid,
+  Visibility,
+  VisibilityOff,
+  Person,
+} from "@material-ui/icons";
+import { styled } from "@material-ui/styles";
 // import InputAdornment from '@material-ui/core/InputAdornment';
 // import IconButton from "@material-ui/core/IconButton";
 // import { TextField } from "@material-ui/core";
 
-
 const MyVisibility = styled(VisibilityOff)({
-  color: "gray"
+  color: "gray",
 });
 
 const MyAlternateEmail = styled(AlternateEmail)({
-  color: "gray"
+  color: "gray",
 });
 
 const MyPhone = styled(PhoneAndroid)({
-  color: "gray"
+  color: "gray",
 });
 
 const MyPerson = styled(Person)({
-  color: "gray"
+  color: "gray",
 });
 
-class LogIn extends Component {
+function ButtonsList(props) {
+    const buttons = props.buttons;
+    const listItems = buttons.map((button) => (
+      <li key={button.id}>
+        <div style={{ textAlign: "center" }}>
+          {button}
+          <br />
+        </div>
+      </li>
+    ));
+    return <ul>{listItems}</ul>;
+  }
 
+class LogIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -70,9 +87,9 @@ class LogIn extends Component {
     if (this.state.isEstablishment) {
       return (
         <div style={{ textAlign: "center" }}>
-          <p class="welcome" >Host Login</p>
+          <p class="welcome">Host Login</p>
           <h2>Welcome back! You've been missed!</h2>
-          <br/>
+          <br />
           <input
             class="secondary-input mx-2"
             type="email"
@@ -100,9 +117,9 @@ class LogIn extends Component {
     } else {
       return (
         <div style={{ textAlign: "center" }}>
-          <p class="welcome" >Guest Login</p>
+          <p class="welcome">Guest Login</p>
           <h2>Welcome back! You've been missed!</h2>
-          <br/>
+          <br />
           <input
             class="secondary-input mx-2"
             type="name"
@@ -131,21 +148,33 @@ class LogIn extends Component {
   }
 
   formatButtons() {
-    return (
-      <div style={{ textAlign: "center" }}>
-        <MyButton
-          class="rounded-btn primary-btn"
-          value="Log In as Establishment"
-          onClick={() => { this.toggleButton(); this.handleEstablishmentClick(); }}
-        />
-        <br />
-        <MyButton
-          class="rounded-btn primary-btn"
-          value="Log In as Guest"
-          onClick={() => { this.toggleButton(); this.handleGuestClick(); }}
-        />
-      </div>
-    );
+    var buttons = [
+      <MyButton
+        class="rounded-btn primary-btn"
+        value="Log In as Establishment"
+        onClick={() => {
+          this.toggleButton();
+          this.handleEstablishmentClick();
+        }}
+      />,
+      <MyButton
+        class="rounded-btn primary-btn"
+        value="Log In as Branch"
+        onClick={() => {
+          this.toggleButton();
+          this.handleBranchClick();
+        }}
+      />,
+      <MyButton
+        class="rounded-btn primary-btn"
+        value="Log In as Guest"
+        onClick={() => {
+          this.toggleButton();
+          this.handleGuestClick();
+        }}
+      />,
+    ];
+    return <ButtonsList buttons={buttons} />;
   }
 
   handleGuestNameChange = (e) => {
@@ -220,7 +249,7 @@ class LogIn extends Component {
   };
 
   render() {
-    const { showButton} = this.state;
+    const { showButton } = this.state;
     return (
       <div style={{ textAlign: "center" }}>
         <MyNavBar />
