@@ -52,5 +52,5 @@ jobs:
       with:
         app-name: 'q-me-lb'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_a48980a49af84b4c8063b53317d24262 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_d4879c1c8c404de6b64b1cc3d209b57d }}
         package: .
