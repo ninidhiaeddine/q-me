@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import MyNavBar from "./MyNavBar";
-import MyLogo from "./MyLogo";
+import MyNavBar from "../components/MyNavBar";
+import MyLogo from "../components/MyLogo";
 import "./about.css";
 
 class About extends Component {
@@ -19,8 +19,8 @@ class About extends Component {
 
         <h3 class="team-members">Team Members:</h3>
         <h3 class="technologies">Technologies:</h3>
-        <br/>
-        <br/>
+        <br />
+        <br />
         <ul class="team-members">
           <li>Dhia Eddine Nini</li>
           <li>Mahdi Al Khatib</li>
@@ -32,9 +32,6 @@ class About extends Component {
           <li>Backend: Flask</li>
           <li>Cloud: Azure</li>
         </ul>
-
-
-
       </div>
     );
   }

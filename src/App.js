@@ -2,17 +2,16 @@ import "./App.css";
 import { useLocation, Route, Switch } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
-import Home from "./components/Home";
-import LogIn from "./components/LogIn";
-import SignUp from "./components/SignUp";
-import Features from "./components/Features";
-import About from "./components/About";
-import ContactUs from "./components/ContactUs";
-import Establishment from "./components/Establishment"
-import Branches from "./components/Branches";
+import Home from "./pages/Home";
+import LogIn from "./pages/LogIn";
+import SignUp from "./pages/SignUp";
+import Features from "./pages/Features";
+import About from "./pages/About";
+import ContactUs from "./pages/ContactUs";
+import Establishment from "./pages/Establishment";
+import Branches from "./pages/Branches";
 import Notifications from "./components/Notifications";
-import Profile from "./components/Profile";
-
+import Profile from "./pages/Profile";
 
 function App() {
   let location = useLocation();
@@ -38,7 +37,6 @@ function App() {
           <Route path="/branches" component={Branches} />
           <Route path="/notifications" component={Notifications} />
           <Route path="/profile" component={Profile} />
-
         </Switch>
       </CSSTransition>
     </TransitionGroup>

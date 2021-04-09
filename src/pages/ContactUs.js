@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import MyNavBar from "./MyNavBar";
-import queue from './queue.png';
+import MyNavBar from "../components/MyNavBar";
+import queue from "./queue.png";
 import "./contact-us.css";
-import MyButton from "./MyButton";
-import "./my-inputs.css";
+import MyButton from "../components/MyButton";
+import "../components/my-input.css";
 
 class ContactUS extends Component {
   state = {};
@@ -50,7 +50,10 @@ class ContactUS extends Component {
             onChange={this.handleEstablishmentPhoneNumberChange}
           />
         </div>
-        <img class="contact-us-photo border-gradient border-gradient-purple" src={queue} />
+        <img
+          class="contact-us-photo border-gradient border-gradient-purple"
+          src={queue}
+        />
         <br />
         <br />
         <br />

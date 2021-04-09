@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import MyButton from "./MyButton";
-import "./my-inputs.css";
-import MyLogo from "./MyLogo";
-import MyNavBar from "./MyNavBar";
+import MyButton from "../components/MyButton";
+import MyLogo from "../components/MyLogo";
+import MyNavBar from "../components/MyNavBar";
+
+import "../components/my-input.css";
+
 import {
   AlternateEmail,
   PhoneAndroid,
@@ -32,17 +34,17 @@ const MyPerson = styled(Person)({
 });
 
 function ButtonsList(props) {
-    const buttons = props.buttons;
-    const listItems = buttons.map((button) => (
-      <li key={button.id}>
-        <div style={{ textAlign: "center" }}>
-          {button}
-          <br />
-        </div>
-      </li>
-    ));
-    return <ul>{listItems}</ul>;
-  }
+  const buttons = props.buttons;
+  const listItems = buttons.map((button) => (
+    <li key={button.id}>
+      <div style={{ textAlign: "center" }}>
+        {button}
+        <br />
+      </div>
+    </li>
+  ));
+  return <ul>{listItems}</ul>;
+}
 
 class LogIn extends Component {
   constructor(props) {

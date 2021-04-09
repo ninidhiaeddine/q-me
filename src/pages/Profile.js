@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import ENavBar from "./ENavBar";
+import ENavBar from "../components/ENavBar";
+
 class Profile extends Component {
-  state = {};
   render() {
-    return( 
+    return (
       <div style={{ textAlign: "center" }}>
         <ENavBar />
         <br />

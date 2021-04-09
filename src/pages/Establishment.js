@@ -1,22 +1,20 @@
 import React, { Component } from "react";
-import MyNavBar from "./MyNavBar";
-
-class Features extends Component {
+import ENavBar from "../components/ENavBar";
+class Establishment extends Component {
   state = {};
   render() {
-    return( 
+    return (
       <div style={{ textAlign: "center" }}>
-        <MyNavBar />
+        <ENavBar />
         <br />
         <br />
         <br />
         <br />
         <br />
         <br />
-        <p>Q</p>
+        <h1>~(˘▾˘~) &nbsp; &nbsp; &nbsp; (~˘▾˘)~ </h1>
       </div>
     );
   }
 }
-
-export default Features;
+export default Establishment;

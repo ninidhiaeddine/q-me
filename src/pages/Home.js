@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import MyNavBar from "./MyNavBar";
-import MyButton from "./MyButton";
-import MyLogo from "./MyLogo";
-import queue from './queue.png';
-import "./my-home.css";
+import MyNavBar from "../components/MyNavBar";
+import MyButton from "../components/MyButton";
+import MyLogo from "../components/MyLogo";
+import queue from "./queue.png";
+import "./home.css";
 import { Link } from "react-router-dom";
 
 class Home extends Component {
@@ -12,15 +12,15 @@ class Home extends Component {
       <div className="App">
         <MyNavBar />
         <br />
-        <Link to="/establishment">
-          Establishment
-        </Link>
+        <Link to="/establishment">Establishment</Link>
         <br />
         <br />
         <div class="absolute">
           {/* <MyLogo /> */}
           <h1>Online Queue Maker</h1>
-          <h2>No need to wait in <br></br>line anymore!</h2>
+          <h2>
+            No need to wait in <br></br>line anymore!
+          </h2>
           <br />
           <br />
           <Link to="/login">
@@ -31,7 +31,10 @@ class Home extends Component {
             <MyButton class="rounded-btn primary-btn" value="Sign Up" />
           </Link>
         </div>
-        <img class=" photo border-gradient border-gradient-purple" src={queue} />
+        <img
+          class=" photo border-gradient border-gradient-purple"
+          src={queue}
+        />
       </div>
     );
     // function Header() {
@@ -39,7 +42,6 @@ class Home extends Component {
     //   return <img src={FrontImage} alt="Logo" />;
     // }
   }
-  
 }
 
 export default Home;

@@ -5,33 +5,49 @@ import "./e-nav-bar.css";
 
 import MyButton from "./MyButton";
 
-import Home from "./Home";
-import Establishment from "./Establishment";
-import Profile from "./Profile";
-import Branches from "./Branches";
+import Home from "../pages/Home";
+import Establishment from "../pages/Establishment";
+import Profile from "../pages/Profile";
+import Branches from "../pages/Branches";
 import Notifications from "./Notifications";
 
 class ENavBar extends Component {
   render() {
     return (
       <Navbar className="my-nav-bar" variant="dark">
-        <Navbar.Brand className="my-nav-bar" href="/establishment" component={Establishment}>
+        <Navbar.Brand
+          className="my-nav-bar"
+          href="/establishment"
+          component={Establishment}
+        >
           E_Name
         </Navbar.Brand>
         <Nav className="mr-auto mx-7">
-          <Nav.Link className="text-nowrap mt-4 mx-4 px-4" href="/profile" component={Profile}>
+          <Nav.Link
+            className="text-nowrap mt-4 mx-4 px-4"
+            href="/profile"
+            component={Profile}
+          >
             My Profile
           </Nav.Link>
-          <Nav.Link className="text-nowrap mt-4 mx-4 px-4" href="/branches" component={Branches}>
+          <Nav.Link
+            className="text-nowrap mt-4 mx-4 px-4"
+            href="/branches"
+            component={Branches}
+          >
             My Branches
           </Nav.Link>
-          <Nav.Link className="text-nowrap mt-4 mx-4 px-4" href="/notifications" component={Notifications}>
+          <Nav.Link
+            className="text-nowrap mt-4 mx-4 px-4"
+            href="/notifications"
+            component={Notifications}
+          >
             My Notifications
           </Nav.Link>
         </Nav>
-          <Nav.Link className="right my-2" href="/" component={Home}>
-            <MyButton class="thin-rounded-btn primary-btn" value="Sign Out" />
-          </Nav.Link>
+        <Nav.Link className="right my-2" href="/" component={Home}>
+          <MyButton class="thin-rounded-btn primary-btn" value="Sign Out" />
+        </Nav.Link>
       </Navbar>
     );
   }

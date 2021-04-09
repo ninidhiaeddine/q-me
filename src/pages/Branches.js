@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import ENavBar from "./ENavBar";
-import MyButton from "./MyButton";
-import "./my-inputs.css";
-import "./my-branches.css";
+import ENavBar from "../components/ENavBar";
+import MyButton from "../components/MyButton";
+import "../components/my-input.css";
+import "./branches.css";
 
 class Branches extends Component {
   state = {};
@@ -11,13 +11,13 @@ class Branches extends Component {
 
     this.state = {
       message: "",
-      items: []
-    }
+      items: [],
+    };
   }
 
   updateMessage(event) {
     this.setState({
-      message: event.target.value
+      message: event.target.value,
     });
   }
 
@@ -28,7 +28,7 @@ class Branches extends Component {
 
     this.setState({
       items: items,
-      message: ""
+      message: "",
     });
   }
 
@@ -37,7 +37,7 @@ class Branches extends Component {
     items[i] = event.target.value;
 
     this.setState({
-      items: items
+      items: items,
     });
   }
 
@@ -47,7 +47,7 @@ class Branches extends Component {
     items.splice(i, 1);
 
     this.setState({
-      items: items
+      items: items,
     });
   }
 
@@ -65,14 +65,13 @@ class Branches extends Component {
               onChange={context.handleItemChanged.bind(context, i)}
             />
           </td>
-        
+
           <td>
-          <MyButton
-            class="text-nowrap small-rounded-btn secondary-btn pr-7"
-            value="Delete Branch"
-            onClick={context.handleItemDeleted.bind(context, i)}
-          >
-          </MyButton>
+            <MyButton
+              class="text-nowrap small-rounded-btn secondary-btn pr-7"
+              value="Delete Branch"
+              onClick={context.handleItemDeleted.bind(context, i)}
+            ></MyButton>
           </td>
         </tr>
       );
@@ -88,18 +87,12 @@ class Branches extends Component {
           <table className="">
             <thead>
               <tr>
-                <th>
-                  Item
-              </th>
-                <th>
-                  Actions
-              </th>
+                <th>Item</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <br />
-            <tbody>
-              {this.renderRows()}
-            </tbody>
+            <tbody>{this.renderRows()}</tbody>
           </table>
           <hr />
           <input
@@ -112,11 +105,9 @@ class Branches extends Component {
             class="text-nowrap small-rounded-btn primary-btn-inverse pr-5"
             value="Add Address"
             onClick={this.handleClick.bind(this)}
-          >
-          </MyButton>
+          ></MyButton>
         </div>
       </div>
-
     );
   }
 }

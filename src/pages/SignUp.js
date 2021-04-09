@@ -1,38 +1,44 @@
 import React, { Component } from "react";
-import MyButton from "./MyButton";
-import MyLogo from "./MyLogo";
-import MyNavBar from "./MyNavBar";
-import "./my-inputs.css";
-import "./my-switches.css";
-import "./my-dropdown.css";
-import { AlternateEmail, PhoneAndroid, Visibility, VisibilityOff, Person, Business } from "@material-ui/icons";
-import { styled } from '@material-ui/styles';
+import MyButton from "../components/MyButton";
+import MyLogo from "../components/MyLogo";
+import MyNavBar from "../components/MyNavBar";
+import "../components/my-input.css";
+import "../components/my-switch.css";
+import "../components/my-dropdown.css";
+import {
+  AlternateEmail,
+  PhoneAndroid,
+  Visibility,
+  VisibilityOff,
+  Person,
+  Business,
+} from "@material-ui/icons";
+import { styled } from "@material-ui/styles";
 // import InputAdornment from '@material-ui/core/InputAdornment';
 // import IconButton from "@material-ui/core/IconButton";
 // import { TextField } from "@material-ui/core";
 
 const MyVisibility = styled(VisibilityOff)({
-  color: "gray"
+  color: "gray",
 });
 
 const MyAlternateEmail = styled(AlternateEmail)({
-  color: "gray"
+  color: "gray",
 });
 
 const MyPhone = styled(PhoneAndroid)({
-  color: "gray"
+  color: "gray",
 });
 
 const MyPerson = styled(Person)({
-  color: "gray"
+  color: "gray",
 });
 
 const MyBusiness = styled(Business)({
-  color: "gray"
+  color: "gray",
 });
 
 class SignUp extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -53,7 +59,6 @@ class SignUp extends Component {
         confirmedPassowrd: "",
         phoneNumber: "",
       },
-
     };
   }
   toggleButton = () => {
@@ -109,18 +114,18 @@ class SignUp extends Component {
     var data =
       this.state.establishmentForm.phoneNumber == ""
         ? {
-          name: this.state.establishmentForm.name,
-          type: this.state.establishmentForm.type,
-          email: this.state.establishmentForm.email,
-          password: password,
-        }
+            name: this.state.establishmentForm.name,
+            type: this.state.establishmentForm.type,
+            email: this.state.establishmentForm.email,
+            password: password,
+          }
         : {
-          name: this.state.establishmentForm.name,
-          type: this.state.establishmentForm.type,
-          email: this.state.establishmentForm.email,
-          password: password,
-          phone_number: this.state.establishmentForm.phoneNumber,
-        };
+            name: this.state.establishmentForm.name,
+            type: this.state.establishmentForm.type,
+            email: this.state.establishmentForm.email,
+            password: password,
+            phone_number: this.state.establishmentForm.phoneNumber,
+          };
 
     if (password == confirmedPassowrd) {
       // Simple POST request with a JSON body using fetch
@@ -243,7 +248,7 @@ class SignUp extends Component {
     if (this.state.isEstablishment) {
       return (
         <div style={{ textAlign: "center" }}>
-          <p class="welcome" >Host Registration</p>
+          <p class="welcome">Host Registration</p>
           <h2>Welcome! Sign up to get started.</h2>
           <br />
           <input
@@ -321,7 +326,7 @@ class SignUp extends Component {
     } else {
       return (
         <div style={{ textAlign: "center" }}>
-          <p class="welcome" >Guest Registration</p>
+          <p class="welcome">Guest Registration</p>
           <h2>Welcome! Sign up to get started.</h2>
           <br />
           <input
@@ -360,13 +365,19 @@ class SignUp extends Component {
         <MyButton
           class="rounded-btn secondary-btn-gradient"
           value="Register as Establishment"
-          onClick={() => { this.toggleButton(); this.handleEstablishmentClick(); }}
+          onClick={() => {
+            this.toggleButton();
+            this.handleEstablishmentClick();
+          }}
         />
         <br />
         <MyButton
           class="rounded-btn secondary-btn-gradient"
           value="Register as Guest"
-          onClick={() => { this.toggleButton(); this.handleGuestClick(); }}
+          onClick={() => {
+            this.toggleButton();
+            this.handleGuestClick();
+          }}
         />
       </div>
     );
