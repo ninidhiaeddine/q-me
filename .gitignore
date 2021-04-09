@@ -9,8 +9,7 @@
 /coverage
 
 # production
-#/build
-# commented this out for Azure deployment
+build
 
 # misc
 .DS_Store
