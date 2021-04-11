@@ -13,6 +13,7 @@ class Home extends Component {
         <MyNavBar />
         <br />
         <Link to="/establishment">Establishment</Link>
+        <Link to="/guest">Guest</Link>
         <br />
         <br />
         <div class="absolute">

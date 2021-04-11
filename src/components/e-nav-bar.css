@@ -6,14 +6,11 @@
     font-size: 40px;
   }
   
-  .Q {
-    font-family: var(--primary-font);
+  .home {
+    font-family: var(--secondary-font);
     color: var(--primary-color);
-  }
-  
-  .Me {
-    font-family: var(--primary-font);
-    color: var(--secondary-color);
+    font-weight: bold;
+    
   }
   
   /* .pr-6,

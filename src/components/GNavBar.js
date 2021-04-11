@@ -6,41 +6,41 @@ import "./e-nav-bar.css";
 import MyButton from "./MyButton";
 
 import Home from "../pages/Home";
-import Establishment from "../pages/Establishment";
-import EProfile from "../pages/EProfile";
-import EBranches from "../pages/EBranches";
-import ENotifications from "../pages/ENotifications";
+import Guest from "../pages/Guest";
+import GProfile from "../pages/GProfile";
+import GQueues from "../pages/GQueues";
+import GNotifications from "../pages/GNotifications";
 
-class ENavBar extends Component {
+class GNavBar extends Component {
   render() {
     return (
       <Navbar className="my-nav-bar" variant="dark">
         <Navbar.Brand
           className="my-nav-bar"
-          href="/establishment"
-          component={Establishment}
+          href="/guest"
+          component={Guest}
         >
           <span class="home">HOME</span>
         </Navbar.Brand>
         <Nav className="mr-auto mx-7">
           <Nav.Link
             className="text-nowrap mt-2 mx-4 px-4"
-            href="/eprofile"
-            component={EProfile}
+            href="/gprofile"
+            component={GProfile}
           >
             My Profile
           </Nav.Link>
           <Nav.Link
             className="text-nowrap mt-2 mx-4 px-4"
-            href="/ebranches"
-            component={EBranches}
+            href="/gqueues"
+            component={GQueues}
           >
-            My Branches
+            My Queues
           </Nav.Link>
           <Nav.Link
             className="text-nowrap mt-2 mx-4 px-4"
-            href="/enotifications"
-            component={ENotifications}
+            href="/gnotifications"
+            component={GNotifications}
           >
             My Notifications
           </Nav.Link>
@@ -53,4 +53,4 @@ class ENavBar extends Component {
   }
 }
 
-export default ENavBar;
+export default GNavBar;

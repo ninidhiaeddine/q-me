@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import ENavBar from "./ENavBar";
-class Notifications extends Component {
+import ENavBar from "../components/ENavBar";
+
+class EProfile extends Component {
   state = {};
   render() {
-    return( 
+    return (
       <div style={{ textAlign: "center" }}>
         <ENavBar />
         <br />
@@ -17,4 +18,4 @@ class Notifications extends Component {
     );
   }
 }
-export default Notifications;
+export default EProfile;

@@ -1,20 +1,21 @@
 import React, { Component } from "react";
-import ENavBar from "../components/ENavBar";
+import GNavBar from "../components/GNavBar";
 
-class Profile extends Component {
+class GNotifications extends Component {
+  state = {};
   render() {
     return (
       <div style={{ textAlign: "center" }}>
-        <ENavBar />
+        <GNavBar />
         <br />
         <br />
         <br />
         <br />
         <br />
         <br />
-        <h1>~(˘▾˘~) &nbsp; &nbsp; &nbsp; (~˘▾˘)~ </h1>
+        <h1>Guest Notifications</h1>
       </div>
     );
   }
 }
-export default Profile;
+export default GNotifications;

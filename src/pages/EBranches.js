@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import ENavBar from "../components/ENavBar";
 import MyButton from "../components/MyButton";
 import "../components/my-input.css";
-import "./branches.css";
+import "./e-branches.css";
 
-class Branches extends Component {
+class EBranches extends Component {
   state = {};
   constructor(props) {
     super(props);
@@ -111,4 +111,4 @@ class Branches extends Component {
     );
   }
 }
-export default Branches;
+export default EBranches;
