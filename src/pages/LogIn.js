@@ -53,6 +53,7 @@ class LogIn extends Component {
       showButton: true,
       showForm: false,
       isEstablishment: false,
+      isBranch: false,
 
       guestForm: {
         name: "",
@@ -63,12 +64,14 @@ class LogIn extends Component {
         email: "",
         password: "",
       },
+
+      branchForm: {
+        email: "",
+        password: "",
+      },
     };
   }
 
-  toggleButton = () => {
-    this.setState({ showButton: !this.state.showButton });
-  };
 
   // state = {
   //   showForm: false,
@@ -85,11 +88,45 @@ class LogIn extends Component {
   //   },
   // };
 
+  toggleButton = () => {
+    this.setState({ showButton: !this.state.showButton });
+  };
+
   formatForm() {
     if (this.state.isEstablishment) {
       return (
         <div style={{ textAlign: "center" }}>
           <p class="welcome">Host Login</p>
+          <h2>Welcome back! You've been missed!</h2>
+          <br />
+          <input
+            class="secondary-input mx-2"
+            type="email"
+            placeholder="Email Address"
+            onChange={this.handleEstablishmentEmailChange}
+          />
+          <MyAlternateEmail />
+          <br />
+          <input
+            class="secondary-input mx-2"
+            type="password"
+            placeholder="Password"
+            onChange={this.handleEstablishmentPasswordChange}
+          />
+          <MyVisibility />
+          <br />
+          <br />
+          <MyButton
+            class="circular-btn primary-btn-gradient"
+            value="→"
+            onClick={this.handleEstablishmentSignIn}
+          ></MyButton>
+        </div>
+      );
+    } else if (this.state.isBranch) {
+      return (
+        <div style={{ textAlign: "center" }}>
+          <p class="welcome">Branch Login</p>
           <h2>Welcome back! You've been missed!</h2>
           <br />
           <input
@@ -203,6 +240,18 @@ class LogIn extends Component {
     this.setState({ establishmentForm });
   };
 
+  handleBranchEmailChange = (e) => {
+    var branchForm = this.state.branchForm;
+    branchForm.email = e.target.value;
+    this.setState({ branchForm });
+  };
+
+  handleBranchPasswordChange = (e) => {
+    var branchForm = this.state.branchForm;
+    branchForm.password = e.target.value;
+    this.setState({ branchForm });
+  };
+
   handleGuestSignIn = () => {
     var data = {
       name: this.state.guestForm.name,
@@ -242,12 +291,18 @@ class LogIn extends Component {
       .then((data) => console.log(data));
   };
 
+  
+
   handleEstablishmentClick = () => {
     this.setState({ showForm: true, isEstablishment: true });
   };
 
   handleGuestClick = () => {
     this.setState({ showForm: true, isEstablishment: false });
+  };
+
+  handleBranchClick = () => {
+    this.setState({ showForm: true, isBranch: true });
   };
 
   render() {

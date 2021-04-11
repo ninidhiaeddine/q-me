@@ -9,9 +9,13 @@ import Features from "./pages/Features";
 import About from "./pages/About";
 import ContactUs from "./pages/ContactUs";
 import Establishment from "./pages/Establishment";
-import Branches from "./pages/Branches";
-import Notifications from "./components/Notifications";
-import Profile from "./pages/Profile";
+import EBranches from "./pages/EBranches";
+import ENotifications from "./pages/ENotifications";
+import EProfile from "./pages/EProfile";
+import GProfile from "./pages/GProfile";
+import Guest from "./pages/Guest";
+import GQueues from "./pages/GQueues";
+import GNotifications from "./pages/GNotifications";
 
 function App() {
   let location = useLocation();
@@ -34,9 +38,13 @@ function App() {
           <Route path="/about" component={About} />
           <Route path="/contactus" component={ContactUs} />
           <Route path="/establishment" component={Establishment} />
-          <Route path="/branches" component={Branches} />
-          <Route path="/notifications" component={Notifications} />
-          <Route path="/profile" component={Profile} />
+          <Route path="/ebranches" component={EBranches} />
+          <Route path="/enotifications" component={ENotifications} />
+          <Route path="/eprofile" component={EProfile} />
+          <Route path="/gprofile" component={GProfile} />
+          <Route path="/guest" component={Guest} />
+          <Route path="/gqueues" component={GQueues} />
+          <Route path="/gnotifications" component={GNotifications} />
         </Switch>
       </CSSTransition>
     </TransitionGroup>
