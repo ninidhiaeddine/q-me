@@ -14,6 +14,7 @@ class Home extends Component {
         <br />
         <Link to="/establishment">Establishment</Link>
         <Link to="/guest">Guest</Link>
+        <Link to="/branch">Branch</Link>
         <br />
         <br />
         <div class="absolute">

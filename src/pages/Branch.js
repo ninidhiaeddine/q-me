@@ -1,20 +1,20 @@
 import React, { Component } from "react";
-import GNavBar from "../components/GNavBar";
-class Guest extends Component {
+import BNavBar from "../components/BNavBar";
+class Branch extends Component {
   state = {};
   render() {
     return (
       <div style={{ textAlign: "center" }}>
-        <GNavBar />
+        <BNavBar />
         <br />
         <br />
         <br />
         <br />
         <br />
         <br />
-        <h1>Guest home</h1>
+        <h1>Branch home</h1>
       </div>
     );
   }
 }
-export default Guest;
+export default Branch;
