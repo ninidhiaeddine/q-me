@@ -3,8 +3,13 @@ import ENavBar from "../components/ENavBar";
 import MyButton from "../components/MyButton";
 import "../components/my-input.css";
 import "./e-branches.css";
-
+import Popup from '../components/Popup';
+import "../components/popup.css";
+import "../components/my-input.css";
+import Collapsible from 'react-collapsible';
+import CollapsibleBox from '../components/CollapsibleBox';
 class EBranches extends Component {
+
   state = {};
   constructor(props) {
     super(props);
@@ -12,7 +17,14 @@ class EBranches extends Component {
     this.state = {
       message: "",
       items: [],
+      isOpen: false,
+      setIsOpen: false
     };
+
+  }
+
+  togglePopup = () => {
+    this.setState({ isOpen: !this.state.isOpen });
   }
 
   updateMessage(event) {
@@ -58,8 +70,7 @@ class EBranches extends Component {
       return (
         <tr key={"item-" + i}>
           <td>
-            <input
-              class="secondary-input"
+            <CollapsibleBox
               type="text"
               value={o}
               onChange={context.handleItemChanged.bind(context, i)}
@@ -68,7 +79,7 @@ class EBranches extends Component {
 
           <td>
             <MyButton
-              class="text-nowrap small-rounded-btn secondary-btn pr-7"
+              class="text-nowrap small-rounded-btn primary-btn pr-7"
               value="Delete Branch"
               onClick={context.handleItemDeleted.bind(context, i)}
             ></MyButton>
@@ -79,34 +90,70 @@ class EBranches extends Component {
   }
 
   render() {
+    const { isOpen } = this.state;
+    const { setIsOpen } = this.state;
     return (
       <div>
         <ENavBar />
         <br />
         <div>
+          <div style={{ textAlign: "center" }}>
+            <MyButton
+              class="rounded-btn primary-btn-gradient"
+              type="button"
+              value="Add Branch"
+              onClick={this.togglePopup}
+            />
+          </div>
+          {isOpen && <Popup
+            content={<>
+              <b>Enter Branch Information</b>
+              <br />
+              <br />
+              <input
+                class="secondary-input black-input-color mx-2 mt-3"
+                type="name"
+                placeholder="Branch Name"
+                onChange={this.handleGuestNameChange}
+              />
+              <br />
+              <input
+                class="secondary-input black-input-color mx-2"
+                type="email"
+                placeholder="Branch Email"
+                onChange={this.handleEstablishmentEmailChange}
+              />
+              <br />
+              <input
+                class="secondary-input black-input-color mx-2"
+                type="tel"
+                placeholder="Phone Number"
+                onChange={this.handleGuestPhoneNumberChange}
+              />
+              <br />
+              <input
+                class="secondary-input black-input-color mx-2"
+                type="password"
+                placeholder="Password"
+                onChange={this.handleEstablishmentPasswordChange}
+              />
+              <MyButton
+                class="circular-btn primary-btn-inverse addBranchButton"
+                value="+"
+                onClick={this.handleClick.bind(this)}
+              />
+            </>}
+            handleClose={this.togglePopup}
+          />}
+        </div>
+        <div>
           <table className="">
-            <thead>
-              <tr>
-                <th>Item</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
             <br />
             <tbody>{this.renderRows()}</tbody>
           </table>
           <hr />
-          <input
-            class="secondary-input"
-            type="text"
-            value={this.state.message}
-            onChange={this.updateMessage.bind(this)}
-          />
-          <MyButton
-            class="text-nowrap small-rounded-btn primary-btn-inverse pr-5"
-            value="Add Address"
-            onClick={this.handleClick.bind(this)}
-          ></MyButton>
         </div>
+
       </div>
     );
   }

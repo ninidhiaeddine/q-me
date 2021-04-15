@@ -65,7 +65,7 @@
 .primary-btn-inverse:hover {
   background-color: var(--primary-color);
   border: 1px solid var(--primary-color);
-  color: black;
+  color: rgb(255, 255, 255);
   transition: 500ms;
   font-family: var(--secondary-font);
 }
