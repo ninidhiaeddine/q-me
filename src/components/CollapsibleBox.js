@@ -15,6 +15,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard() {
+export default function RecipeReviewCard({name, email, password, phone}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -60,7 +61,7 @@ export default function RecipeReviewCard() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Hamra Branch"
+        title={name}
         subheader="April 15, 2021"
       />
       <CardContent>
@@ -88,20 +89,27 @@ export default function RecipeReviewCard() {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph color="textPrimary">
-            Name: Hamra Branch
+          <Typography id = "1" paragraph color="textPrimary">
+            {name}
           </Typography>
           <Typography paragraph color="textPrimary">
-            Date added: April 15, 2021
+            {email}
           </Typography>
           <Typography paragraph color="textPrimary">
-            Email: McDonaldsHamra@qme.com
+            {password}
           </Typography>
           <Typography color="textPrimary">
-            Phone Number: +961 123 456 78
+            {phone}
           </Typography>
         </CardContent>
       </Collapse>
     </Card>
   );
 }
+
+RecipeReviewCard.propTypes = {
+  name: PropTypes.string,
+  email: PropTypes.string,
+  password: PropTypes.string,
+  phone: PropTypes.string
+};
