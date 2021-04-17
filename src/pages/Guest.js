@@ -7,11 +7,69 @@ import Button from '@material-ui/core/Button';
 import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
 import { Icon } from "@material-ui/core";
 import "../components/guest.css"
+import QrReader from 'react-qr-reader'
 // import Card from '@material-ui/core/Card';
 // import CardHeader from '@material-ui/core/CardHeader';
 
 class Guest extends Component {
-  state = {};
+  state = {
+    showScanner : false,
+    result : 'No result'
+  };
+
+  postRequest(endpoint) {
+    var data = {
+      guest_id: 0 /* <-- wrong id. guest id comes here */
+    };
+
+    // Simple POST request with a JSON body using fetch
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+
+    fetch("https://q-me.azurewebsites.net" + endpoint, requestOptions)
+      .then((response) => console.log(response.json()))
+      .then((data) => console.log(data));
+  }
+
+  handleScanQrCodeClick = () => {
+    var isShowing = this.state.showScanner;
+    this.setState({ showScanner: !isShowing });
+  }
+
+  handleScan = (data) => {
+    if (data) {
+      this.setState({ result: data })
+
+      // post request to get queued up:
+      // this.postRequest(data)
+    }
+  }
+
+  handleError = (err) => {
+    console.error(err)
+  }
+
+  renderScaner() {
+    if (this.state.showScanner) {
+      return (<div>
+        <QrReader
+          delay={300}
+          onScan={this.handleScan}
+          onError={this.handleError}
+          facingMode="user"
+        >
+        </QrReader>
+      </div>);
+    }
+    else
+      return <div></div>;
+  }
+
   render() {
     return (
       <div>
@@ -24,9 +82,11 @@ class Guest extends Component {
           <Button
             class="rounded-btn primary-btn-gradient scan-btn"
             value="Scan QR Code"
-            endIcon={<CameraAltOutlinedIcon />}>
+            endIcon={<CameraAltOutlinedIcon />}
+            onClick={this.handleScanQrCodeClick}>
             Scan QR Code
         </Button>
+          {this.renderScaner()}
           <br />
           <br />
           <h5 class="desc">This will open your device's camera</h5>
