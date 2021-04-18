@@ -1,25 +1,48 @@
 import React, { Component } from "react";
 import GNavBar from "../components/GNavBar";
-import MyButton from "../components/MyButton";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
-import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
-import { Icon } from "@material-ui/core";
-import "../components/guest.css"
-import QrReader from 'react-qr-reader'
+import Button from "@material-ui/core/Button";
+import CameraAltOutlinedIcon from "@material-ui/icons/CameraAltOutlined";
+import "../components/guest.css";
+import QrReader from "react-qr-reader";
+import socketIOClient, { io } from "socket.io-client";
 // import Card from '@material-ui/core/Card';
 // import CardHeader from '@material-ui/core/CardHeader';
 
 class Guest extends Component {
   state = {
-    showScanner : false,
-    result : 'No result'
+    showScanner: false,
+    scannerResult: "",
+    apiMsg: "",
+    queueInfo: {
+      queueId: -1,
+      positionInLine: -1,
+      timeRemaining: -1,
+      count: -1,
+    },
   };
 
-  postRequest(endpoint) {
-    var data = {
-      guest_id: 0 /* <-- wrong id. guest id comes here */
+  // Helper Functions:
+
+  pullUpdatedQueueInfo() {
+    let currentQueueId = this.state.queueInfo.queue_id;
+    let changedQueueId = this.state.apiMsg.message.queue_id;
+
+    // only pull the updated info when the changes
+    // occured within the queue this guest is in:
+    if (currentQueueId == changedQueueId) {
+      // retrieve the endpoint from the state:
+      const endpoint = this.state.scannerResult;
+
+      // post a request to get the updated info:
+      this.sendGetInfoRequest(endpoint);
+    }
+  }
+
+  // HTTP Requests:
+
+  sendGetInfoRequest(guestId, endpoint) {
+    const data = {
+      guest_id: guestId,
     };
 
     // Simple POST request with a JSON body using fetch
@@ -33,48 +56,109 @@ class Guest extends Component {
 
     fetch("https://q-me.azurewebsites.net" + endpoint, requestOptions)
       .then((response) => console.log(response.json()))
-      .then((data) => console.log(data));
+      .then((data) => console.log(data.json()));
   }
 
-  handleScanQrCodeClick = () => {
-    var isShowing = this.state.showScanner;
-    this.setState({ showScanner: !isShowing });
+  sendAddTokenRequest(guestId, endpoint) {
+    const data = {
+      guest_id: guestId,
+    };
+
+    // Simple POST request with a JSON body using fetch
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+
+    fetch("https://q-me.azurewebsites.net" + endpoint, requestOptions)
+      .then((response) => console.log(response.json()))
+      .then((data) => console.log(data.json()));
   }
+
+  // Event Handlers:
+
+  handleScanQrCodeClick = () => {
+    let isShowing = this.state.showScanner;
+    this.setState({ showScanner: !isShowing });
+  };
 
   handleScan = (data) => {
     if (data) {
-      this.setState({ result: data })
+      this.setState({ scannerResult: data });
 
       // post request to get queued up:
-      // this.postRequest(data)
+      // this.postAddTokenRequest(data)
     }
-  }
+  };
 
   handleError = (err) => {
-    console.error(err)
+    console.error(err);
+  };
+
+  // Renderers:
+
+  renderScanner() {
+    if (this.state.showScanner) {
+      return (
+        <div>
+          <QrReader
+            delay={300}
+            onScan={this.handleScan}
+            onError={this.handleError}
+            facingMode="user"
+          ></QrReader>
+        </div>
+      );
+    } else return <div></div>;
   }
 
-  renderScaner() {
-    if (this.state.showScanner) {
-      return (<div>
-        <QrReader
-          delay={300}
-          onScan={this.handleScan}
-          onError={this.handleError}
-          facingMode="user"
-        >
-        </QrReader>
-      </div>);
+  renderQueueInfo() {
+    let queueInfo = this.state.queueInfo;
+
+    // only render when queue info are available
+    if (queueInfo.queueId != -1) {
+      return (
+        <div>
+          <h2>Position In Line: {queueInfo.positionInLine}</h2>
+          <h2>Estimated Time Remaining: {queueInfo.timeRemaining}</h2>
+          <h2>Number of People in Queue: {queueInfo.count}</h2>
+        </div>
+      );
+    } else {
+      return <h2>You are not enqueued in any queue!</h2>;
     }
-    else
-      return <div></div>;
+  }
+
+  // component events:
+
+  componentDidMount() {
+    // open socket connection with the server:
+
+    //const endpoint = "https://q-me.azurewebsites.net/";
+    const endpoint = "http://127.0.0.1:5000/"; // for debugging
+    const socket = socketIOClient(endpoint);
+
+    // listen to changes on the "dequeue" event
+    socket.on("dequeue", (json) => {
+      this.setState({ apiMsg: json });
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.apiMsg !== prevState.apiMsg) {
+      // pull updated queue info whenever api message changes:
+      console.log("New api message received: " + this.setState); // for debugging
+      // this.pullUpdatedQueueInfo();
+    }
   }
 
   render() {
     return (
       <div>
         <GNavBar />
-
         <div style={{ textAlign: "center" }}>
           <br />
           <h1 class="hi">Hi, Guest. Welcome Back!</h1>
@@ -83,10 +167,11 @@ class Guest extends Component {
             class="rounded-btn primary-btn-gradient scan-btn"
             value="Scan QR Code"
             endIcon={<CameraAltOutlinedIcon />}
-            onClick={this.handleScanQrCodeClick}>
+            onClick={this.handleScanQrCodeClick}
+          >
             Scan QR Code
-        </Button>
-          {this.renderScaner()}
+          </Button>
+          {this.renderScanner()}
           <br />
           <br />
           <h5 class="desc">This will open your device's camera</h5>
@@ -94,6 +179,7 @@ class Guest extends Component {
           <hr class="rounded divider"></hr>
           <br />
           <h1 class="hi">Live Tracking</h1>
+          {this.renderQueueInfo()}
           <br />
           <br />
         </div>
