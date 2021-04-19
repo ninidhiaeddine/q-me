@@ -4,14 +4,15 @@ import Box from "../components/Box";
 
 class GProfile extends Component {
   state = {};
+
   render() {
+    let txtList = ["Name", "Phone Number"];
+
     return (
       <div>
         <GNavBar />
         <br />
-        <Box
-        button="Change Information"
-         />
+        <Box txtList={txtList} buttonText="Change Information" />
       </div>
     );
   }
