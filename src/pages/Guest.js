@@ -87,8 +87,7 @@ class Guest extends Component {
 
   handleScan = (data) => {
     if (data) {
-      this.setState({ scannerResult: data });
-
+      this.setState({ scannerResult: data, showScanner: false });
       // post request to get queued up:
       // this.postAddTokenRequest(data)
     }
