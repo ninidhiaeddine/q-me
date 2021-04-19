@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 import BNavBar from "../components/BNavBar";
+import Box from "../components/Box";
 
 class BQueues extends Component {
   state = {};
   render() {
+    let txtList = ["Queue ID:", "Establishment's ID:", "Establishment's Name:", "Branch ID:", "Branch Name:"];
+    let btnList = ["Postpone Turn", "Leave Line"];
     return (
-      <div style={{ textAlign: "center" }}>
-        <BNavBar />
-        <br />
-        <br />
+      <div>
+        <div>
+          <BNavBar />
+          <br />
+          <Box txtList={txtList} btnList={btnList}/>
+        </div>
         <br />
         <br />
         <br />

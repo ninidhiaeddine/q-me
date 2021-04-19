@@ -37,7 +37,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard({ txtList, buttonText }) {
+export default function SimpleCard({ txtList, buttonText, title, btnList, myDivider }) {
   const classes = useStyles();
 
   function renderTexts(txtList) {
@@ -52,6 +52,36 @@ export default function SimpleCard({ txtList, buttonText }) {
     return txtListHtml;
   }
 
+  function renderButtons(btnList) {
+    let btnListHtml = [];
+    for (let index = 0; index < btnList.length; index++) {
+      btnListHtml.push(
+        <Grid container justify="center">
+          <Button
+            className={classes.actions}
+            style={{ textAlign: "center" }}
+            class="rounded-btn-card primary-btn-inverse mb-2"
+          >
+            {btnList[index]}
+          </Button>
+        </Grid>
+      );
+    }
+    return btnListHtml;
+  }
+
+  function renderdivider(myDivider) {
+    let dividerHtml = [];
+
+    dividerHtml.push(
+      <hr class="divider">
+        {myDivider}
+        </hr>
+    );
+
+    return dividerHtml;
+  }
+
   return (
     <Grid container justify="center">
       <Card class="box-size" className={classes.root}>
@@ -62,20 +92,13 @@ export default function SimpleCard({ txtList, buttonText }) {
             className={classes.title}
             gutterBottom
           >
-            Your Profile
+            {title}
           </Typography>
           <br />
           {renderTexts(txtList)}
+          {renderdivider(myDivider)}
         </CardContent>
-        <Grid container justify="center">
-          <Button
-            className={classes.actions}
-            style={{ textAlign: "center" }}
-            class="rounded-btn-card primary-btn-inverse mb-2"
-          >
-            {buttonText}
-          </Button>
-        </Grid>
+          {renderButtons(btnList)}
         <br />
       </Card>
     </Grid>
@@ -83,5 +106,5 @@ export default function SimpleCard({ txtList, buttonText }) {
 }
 
 SimpleCard.propTypes = {
-  button: PropTypes.string,
+  title: PropTypes.string,
 };
