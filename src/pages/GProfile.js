@@ -7,12 +7,12 @@ class GProfile extends Component {
 
   render() {
     let txtList = ["Name", "Phone Number"];
-
+    let btnList = ["Change Information"];
     return (
       <div>
         <GNavBar />
         <br />
-        <Box txtList={txtList} buttonText="Change Information" />
+        <Box title="Your Profile" txtList={txtList} btnList={btnList}/>
       </div>
     );
   }
