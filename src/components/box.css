@@ -1,0 +1,31 @@
+.box-size{
+    background: linear-gradient(to bottom right, rgba(231, 228, 228, 0.281), rgba(86, 86, 87, 0.226));
+    border-radius: 10%;
+    min-width: 350px;
+    min-height: 400px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+.rounded-btn-card {
+    width: 70%;
+    padding: 10px 50px;
+    margin: 5px;
+    border-radius: 50px;
+    font-weight: bold;
+    margin-top: 70px;
+  }
+
+.title{
+    color: var(--primary-color);
+    font-family: var(--secondary-font);
+    font-size: 20px;
+    font-weight: bold;
+}
+  
+.text-color{
+    color:aliceblue;
+    font-family: var(--secondary-font);
+    font-size: 20px;
+    font-weight: 100;
+    margin-top: 1.5rem;
+}

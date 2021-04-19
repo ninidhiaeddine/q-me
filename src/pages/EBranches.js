@@ -9,6 +9,7 @@ import "../components/my-input.css";
 import Collapsible from 'react-collapsible';
 import CollapsibleBox from '../components/CollapsibleBox';
 import Typography from '@material-ui/core/Typography';
+
 class EBranches extends Component {
 
   state = {};

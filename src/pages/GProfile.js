@@ -1,19 +1,17 @@
 import React, { Component } from "react";
 import GNavBar from "../components/GNavBar";
+import Box from "../components/Box";
 
 class GProfile extends Component {
   state = {};
   render() {
     return (
-      <div style={{ textAlign: "center" }}>
+      <div>
         <GNavBar />
         <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <h1>Guest Profile</h1>
+        <Box
+        button="Change Information"
+         />
       </div>
     );
   }
