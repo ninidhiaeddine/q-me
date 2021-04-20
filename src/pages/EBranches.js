@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ENavBar from "../components/ENavBar";
 import MyButton from "../components/MyButton";
 import "../components/my-input.css";
+import "../components/my-button.css";
 import "./e-branches.css";
 import Popup from "../components/Popup";
 import "../components/popup.css";
@@ -9,20 +10,43 @@ import "../components/my-input.css";
 import Collapsible from "react-collapsible";
 import CollapsibleBox from "../components/CollapsibleBox";
 import Typography from "@material-ui/core/Typography";
+import Box from "../components/Box";
+import Button from "@material-ui/core/Button";
+import QueueOutlinedIcon from "@material-ui/icons/QueueOutlined";
+import Grid from "@material-ui/core/Grid";
+import Branch from "../components/Branch";
+import BranchBox from "../components/BranchBox";
 
 class EBranches extends Component {
-  state = {};
   constructor(props) {
     super(props);
 
     this.state = {
       message: "",
-      items: [],
       isOpen: false,
       setIsOpen: false,
+      // simulate having branches:
+      branches: [
+        new Branch(
+          "Hamra Street",
+          "+3213213",
+          "bank@audi.com",
+          "334932434",
+          "33.23213",
+          "34.243232"
+        ),
+        new Branch(
+          "LEb Street",
+          "+3213asd213",
+          "badasdsadnk@audi.com",
+          "334asd932434",
+          "33.2asd3213",
+          "34.243232"
+        ),
+      ],
 
+      name: [],
       branchForm: {
-        name: "",
         email: "",
         password: "",
         confirmedPassowrd: "",
@@ -66,10 +90,12 @@ class EBranches extends Component {
     }
   };
 
-  handlebranchNameChange = (e) => {
-    var branchForm = this.state.branchForm;
-    branchForm.name = e.target.value;
-    this.setState({ branchForm });
+  handlebranchNameChange = (i, e) => {
+    var names = this.state.name;
+    names[i] = e.target.value;
+    this.setState({
+      name: names,
+    });
   };
 
   handlebranchEmailChange = (e) => {
@@ -101,20 +127,17 @@ class EBranches extends Component {
   };
 
   updateMessage(event) {
+    var names = this.state.name;
+    names.push(event.target.value);
     this.setState({
-      message: event.target.value,
+      name: names,
     });
   }
 
   handleClick() {
-    var items = this.state.items;
+    var branches = this.state.branches;
 
-    items.push(this.state.message);
-
-    this.setState({
-      items: items,
-      message: "",
-    });
+    // this.handleBranchSignUp();
   }
 
   handleItemChanged(i, event) {
@@ -137,34 +160,17 @@ class EBranches extends Component {
   }
 
   renderRows() {
-    //var context = this;
-
-    let renderedCards = [];
-    for (let index = 0; index < this.state.items.length; index++) {
-      renderedCards.push(
-        <tr key={"item-" + index}>
-          <td>
-            <CollapsibleBox
-              name={this.state.items[index].name}
-              email={this.state.items[index].email}
-              password={this.state.items[index].password}
-              phone={this.state.items[index].phoneNumber}
-              type="text"
-              onChange={this.handleItemChanged.bind(this, index)}
-            />
-          </td>
-
-          <td>
-            <MyButton
-              class="text-nowrap small-rounded-btn primary-btn pr-7"
-              value="Delete Branch"
-              onClick={this.handleItemDeleted.bind(this, index)}
-            ></MyButton>
-          </td>
-        </tr>
+    let renderedBranches = [];
+    for (let index = 0; index < this.state.branches.length; index++) {
+      let branchBox = (
+        <div>
+          <BranchBox branch={this.state.branches[index]}></BranchBox>
+          <br />
+        </div>
       );
+      renderedBranches.push(branchBox);
     }
-    return renderedCards;
+    return renderedBranches;
   }
 
   render() {
@@ -196,7 +202,7 @@ class EBranches extends Component {
                     class="secondary-input black-input-color mx-2 mt-3"
                     type="name"
                     placeholder="Branch Name"
-                    onChange={this.handlebranchNameChange}
+                    onChange={this.updateMessage.bind(this)}
                   />
                   <br />
                   <input
