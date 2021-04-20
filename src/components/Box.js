@@ -55,21 +55,21 @@ export default function SimpleCard({
     return txtListHtml;
   }
 
-  function renderValues(valuesList) {
-    let valuesListHtml = [];
-    for (let index = 0; index < valuesList.length; index++) {
-      valuesListHtml.push(
-        <div>
-          <Grid containter justify="right">
-            <Typography class="text-color right">
-              {valuesList[index]}
-            </Typography>
-          </Grid>
-        </div>
-      );
-    }
-    return valuesListHtml;
-  }
+  // function renderValues(valuesList) {
+  //   let valuesListHtml = [];
+  //   for (let index = 0; index < valuesList.length; index++) {
+  //     valuesListHtml.push(
+  //       <div>
+  //         <Grid containter justify="right">
+  //           <Typography class="text-color right">
+  //             {valuesList[index]}
+  //           </Typography>
+  //         </Grid>
+  //       </div>
+  //     );
+  //   }
+  //   return valuesListHtml;
+  // }
 
   function renderButtons(btnList) {
     let btnListHtml = [];

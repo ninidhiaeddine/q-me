@@ -12,25 +12,41 @@ import CollapsibleBox from "../components/CollapsibleBox";
 import Typography from "@material-ui/core/Typography";
 import Box from "../components/Box";
 import Button from "@material-ui/core/Button";
-import QueueOutlinedIcon from '@material-ui/icons/QueueOutlined';
+import QueueOutlinedIcon from "@material-ui/icons/QueueOutlined";
 import Grid from "@material-ui/core/Grid";
+import Branch from "../components/Branch";
+import BranchBox from "../components/BranchBox";
 
 class EBranches extends Component {
-  state = {};
   constructor(props) {
     super(props);
 
     this.state = {
       message: "",
-      items: [],
       isOpen: false,
       setIsOpen: false,
-      branches: [],
+      // simulate having branches:
+      branches: [
+        new Branch(
+          "Hamra Street",
+          "+3213213",
+          "bank@audi.com",
+          "334932434",
+          "33.23213",
+          "34.243232"
+        ),
+        new Branch(
+          "LEb Street",
+          "+3213asd213",
+          "badasdsadnk@audi.com",
+          "334asd932434",
+          "33.2asd3213",
+          "34.243232"
+        ),
+      ],
 
       name: [],
       branchForm: {
-        ID: "N/A",
-        QR_Code: "N/A",
         email: "",
         password: "",
         confirmedPassowrd: "",
@@ -46,16 +62,16 @@ class EBranches extends Component {
     var data =
       this.state.branchForm.phoneNumber == ""
         ? {
-          name: this.state.branchForm.name,
-          email: this.state.branchForm.email,
-          password: password,
-        }
+            name: this.state.branchForm.name,
+            email: this.state.branchForm.email,
+            password: password,
+          }
         : {
-          name: this.state.branchForm.name,
-          email: this.state.branchForm.email,
-          password: password,
-          phone_number: this.state.branchForm.phoneNumber,
-        };
+            name: this.state.branchForm.name,
+            email: this.state.branchForm.email,
+            password: password,
+            phone_number: this.state.branchForm.phoneNumber,
+          };
 
     if (password == confirmedPassowrd) {
       // Simple POST request with a JSON body using fetch
@@ -76,7 +92,7 @@ class EBranches extends Component {
 
   handlebranchNameChange = (i, e) => {
     var names = this.state.name;
-    names[i] = (e.target.value);
+    names[i] = e.target.value;
     this.setState({
       name: names,
     });
@@ -119,14 +135,9 @@ class EBranches extends Component {
   }
 
   handleClick() {
-    var items = this.state.items;
+    var branches = this.state.branches;
 
-    items.push(this.state.name);
-
-    this.setState({
-      items: items,
-      message: "",
-    });
+    // this.handleBranchSignUp();
   }
 
   handleItemChanged(i, event) {
@@ -149,45 +160,17 @@ class EBranches extends Component {
   }
 
   renderRows() {
-    //var context = this;
-
-
-    let renderedCards = [];
-    let btnList = ["Generate QR Code"];
-    for (let index = 0; index < this.state.items.length; index++) {
-      let txtList = ["Branch ID:", "Branch Name:", "QR Code:"];
-      let valuesList = [
-        this.state.branchForm.ID,
-        this.state.name[index],
-        this.state.branchForm.QR_Code,
-      ];
-      renderedCards.push(
-        <tr key={"item-" + index}>
-            
-            <Grid containter justify="center">
-              <Box
-                title={"Branch " + (index+1)}
-                txtList={txtList}
-                valuesList={valuesList}
-                btnList={btnList}
-                renderDivider={true}
-                onChange={this.handlebranchNameChange.bind(index, this)}
-              />
-            </Grid>
-            <br />
-          
-
-          <td>
-            <MyButton
-              class="text-nowrap small-rounded-btn primary-btn pr-7"
-              value="Delete Branch"
-              onClick={this.handleItemDeleted.bind(this, index)}
-            ></MyButton>
-          </td>
-        </tr>
+    let renderedBranches = [];
+    for (let index = 0; index < this.state.branches.length; index++) {
+      let branchBox = (
+        <div>
+          <BranchBox branch={this.state.branches[index]}></BranchBox>
+          <br />
+        </div>
       );
+      renderedBranches.push(branchBox);
     }
-    return renderedCards;
+    return renderedBranches;
   }
 
   render() {
