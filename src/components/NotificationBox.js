@@ -11,7 +11,7 @@ import "./my-button.css";
 import "./notification-box.css";
 import { grey, red } from "@material-ui/core/colors";
 import { Gradient } from "@material-ui/icons";
-import Link from '@material-ui/core/Link';
+import Link from "@material-ui/core/Link";
 
 // const useStyles = makeStyles({
 //   root: {
@@ -29,42 +29,36 @@ import Link from '@material-ui/core/Link';
 //   },
 // });
 
-export default function NotificationCard({ myLink, txtList }) {
+export default function NotificationCard({ valuesList }) {
   // const classes = useStyles();
 
   function renderTexts(txtList) {
     let txtListHtml = [];
     for (let index = 0; index < txtList.length; index++) {
-      txtListHtml.push(
-        <Typography class="text-color">
-          {txtList[index]}
-        </Typography>
-      );
+      let str = txtList[index] + " " + valuesList[index];
+      txtListHtml.push(<Typography class="text-color">{str}</Typography>);
     }
     return txtListHtml;
   }
 
   function renderLink(myLink) {
-    let myLinkHtml = [];
-    myLinkHtml.push(
+    return (
       <Grid container justify="center">
         <Link href="/gqueues" class="link-to-my-queues">
           {myLink}
         </Link>
       </Grid>
     );
-    return myLinkHtml;
   }
+
+  let txtList = ["Your position in line is:", "Estimated time remaining:"];
+  let myLink = ' Go to "My Queues" for Live Tracking... ';
 
   return (
     <Grid container justify="center">
       <Card class="notification-box-size">
         <CardContent>
-          <Typography
-            class="title"
-            style={{ textAlign: "right" }}
-            gutterBottom
-          >
+          <Typography class="title" style={{ textAlign: "right" }} gutterBottom>
             5 minutes ago | 10:45 AM
           </Typography>
           {renderTexts(txtList)}
@@ -74,7 +68,6 @@ export default function NotificationCard({ myLink, txtList }) {
 
           {renderLink(myLink)}
         </CardContent>
-
       </Card>
     </Grid>
   );

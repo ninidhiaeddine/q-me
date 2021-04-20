@@ -3,15 +3,14 @@ import ENavBar from "../components/ENavBar";
 import MyButton from "../components/MyButton";
 import "../components/my-input.css";
 import "./e-branches.css";
-import Popup from '../components/Popup';
+import Popup from "../components/Popup";
 import "../components/popup.css";
 import "../components/my-input.css";
-import Collapsible from 'react-collapsible';
-import CollapsibleBox from '../components/CollapsibleBox';
-import Typography from '@material-ui/core/Typography';
+import Collapsible from "react-collapsible";
+import CollapsibleBox from "../components/CollapsibleBox";
+import Typography from "@material-ui/core/Typography";
 
 class EBranches extends Component {
-
   state = {};
   constructor(props) {
     super(props);
@@ -27,11 +26,9 @@ class EBranches extends Component {
         email: "",
         password: "",
         confirmedPassowrd: "",
-        phoneNumber: ""
-      }
-
+        phoneNumber: "",
+      },
     };
-
   }
 
   handlebranchSignUp = () => {
@@ -41,16 +38,16 @@ class EBranches extends Component {
     var data =
       this.state.branchForm.phoneNumber == ""
         ? {
-          name: this.state.branchForm.name,
-          email: this.state.branchForm.email,
-          password: password,
-        }
+            name: this.state.branchForm.name,
+            email: this.state.branchForm.email,
+            password: password,
+          }
         : {
-          name: this.state.branchForm.name,
-          email: this.state.branchForm.email,
-          password: password,
-          phone_number: this.state.branchForm.phoneNumber,
-        };
+            name: this.state.branchForm.name,
+            email: this.state.branchForm.email,
+            password: password,
+            phone_number: this.state.branchForm.phoneNumber,
+          };
 
     if (password == confirmedPassowrd) {
       // Simple POST request with a JSON body using fetch
@@ -101,7 +98,7 @@ class EBranches extends Component {
 
   togglePopup = () => {
     this.setState({ isOpen: !this.state.isOpen });
-  }
+  };
 
   updateMessage(event) {
     this.setState({
@@ -140,20 +137,20 @@ class EBranches extends Component {
   }
 
   renderRows() {
-    var context = this;
+    //var context = this;
 
-    return this.state.items.map(function (o, i) {
-      return (
-        <tr key={"item-" + i}>
+    let renderedCards = [];
+    for (let index = 0; index < this.state.items.length; index++) {
+      renderedCards.push(
+        <tr key={"item-" + index}>
           <td>
             <CollapsibleBox
-              name= {context.state.branchForm.name}
-              email= {context.state.branchForm.email}
-              password= {context.state.branchForm.password}
-              phone= {context.state.branchForm.phoneNumber}
+              name={this.state.items[index].name}
+              email={this.state.items[index].email}
+              password={this.state.items[index].password}
+              phone={this.state.items[index].phoneNumber}
               type="text"
-              value={o}
-              onChange={context.handleItemChanged.bind(context, i)}
+              onChange={this.handleItemChanged.bind(this, index)}
             />
           </td>
 
@@ -161,12 +158,13 @@ class EBranches extends Component {
             <MyButton
               class="text-nowrap small-rounded-btn primary-btn pr-7"
               value="Delete Branch"
-              onClick={context.handleItemDeleted.bind(context, i)}
+              onClick={this.handleItemDeleted.bind(this, index)}
             ></MyButton>
           </td>
         </tr>
       );
-    });
+    }
+    return renderedCards;
   }
 
   render() {
@@ -187,46 +185,50 @@ class EBranches extends Component {
             <br />
             <br />
           </div>
-          {isOpen && <Popup
-            content={<>
-              <b>Enter Branch Information</b>
-              <br />
-              <br />
-              <input
-                class="secondary-input black-input-color mx-2 mt-3"
-                type="name"
-                placeholder="Branch Name"
-                onChange={this.handlebranchNameChange}
-              />
-              <br />
-              <input
-                class="secondary-input black-input-color mx-2"
-                type="email"
-                placeholder="Branch Email"
-                onChange={this.handlebranchEmailChange}
-              />
-              <br />
-              <input
-                class="secondary-input black-input-color mx-2"
-                type="tel"
-                placeholder="Phone Number"
-                onChange={this.handlebranchPhoneNumberChange}
-              />
-              <br />
-              <input
-                class="secondary-input black-input-color mx-2"
-                type="password"
-                placeholder="Password"
-                onChange={this.handlebranchPasswordChange}
-              />
-              <MyButton
-                class="circular-btn primary-btn-inverse addBranchButton"
-                value="+"
-                onClick={this.handleClick.bind(this)}
-              />
-            </>}
-            handleClose={this.togglePopup}
-          />}
+          {isOpen && (
+            <Popup
+              content={
+                <>
+                  <b>Enter Branch Information</b>
+                  <br />
+                  <br />
+                  <input
+                    class="secondary-input black-input-color mx-2 mt-3"
+                    type="name"
+                    placeholder="Branch Name"
+                    onChange={this.handlebranchNameChange}
+                  />
+                  <br />
+                  <input
+                    class="secondary-input black-input-color mx-2"
+                    type="email"
+                    placeholder="Branch Email"
+                    onChange={this.handlebranchEmailChange}
+                  />
+                  <br />
+                  <input
+                    class="secondary-input black-input-color mx-2"
+                    type="tel"
+                    placeholder="Phone Number"
+                    onChange={this.handlebranchPhoneNumberChange}
+                  />
+                  <br />
+                  <input
+                    class="secondary-input black-input-color mx-2"
+                    type="password"
+                    placeholder="Password"
+                    onChange={this.handlebranchPasswordChange}
+                  />
+                  <MyButton
+                    class="circular-btn primary-btn-inverse addBranchButton"
+                    value="+"
+                    onClick={this.handleClick.bind(this)}
+                  />
+                </>
+              }
+              handleClose={this.togglePopup}
+            />
+          )}
         </div>
         <div>
           <table className="">
@@ -235,7 +237,6 @@ class EBranches extends Component {
           </table>
           <hr />
         </div>
-
       </div>
     );
   }

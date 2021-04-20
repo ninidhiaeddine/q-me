@@ -1,0 +1,11 @@
+.field-name {
+  font-size: 30px;
+  font-weight: lighter;
+  text-align: left;
+}
+
+.field-value {
+  font-size: 30px;
+  font-weight: bolder;
+  text-align: right;
+}

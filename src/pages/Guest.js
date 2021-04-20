@@ -107,7 +107,7 @@ class Guest extends Component {
             delay={300}
             onScan={this.handleScan}
             onError={this.handleError}
-            facingMode="user"
+            facingMode="environment"
           ></QrReader>
         </div>
       );

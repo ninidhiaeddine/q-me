@@ -37,19 +37,38 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard({ txtList, buttonText, title, btnList, myDivider }) {
+export default function SimpleCard({
+  title,
+  txtList,
+  valuesList,
+  btnList,
+  renderDivider,
+}) {
   const classes = useStyles();
 
-  function renderTexts(txtList) {
+  function renderTexts(txtList, valuesList) {
     let txtListHtml = [];
     for (let index = 0; index < txtList.length; index++) {
-      txtListHtml.push(
-        <Typography className={classes.pos} class="text-color">
-          {txtList[index]}
-        </Typography>
-      );
+      let str = txtList[index] + " " + valuesList[index];
+      txtListHtml.push(<Typography class="text-color left">{str}</Typography>);
     }
     return txtListHtml;
+  }
+
+  function renderValues(valuesList) {
+    let valuesListHtml = [];
+    for (let index = 0; index < valuesList.length; index++) {
+      valuesListHtml.push(
+        <div>
+          <Grid containter justify="right">
+            <Typography class="text-color right">
+              {valuesList[index]}
+            </Typography>
+          </Grid>
+        </div>
+      );
+    }
+    return valuesListHtml;
   }
 
   function renderButtons(btnList) {
@@ -70,16 +89,10 @@ export default function SimpleCard({ txtList, buttonText, title, btnList, myDivi
     return btnListHtml;
   }
 
-  function renderdivider(myDivider) {
-    let dividerHtml = [];
-
-    dividerHtml.push(
-      <hr class="divider">
-        {myDivider}
-        </hr>
-    );
-
-    return dividerHtml;
+  function renderDivider(renderDivider) {
+    if (renderDivider) {
+      return <hr class="divider"></hr>;
+    }
   }
 
   return (
@@ -95,11 +108,10 @@ export default function SimpleCard({ txtList, buttonText, title, btnList, myDivi
             {title}
           </Typography>
           <br />
-          {renderTexts(txtList)}
-          {renderdivider(myDivider)}
-        </CardContent>
+          {renderTexts(txtList, valuesList)}
+          {renderDivider(renderDivider)}
           {renderButtons(btnList)}
-        <br />
+        </CardContent>
       </Card>
     </Grid>
   );

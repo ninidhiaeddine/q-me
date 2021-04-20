@@ -1,19 +1,40 @@
 import React, { Component } from "react";
+import QueueBox from "../components/QueueBox";
 import GNavBar from "../components/GNavBar";
 
 class GQueues extends Component {
-  state = {};
+  state = {
+    queues: [],
+  };
+
+  renderQueues() {
+    if (this.state.queues.length == 0) {
+      return (
+        <h1 style={{ textAlign: "center" }}>
+          You are not enqueued in any queue!
+        </h1>
+      );
+    } else {
+      let queueBoxes = [];
+      for (let index = 0; index < this.state.queues.length; index++) {
+        queueBoxes.push(
+          <QueueBox
+            establishmentName="N/A"
+            branchName="N/A"
+            status="N/A"
+            positionInLine="N/A"
+          ></QueueBox>
+        );
+      }
+      return queueBoxes;
+    }
+  }
+
   render() {
     return (
-      <div style={{ textAlign: "center" }}>
-        <GNavBar />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <h1>Guest's current queues</h1>
+      <div>
+        <GNavBar></GNavBar>
+        {this.renderQueues()}
       </div>
     );
   }

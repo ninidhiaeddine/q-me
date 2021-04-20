@@ -3,26 +3,37 @@ import GNavBar from "../components/GNavBar";
 import NotificationBox from "../components/NotificationBox";
 
 class GNotifications extends Component {
-  state = {};
+  state = {
+    notifs: [],
+  };
+
+  renderNotifications() {
+    //if (this.state.notifs.length == 0) {
+    if (false) {
+      return (
+        <h1 style={{ textAlign: "center" }}>You have no notifications!</h1>
+      );
+    } else {
+      let notifBoxes = [];
+      let valuesList = ["N/A", "N/A"];
+      for (let index = 0; index < 2; index++) {
+        notifBoxes.push(
+          <div>
+            <NotificationBox valuesList={valuesList}></NotificationBox>
+            <br />
+          </div>
+        );
+      }
+      return notifBoxes;
+    }
+  }
 
   render() {
-    let txtList = ["Your position in line is:", "Estimated time remaining:"];
-    let myLink = " Go to \"My Queues\" for Live Tracking... ";
     return (
       <div>
-        <div style={{ textAlign: "center" }}>
-          <GNavBar />
-          <h1>Guest Notifications</h1>
-          <br />
-        </div>
-        <div>
-          <NotificationBox txtList={txtList} myLink={myLink} buttonText="Change Information" />
-        </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+        <GNavBar></GNavBar>
+        <h1 style={{ textAlign: "center" }}>Guest Notifications</h1>
+        {this.renderNotifications()}
       </div>
     );
   }
