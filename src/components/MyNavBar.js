@@ -2,17 +2,49 @@ import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import "./my-nav-bar.css";
+import NavLinkItem from "./NavLinkItem";
+
+import Home from "../pages/Home";
+import SignUp from "../pages/SignUp";
 
 import MyButton from "./MyButton";
 
-import Home from "../pages/Home";
-import LogIn from "../pages/LogIn";
-import SignUp from "../pages/SignUp";
-import Features from "../pages/Features";
-import About from "../pages/About";
-import ContactUs from "../pages/ContactUs";
-
 class MyNavBar extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  renderNavLinks(navLinksList) {
+    let renderedNavLinks = [];
+    for (let index = 0; index < navLinksList.length; index++) {
+      let navLink = navLinksList[index];
+      if (navLink.isActive) {
+        renderedNavLinks.push(
+          <Nav.Link
+            className="text-nowrap mt-2 mx-4 ml-5 active"
+            activeClassName="is-active"
+            href={navLink.href}
+            component={navLink.component}
+          >
+            {navLink.text}
+          </Nav.Link>
+        );
+      } else {
+        renderedNavLinks.push(
+          <Nav.Link
+            className="text-nowrap mt-2 mx-4 ml-5"
+            activeClassName="is-active"
+            href={navLink.href}
+            component={navLink.component}
+          >
+            {navLink.text}
+          </Nav.Link>
+        );
+      }
+    }
+    return renderedNavLinks;
+  }
+
   render() {
     return (
       <Navbar className="my-nav-bar" variant="dark">
@@ -20,15 +52,8 @@ class MyNavBar extends Component {
           <span class="QMe brand">QMe!</span>
         </Navbar.Brand>
         <Nav className="mr-auto ml-7">
-          <Nav.Link
-            className="text-nowrap mt-2 mx-4 ml-5"
-            activeClassName="is-active"
-            href="/login"
-            component={LogIn}
-          >
-            Log In
-          </Nav.Link>
-          <Nav.Link
+          {this.renderNavLinks(this.props.navLinksList)}
+          {/* <Nav.Link
             className="text-nowrap mt-2 mx-4"
             href="/features"
             component={Features}
@@ -48,7 +73,7 @@ class MyNavBar extends Component {
             component={ContactUs}
           >
             Contact Us
-          </Nav.Link>
+          </Nav.Link>*/}
         </Nav>
         <Nav.Link
           className="my-nav-bar right my-2"

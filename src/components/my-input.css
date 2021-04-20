@@ -26,7 +26,7 @@ input {
 .secondary-input {
   border-bottom: 3px solid rgb(151, 152, 153);
   transition: 500ms;
-  color:aliceblue;
+  color: aliceblue;
 }
 
 .secondary-input:hover {
@@ -40,9 +40,4 @@ input {
 
 ::placeholder {
   color: rgb(151, 152, 153);
-}
-
-p.welcome{
-  font-weight: bolder;
-  font-family: var(--secondary-font);
 }

@@ -5,12 +5,25 @@ import MyLogo from "../components/MyLogo";
 import queue from "./queue.png";
 import "./home.css";
 import { Link } from "react-router-dom";
+import NavLinkItem from "../components/NavLinkItem";
+
+import Features from "./Features";
+import About from "./About";
+import ContactUs from "./ContactUs";
+import LogIn from "./LogIn";
 
 class Home extends Component {
   render() {
+    let navLinksList = [
+      new NavLinkItem(false, "Log In", "/login", { LogIn }),
+      new NavLinkItem(false, "Features", "/features", { Features }),
+      new NavLinkItem(false, "About", "/about", { About }),
+      new NavLinkItem(false, "Contact Us", "/contactus", { ContactUs }),
+    ];
+
     return (
       <div className="App">
-        <MyNavBar />
+        <MyNavBar navLinksList={navLinksList} />
         <br />
         <Link to="/establishment">Establishment</Link>
         <Link to="/guest">Guest</Link>
@@ -33,10 +46,7 @@ class Home extends Component {
             <MyButton class="rounded-btn primary-btn" value="Sign Up" />
           </Link>
         </div>
-        <img
-          class=" photo border-gradient border-gradient-purple"
-          src={queue}
-        />
+        <img class="photo border-gradient border-gradient-purple" src={queue} />
       </div>
     );
     // function Header() {

@@ -1,14 +1,26 @@
 import React, { Component } from "react";
 import MyNavBar from "../components/MyNavBar";
+import NavLinkItem from "../components/NavLinkItem";
 import MyLogo from "../components/MyLogo";
 import "./about.css";
+
+import Features from "./Features";
+import ContactUs from "./ContactUs";
+import LogIn from "./LogIn";
 
 class About extends Component {
   state = {};
   render() {
+    let navLinksList = [
+      new NavLinkItem(false, "Log In", "/login", { LogIn }),
+      new NavLinkItem(false, "Features", "/features", { Features }),
+      new NavLinkItem(true, "About", "/about", { About }),
+      new NavLinkItem(false, "Contact Us", "/contactus", { ContactUs }),
+    ];
+
     return (
       <div>
-        <MyNavBar />
+        <MyNavBar navLinksList={navLinksList} />
         <br />
         <br />
         <div style={{ textAlign: "center" }}>

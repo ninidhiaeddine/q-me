@@ -2,8 +2,14 @@ import React, { Component } from "react";
 import MyButton from "../components/MyButton";
 import MyLogo from "../components/MyLogo";
 import MyNavBar from "../components/MyNavBar";
+import NavLinkItem from "../components/NavLinkItem";
+
+import Features from "./Features";
+import About from "./About";
+import ContactUs from "./ContactUs";
 
 import "../components/my-input.css";
+import "./login.css";
 
 import {
   AlternateEmail,
@@ -43,7 +49,7 @@ function ButtonsList(props) {
       </div>
     </li>
   ));
-  return <ul>{listItems}</ul>;
+  return <ul style={{ paddingLeft: 0 }}>{listItems}</ul>;
 }
 
 class LogIn extends Component {
@@ -72,31 +78,15 @@ class LogIn extends Component {
     };
   }
 
-
-  // state = {
-  //   showForm: false,
-  //   isEstablishment: false,
-
-  //   guestForm: {
-  //     name: "",
-  //     phoneNumber: "",
-  //   },
-
-  //   establishmentForm: {
-  //     email: "",
-  //     password: "",
-  //   },
-  // };
-
   toggleButton = () => {
     this.setState({ showButton: !this.state.showButton });
   };
 
-  formatForm() {
+  renderForm() {
     if (this.state.isEstablishment) {
       return (
         <div style={{ textAlign: "center" }}>
-          <p class="welcome">Host Login</p>
+          <h1 className="welcome">Host Login</h1>
           <h2>Welcome back! You've been missed!</h2>
           <br />
           <input
@@ -126,7 +116,7 @@ class LogIn extends Component {
     } else if (this.state.isBranch) {
       return (
         <div style={{ textAlign: "center" }}>
-          <p class="welcome">Branch Login</p>
+          <h1 className="welcome">Branch Login</h1>
           <h2>Welcome back! You've been missed!</h2>
           <br />
           <input
@@ -156,7 +146,7 @@ class LogIn extends Component {
     } else {
       return (
         <div style={{ textAlign: "center" }}>
-          <p class="welcome">Guest Login</p>
+          <h1 class="welcome">Guest Login</h1>
           <h2>Welcome back! You've been missed!</h2>
           <br />
           <input
@@ -186,7 +176,7 @@ class LogIn extends Component {
     }
   }
 
-  formatButtons() {
+  renderButtons() {
     var buttons = [
       <MyButton
         class="rounded-btn primary-btn"
@@ -291,8 +281,6 @@ class LogIn extends Component {
       .then((data) => console.log(data));
   };
 
-  
-
   handleEstablishmentClick = () => {
     this.setState({ showForm: true, isEstablishment: true });
   };
@@ -307,16 +295,23 @@ class LogIn extends Component {
 
   render() {
     const { showButton } = this.state;
+    let navLinksList = [
+      new NavLinkItem(true, "Log In", "/login", { LogIn }),
+      new NavLinkItem(false, "Features", "/features", { Features }),
+      new NavLinkItem(false, "About", "/about", { About }),
+      new NavLinkItem(false, "Contact Us", "/contactus", { ContactUs }),
+    ];
+
     return (
       <div style={{ textAlign: "center" }}>
-        <MyNavBar />
+        <MyNavBar navLinksList={navLinksList} />
         <br />
         <br />
         {showButton ? <MyLogo /> : null}
         <br />
         {this.state.showForm == false
-          ? this.formatButtons()
-          : this.formatForm()}
+          ? this.renderButtons()
+          : this.renderForm()}
       </div>
     );
   }

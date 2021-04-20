@@ -4,13 +4,25 @@ import queue from "./queue.png";
 import "./contact-us.css";
 import MyButton from "../components/MyButton";
 import "../components/my-input.css";
+import NavLinkItem from "../components/NavLinkItem";
 
-class ContactUS extends Component {
+import Features from "./Features";
+import About from "./About";
+import LogIn from "./LogIn";
+
+class ContactUs extends Component {
   state = {};
   render() {
+    let navLinksList = [
+      new NavLinkItem(false, "Log In", "/login", { LogIn }),
+      new NavLinkItem(false, "Features", "/features", { Features }),
+      new NavLinkItem(false, "About", "/about", { About }),
+      new NavLinkItem(true, "Contact Us", "/contactus", { ContactUs }),
+    ];
+
     return (
       <div>
-        <MyNavBar />
+        <MyNavBar navLinksList={navLinksList} />
         <div style={{ textAlign: "center" }}>
           <h1 class="get-in-touch">Get in touch with us!</h1>
         </div>
@@ -63,4 +75,4 @@ class ContactUS extends Component {
     );
   }
 }
-export default ContactUS;
+export default ContactUs;

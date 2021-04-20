@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import MyButton from "../components/MyButton";
 import MyLogo from "../components/MyLogo";
 import MyNavBar from "../components/MyNavBar";
+import NavLinkItem from "../components/NavLinkItem";
 import "../components/my-input.css";
 import "../components/my-switch.css";
 import "../components/my-dropdown.css";
@@ -17,6 +18,16 @@ import { styled } from "@material-ui/styles";
 // import InputAdornment from '@material-ui/core/InputAdornment';
 // import IconButton from "@material-ui/core/IconButton";
 // import { TextField } from "@material-ui/core";
+
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+
+import Features from "./Features";
+import About from "./About";
+import ContactUs from "./ContactUs";
+import LogIn from "./LogIn";
 
 const MyVisibility = styled(VisibilityOff)({
   color: "gray",
@@ -164,7 +175,7 @@ class SignUp extends Component {
   };
 
   // Close the dropdown if the user clicks outside of it
-  formatDropDown() {
+  renderDropDown() {
     window.onclick = function (event) {
       if (!event.target.matches(".dropbtn")) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -244,11 +255,11 @@ class SignUp extends Component {
     this.setState({ establishmentForm });
   };
 
-  formatForm() {
+  renderForm() {
     if (this.state.isEstablishment) {
       return (
         <div style={{ textAlign: "center" }}>
-          <p class="welcome">Host Registration</p>
+          <h1 class="welcome">Host Registration</h1>
           <h2>Welcome! Sign up to get started.</h2>
           <br />
           <input
@@ -298,6 +309,19 @@ class SignUp extends Component {
           <MyPhone />
           <br />
           <br />
+          {/* <FormControl>
+            <InputLabel id="demo-simple-select-label">Age</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value="Type of Establishment"
+              //onChange={handleChange}
+            >
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl> */}
           <div>
             <select
               name="establishments"
@@ -326,7 +350,7 @@ class SignUp extends Component {
     } else {
       return (
         <div style={{ textAlign: "center" }}>
-          <p class="welcome">Guest Registration</p>
+          <h1 class="welcome">Guest Registration</h1>
           <h2>Welcome! Sign up to get started.</h2>
           <br />
           <input
@@ -356,7 +380,7 @@ class SignUp extends Component {
     }
   }
 
-  formatButtons() {
+  renderButtons() {
     return (
       <div style={{ textAlign: "center" }}>
         <br />
@@ -392,17 +416,24 @@ class SignUp extends Component {
   };
 
   render() {
+    let navLinksList = [
+      new NavLinkItem(false, "Log In", "/login", { LogIn }),
+      new NavLinkItem(false, "Features", "/features", { Features }),
+      new NavLinkItem(false, "About", "/about", { About }),
+      new NavLinkItem(false, "Contact Us", "/contactus", { ContactUs }),
+    ];
+
     const { showButton } = this.state;
     return (
       <div style={{ textAlign: "center" }}>
-        <MyNavBar />
+        <MyNavBar navLinksList={navLinksList} />
         <br />
         <br />
         <br />
         {showButton ? <MyLogo /> : null}
         {this.state.showForm == false
-          ? this.formatButtons()
-          : this.formatForm()}
+          ? this.renderButtons()
+          : this.renderForm()}
         <br />
       </div>
     );
