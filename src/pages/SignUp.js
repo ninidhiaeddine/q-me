@@ -15,6 +15,7 @@ import {
   Business,
 } from "@material-ui/icons";
 import { styled } from "@material-ui/styles";
+import Link from "@material-ui/core/Link";
 // import InputAdornment from '@material-ui/core/InputAdornment';
 // import IconButton from "@material-ui/core/IconButton";
 // import { TextField } from "@material-ui/core";
@@ -125,18 +126,18 @@ class SignUp extends Component {
     var data =
       this.state.establishmentForm.phoneNumber == ""
         ? {
-            name: this.state.establishmentForm.name,
-            type: this.state.establishmentForm.type,
-            email: this.state.establishmentForm.email,
-            password: password,
-          }
+          name: this.state.establishmentForm.name,
+          type: this.state.establishmentForm.type,
+          email: this.state.establishmentForm.email,
+          password: password,
+        }
         : {
-            name: this.state.establishmentForm.name,
-            type: this.state.establishmentForm.type,
-            email: this.state.establishmentForm.email,
-            password: password,
-            phone_number: this.state.establishmentForm.phoneNumber,
-          };
+          name: this.state.establishmentForm.name,
+          type: this.state.establishmentForm.type,
+          email: this.state.establishmentForm.email,
+          password: password,
+          phone_number: this.state.establishmentForm.phoneNumber,
+        };
 
     if (password == confirmedPassowrd) {
       // Simple POST request with a JSON body using fetch
@@ -370,11 +371,13 @@ class SignUp extends Component {
           <MyPhone />
           <br />
           <br />
-          <MyButton
-            class="rounded-btn primary-btn-gradient"
-            value="Sign Up as a Guest"
-            onClick={this.handleGuestSignUp}
-          ></MyButton>
+          <Link href="/phone-verification">
+            <MyButton
+              class="rounded-btn primary-btn-gradient"
+              value="Sign Up as a Guest"
+              onClick={this.handleGuestSignUp}
+            ></MyButton>
+          </Link>
         </div>
       );
     }
