@@ -126,18 +126,18 @@ class SignUp extends Component {
     var data =
       this.state.establishmentForm.phoneNumber == ""
         ? {
-          name: this.state.establishmentForm.name,
-          type: this.state.establishmentForm.type,
-          email: this.state.establishmentForm.email,
-          password: password,
-        }
+            name: this.state.establishmentForm.name,
+            type: this.state.establishmentForm.type,
+            email: this.state.establishmentForm.email,
+            password: password,
+          }
         : {
-          name: this.state.establishmentForm.name,
-          type: this.state.establishmentForm.type,
-          email: this.state.establishmentForm.email,
-          password: password,
-          phone_number: this.state.establishmentForm.phoneNumber,
-        };
+            name: this.state.establishmentForm.name,
+            type: this.state.establishmentForm.type,
+            email: this.state.establishmentForm.email,
+            password: password,
+            phone_number: this.state.establishmentForm.phoneNumber,
+          };
 
     if (password == confirmedPassowrd) {
       // Simple POST request with a JSON body using fetch
@@ -149,7 +149,7 @@ class SignUp extends Component {
         body: JSON.stringify(data),
       };
       fetch("http://127.0.0.1:5000/establishments", requestOptions)
-        .then((response) => console.log(response.json()))
+        .then((response) => console.log(response))
         .then((data) => console.log(data));
     } else {
       console.log("ERROR: Passwords are not matching!");
@@ -157,22 +157,26 @@ class SignUp extends Component {
   };
 
   handleGuestSignUp = () => {
-    var data = {
-      name: this.state.guestForm.name,
-      phone_number: this.state.guestForm.phoneNumber,
-    };
-
-    // Simple POST request with a JSON body using fetch
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
-    fetch("http://127.0.0.1:5000/guests", requestOptions)
-      .then((response) => console.log(response.json()))
-      .then((data) => console.log(data));
+    // var data = {
+    //   name: this.state.guestForm.name,
+    //   phone_number: this.state.guestForm.phoneNumber,
+    // };
+    // // Simple POST request with a JSON body using fetch
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(data),
+    // };
+    // console.log("Calling the API...");
+    // // fetch("http://127.0.0.1:5000/register/guests", requestOptions)
+    // //   .then((response) => console.log(response.json()))
+    // //   .then((data) => console.log(data));
+    // fetch("http://127.0.0.1:5000/register/test", requestOptions)
+    //   .then((response) => this.setState({ response: response.json() }))
+    //   .then((data) => this.setState({ data: data }));
+    // console.log("Finished calling the API...");
   };
 
   // Close the dropdown if the user clicks outside of it
@@ -371,13 +375,18 @@ class SignUp extends Component {
           <MyPhone />
           <br />
           <br />
-          <Link href="/phone-verification">
+          {/* <Link href="/phone-verification">
             <MyButton
               class="rounded-btn primary-btn-gradient"
               value="Sign Up as a Guest"
               onClick={this.handleGuestSignUp}
             ></MyButton>
-          </Link>
+          </Link> */}
+          <MyButton
+            class="rounded-btn primary-btn-gradient"
+            value="Sign Up as a Guest"
+            onClick={this.handleGuestSignUp}
+          ></MyButton>
         </div>
       );
     }

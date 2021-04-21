@@ -9,7 +9,7 @@ import About from "./About";
 import ContactUs from "./ContactUs";
 
 import "../components/my-input.css";
-import "./login.css";
+import "./css/login.css";
 
 import {
   AlternateEmail,

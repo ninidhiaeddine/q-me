@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import MyNavBar from "../components/MyNavBar";
 import NavLinkItem from "../components/NavLinkItem";
 import MyLogo from "../components/MyLogo";
-import "./about.css";
+import "./css/about.css";
 
 import Features from "./Features";
 import ContactUs from "./ContactUs";
@@ -42,6 +42,7 @@ class About extends Component {
         <ul class="technologies">
           <li>Frontend: React.js</li>
           <li>Backend: Flask</li>
+          <li>Database: Microsoft SQL Server</li>
           <li>Cloud: Azure</li>
         </ul>
       </div>
