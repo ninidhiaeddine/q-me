@@ -28,9 +28,10 @@ jobs:
         npm run test --if-present
         
     - name: Zip files
-      uses: thedoctor0/zip-release@master
+      uses: vimtor/action-zip@v1
       with:
-        filename: 'result.zip'
+        files: .
+        dest: 'result.zip'
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
