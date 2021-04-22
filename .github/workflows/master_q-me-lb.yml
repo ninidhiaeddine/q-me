@@ -27,16 +27,14 @@ jobs:
         npm run build --if-present
         npm run test --if-present
         
-    - name: Zip app
-      uses: vimtor/action-zip@v1
-      with: 
-        dest: result.zip
+    - name: Tar files
+      run: tar -cvf q-me-app.tar ./
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
       with:
         name: node-app
-        path: result.zip
+        path: q-me-app.tar
 
   deploy:
     runs-on: windows-latest
