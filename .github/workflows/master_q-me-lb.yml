@@ -28,7 +28,7 @@ jobs:
         npm run test --if-present
         
     - name: Tar files
-      run: sudo tar -cvf q-me-lb.tar /path/to/my/directory
+      run: tar -cvf q-me-lb.tar .
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
