@@ -17,7 +17,7 @@ class ENavBar extends Component {
       <Navbar className="my-nav-bar" variant="dark">
         <Navbar.Brand
           className="my-nav-bar"
-          href="/establishment"
+          href="/ebranches"
           component={Establishment}
         >
           <span class="home">HOME</span>

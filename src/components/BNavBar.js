@@ -17,7 +17,7 @@ class GNavBar extends Component {
       <Navbar className="my-nav-bar" variant="dark">
         <Navbar.Brand
           className="my-nav-bar"
-          href="/branch"
+          href="/bqueues"
           component={Branch}
         >
           <span class="home">HOME</span>
