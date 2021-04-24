@@ -116,8 +116,8 @@ class LogIn extends Component {
 
   sendEstablishmentLoginRequest() {
     var data = {
-      name: this.state.establishmentForm.email,
-      phone_number: this.state.establishmentForm.password,
+      email: this.state.establishmentForm.email,
+      password: this.state.establishmentForm.password,
     };
 
     // Simple POST request with a JSON body using fetch
@@ -143,8 +143,8 @@ class LogIn extends Component {
 
   sendBranchLoginRequest() {
     var data = {
-      name: this.state.branchForm.email,
-      phone_number: this.state.branchForm.password,
+      email: this.state.branchForm.email,
+      password: this.state.branchForm.password,
     };
 
     // Simple POST request with a JSON body using fetch
@@ -254,7 +254,7 @@ class LogIn extends Component {
     if (this.state.isEstablishment) {
       return (
         <div style={{ textAlign: "center" }}>
-          <h1 className="welcome">Host Login</h1>
+          <h1 className="welcome">Establishment Login</h1>
           <h2>Welcome back! You've been missed!</h2>
           <br />
           <input

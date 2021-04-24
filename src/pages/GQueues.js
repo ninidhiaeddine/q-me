@@ -7,6 +7,8 @@ class GQueues extends Component {
     queues: [],
   };
 
+  // renderers:
+
   renderQueues() {
     if (this.state.queues.length == 0) {
       return (
@@ -34,6 +36,7 @@ class GQueues extends Component {
     return (
       <div>
         <GNavBar></GNavBar>
+        <br />
         {this.renderQueues()}
       </div>
     );

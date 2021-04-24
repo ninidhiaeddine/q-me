@@ -116,7 +116,6 @@ class Guest extends Component {
   socketListener() {
     // open socket connection with the server:
 
-    //const endpoint = "https://q-me.azurewebsites.net/";
     const endpoint = "http://127.0.0.1:5000/"; // for debugging
     const socket = socketIOClient(endpoint);
 

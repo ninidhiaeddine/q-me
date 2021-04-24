@@ -8,32 +8,23 @@ class EProfile extends Component {
     super(props);
 
     this.state = {
-
-      establishments: [
-        new Establishment(
-          "12",
-          "Bank Audi",
-          "2, Bank",
-          "+3213213",
-          "Audi_123@Audi.lb",
-          "********"
-        ),
-      ],
-    }
+      establishment: new Establishment(
+        "12",
+        "Bank Audi",
+        "2, Bank",
+        "+3213213",
+        "Audi_123@Audi.lb",
+        "********"
+      ),
+    };
   }
 
-  renderRows() {
-    let renderedEstablishments = [];
-    for (let index = 0; index < this.state.establishments.length; index++) {
-      let establishmentBox = (
-        <div>
-          <EstablishmentBox establishment={this.state.establishments[index]}></EstablishmentBox>
-          <br />
-        </div>
-      );
-      renderedEstablishments.push(establishmentBox);
-    }
-    return renderedEstablishments;
+  renderEstablishment() {
+    return (
+      <EstablishmentBox
+        establishment={this.state.establishment}
+      ></EstablishmentBox>
+    );
   }
 
   render() {
@@ -42,7 +33,7 @@ class EProfile extends Component {
         <ENavBar />
 
         <br />
-        {this.renderRows()}
+        {this.renderEstablishment()}
       </div>
     );
   }

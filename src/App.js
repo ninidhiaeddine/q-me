@@ -41,6 +41,7 @@ function App() {
 
   // event handlers:
 
+  //#region Log In:
   function handleSuccessfulGuestLogin(json) {
     // store guestId:
     const guestId = json.message.guest_id;
@@ -67,6 +68,33 @@ function App() {
     // redirect:
     history.push("/branch");
   }
+  //#endregion
+
+  //#region Sign Up:
+  function handleSuccessfulGuestSignUp(json) {
+    // store guestId:
+    const guestId = json.message.guest_id;
+    setGuestId(guestId);
+
+    // redirect:
+    history.push("/phone-verification");
+  }
+
+  function handleSuccessfulOtpCheck(json) {
+    // redirect:
+    history.push("/guest");
+  }
+
+  function handleSuccessfulEstablishmentSignUp(json) {
+    // store guestId:
+    const establishmentId = json.message.establishment_id;
+    setEstablishmentId(establishmentId);
+
+    // redirect:
+    history.push("/establishment");
+  }
+
+  //#endregion
 
   return (
     <TransitionGroup>
@@ -90,7 +118,16 @@ function App() {
             path="/signup"
             render={(props) => (
               <SignUp
-                typesOfEstablishments={["Resturant", "Bank", "Hospital"]}
+                establishmentTypes={[
+                  "Resturant",
+                  "Bank",
+                  "Hospital",
+                  "Supermarket",
+                ]}
+                handleSuccessfulGuestSignUp={handleSuccessfulGuestSignUp}
+                handleSuccessfulEstablishmentSignUp={
+                  handleSuccessfulEstablishmentSignUp
+                }
               />
             )}
           />
@@ -155,7 +192,16 @@ function App() {
               <BNotifications {...props} branchId={branchId} />
             )}
           />
-          <Route path="/phone-verification" component={PhoneVerification} />
+          <Route
+            path="/phone-verification"
+            render={(props) => (
+              <PhoneVerification
+                {...props}
+                guestId={guestId}
+                handleSuccessfulOtpCheck={handleSuccessfulOtpCheck}
+              />
+            )}
+          />
         </Switch>
       </CSSTransition>
     </TransitionGroup>

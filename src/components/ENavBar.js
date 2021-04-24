@@ -20,7 +20,7 @@ class ENavBar extends Component {
           href="/ebranches"
           component={Establishment}
         >
-          <span class="home">HOME</span>
+          <span class="home">Home</span>
         </Navbar.Brand>
         <Nav className="mr-auto mx-7">
           <Nav.Link

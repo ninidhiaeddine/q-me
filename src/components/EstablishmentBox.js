@@ -3,7 +3,7 @@ import Box from "./Box";
 
 class EstablishmentBox extends Component {
   render() {
-    // props we have are: {branch}
+    // props we have are: {establishment}
     // variable declarations:
     let establishment = this.props.establishment;
     let txtList = [
@@ -15,12 +15,12 @@ class EstablishmentBox extends Component {
       "password:",
     ];
     let valuesList = [
-        establishment.id,
-        establishment.name,
-        establishment.type,
-        establishment.phoneNumber,
-        establishment.email,
-        establishment.password,
+      establishment.id,
+      establishment.name,
+      establishment.type,
+      establishment.phoneNumber,
+      establishment.email,
+      establishment.password,
     ];
     let btnList = ["Edit Information"];
 
