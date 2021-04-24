@@ -18,7 +18,7 @@ class Home extends Component {
       new NavLinkItem(false, "Log In", "/login", { LogIn }),
       new NavLinkItem(false, "Features", "/features", { Features }),
       new NavLinkItem(false, "About", "/about", { About }),
-      new NavLinkItem(false, "Contact Us", "/contactus", { ContactUs }),
+      new NavLinkItem(false, "Contact Us", "/contact-us", { ContactUs }),
     ];
 
     return (

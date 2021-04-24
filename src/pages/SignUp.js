@@ -63,7 +63,7 @@ class SignUp extends Component {
 
       establishmentForm: {
         name: "",
-        type: 0,
+        type: -1,
         email: "",
         password: "",
         confirmedPassowrd: "",

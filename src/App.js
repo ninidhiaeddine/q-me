@@ -184,6 +184,12 @@ function App() {
             path="/eprofile"
             render={(props) => (
               <EProfile
+                establishmentTypes={[
+                  "Resturant",
+                  "Bank",
+                  "Hospital",
+                  "Supermarket",
+                ]}
                 {...props}
                 establishmentId={establishmentId}
                 handleEstablishmentLogout={handleEstablishmentLogout}
