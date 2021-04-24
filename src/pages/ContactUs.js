@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import MyNavBar from "../components/MyNavBar";
-import queue from "./queue.png";
-import "./contact-us.css";
-import MyButton from "../components/MyButton";
+import contactus from "./images/contact-us.jpg";
+import "./css/contact-us.css";
 import "../components/my-input.css";
 import NavLinkItem from "../components/NavLinkItem";
+import Button from "@material-ui/core/Button";
+import SendIcon from "@material-ui/icons/Send";
 
 import Features from "./Features";
 import About from "./About";
@@ -61,10 +62,18 @@ class ContactUs extends Component {
             placeholder="Message"
             onChange={this.handleEstablishmentPhoneNumberChange}
           />
+          <br />
+          <Button
+            variant="contained"
+            className="sendBtn"
+            endIcon={<SendIcon></SendIcon>}
+          >
+            Send Message
+          </Button>
         </div>
         <img
           class="contact-us-photo border-gradient border-gradient-purple"
-          src={queue}
+          src={contactus}
         />
         <br />
         <br />

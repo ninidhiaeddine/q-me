@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import MyNavBar from "../components/MyNavBar";
 import MyButton from "../components/MyButton";
 import MyLogo from "../components/MyLogo";
-import queue from "./queue.png";
-import "./home.css";
+import home from "./images/home.jpg";
+import "./css/home.css";
 import { Link } from "react-router-dom";
 import NavLinkItem from "../components/NavLinkItem";
 
@@ -46,7 +46,7 @@ class Home extends Component {
             <MyButton class="rounded-btn primary-btn" value="Sign Up" />
           </Link>
         </div>
-        <img class="photo border-gradient border-gradient-purple" src={queue} />
+        <img class="photo border-gradient border-gradient-purple" src={home} />
       </div>
     );
     // function Header() {

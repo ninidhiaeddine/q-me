@@ -14,6 +14,7 @@ class Guest extends Component {
     showScanner: false,
     scannerResult: "",
     apiMsg: "",
+    guest: {},
     queueInfo: {
       queueId: -1,
       positionInLine: -1,
@@ -23,6 +24,11 @@ class Guest extends Component {
   };
 
   // Helper Functions:
+
+  pullGuestInfo() {
+    const guestId = this.props.guestId;
+    this.sendGetGuestRequest(guestId);
+  }
 
   pullUpdatedQueueInfo() {
     let currentQueueId = this.state.queueInfo.queue_id;
@@ -40,6 +46,15 @@ class Guest extends Component {
   }
 
   // HTTP Requests:
+
+  sendGetGuestRequest(guestId) {
+    fetch("http://127.0.0.1:5000/guests/" + guestId)
+      .then((response) => response.json())
+      .then((json) => {
+        let guest = json.message;
+        this.setState({ guest: guest });
+      });
+  }
 
   sendGetInfoRequest(guestId, endpoint) {
     const data = {
@@ -98,7 +113,35 @@ class Guest extends Component {
     console.error(err);
   };
 
-  // Renderers:
+  socketListener() {
+    // open socket connection with the server:
+
+    //const endpoint = "https://q-me.azurewebsites.net/";
+    const endpoint = "http://127.0.0.1:5000/"; // for debugging
+    const socket = socketIOClient(endpoint);
+
+    // listen to changes on the "dequeue" event
+    socket.on("dequeue", (json) => {
+      this.setState({ apiMsg: json });
+    });
+  }
+
+  // component events:
+
+  componentDidMount() {
+    this.pullGuestInfo();
+    //this.socketListener();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.apiMsg !== prevState.apiMsg) {
+      // pull updated queue info whenever api message changes:
+      console.log("New api message received: " + this.setState); // for debugging
+      // this.pullUpdatedQueueInfo();
+    }
+  }
+
+  // renderers:
 
   renderScanner() {
     if (this.state.showScanner) {
@@ -132,36 +175,13 @@ class Guest extends Component {
     }
   }
 
-  // component events:
-
-  componentDidMount() {
-    // open socket connection with the server:
-
-    //const endpoint = "https://q-me.azurewebsites.net/";
-    const endpoint = "http://127.0.0.1:5000/"; // for debugging
-    const socket = socketIOClient(endpoint);
-
-    // listen to changes on the "dequeue" event
-    socket.on("dequeue", (json) => {
-      this.setState({ apiMsg: json });
-    });
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.state.apiMsg !== prevState.apiMsg) {
-      // pull updated queue info whenever api message changes:
-      console.log("New api message received: " + this.setState); // for debugging
-      // this.pullUpdatedQueueInfo();
-    }
-  }
-
   render() {
     return (
       <div>
         <GNavBar />
         <div style={{ textAlign: "center" }}>
           <br />
-          <h1 class="hi">Hi, Guest. Welcome Back!</h1>
+          <h1 class="hi">Hi, {this.state.guest.Name}. Welcome Back!</h1>
           <br />
           <Button
             class="rounded-btn primary-btn-gradient scan-btn"

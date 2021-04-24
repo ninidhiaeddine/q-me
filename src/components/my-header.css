@@ -6,41 +6,29 @@ p {
   font-family: var(--primary-font);
 }
 
+h1.logo {
+  color: var(--primary-color);
+  font-weight: bolder;
+  font-size: 60px;
+  transition: 500ms;
+  font-family: var(--primary-font);
+}
 
-/* h1:hover {
-  font-size: 70px;
-} */
+h1.logo:hover {
+  font-size: 80px;
+}
 
 h2.logo {
   color: aliceblue;
-  opacity: 80%;
+  font-size: 30px;
   transition: 500ms;
   font-family: var(--secondary-font);
 }
 
-.primaryColor {
-  color: var(--primary-color);
-}
-
-.secondaryColor {
-  color: var(--secondary-color);
-}
-
-a.logo:link {
+a {
   text-decoration: none;
 }
 
-a.logo:visited {
+a:hover {
   text-decoration: none;
 }
-
-a.logo:hover {
-  text-decoration: none;  
-}
-
-a.logo:active {
-  text-decoration: none; 
-}
-
-/* h2:hover {
-} */

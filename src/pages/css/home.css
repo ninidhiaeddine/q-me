@@ -24,11 +24,8 @@ p {
 
 .photo {
   position: absolute;
-  /* border-radius: 10%; */
   left: 650px;
-  height: 300px;
-  width: 500px;
-  mix-blend-mode: luminosity !important;
+  height: 60%;
 }
 
 .border-gradient {

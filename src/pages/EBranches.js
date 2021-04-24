@@ -3,7 +3,7 @@ import ENavBar from "../components/ENavBar";
 import MyButton from "../components/MyButton";
 import "../components/my-input.css";
 import "../components/my-button.css";
-import "./e-branches.css";
+import "./css/e-branches.css";
 import Popup from "../components/Popup";
 import "../components/popup.css";
 import "../components/my-input.css";

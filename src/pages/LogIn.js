@@ -9,7 +9,7 @@ import About from "./About";
 import ContactUs from "./ContactUs";
 
 import "../components/my-input.css";
-import "./login.css";
+import "./css/login.css";
 
 import {
   AlternateEmail,
@@ -60,6 +60,7 @@ class LogIn extends Component {
       showForm: false,
       isEstablishment: false,
       isBranch: false,
+      error: "",
 
       guestForm: {
         name: "",
@@ -81,6 +82,173 @@ class LogIn extends Component {
   toggleButton = () => {
     this.setState({ showButton: !this.state.showButton });
   };
+
+  // helper functions:
+
+  // HTTP Requests:
+
+  sendGuestLoginRequest() {
+    var data = {
+      name: this.state.guestForm.name,
+      phone_number: this.state.guestForm.phoneNumber,
+    };
+
+    // Simple POST request with a JSON body using fetch
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+    fetch("http://127.0.0.1:5000/auth/guests", requestOptions)
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.status == 200) {
+          // succeeded:
+          this.props.handleSuccessfulGuestLogin(json);
+        } else {
+          // failed:
+          this.setState({ error: json.message });
+        }
+      });
+  }
+
+  sendEstablishmentLoginRequest() {
+    var data = {
+      name: this.state.establishmentForm.email,
+      phone_number: this.state.establishmentForm.password,
+    };
+
+    // Simple POST request with a JSON body using fetch
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+    fetch("http://127.0.0.1:5000/auth/establishments", requestOptions)
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.status == 200) {
+          // succeeded:
+          this.props.handleSuccessfulEstablishmentLogin(json);
+        } else {
+          // failed:
+          this.setState({ error: json.message });
+        }
+      });
+  }
+
+  sendBranchLoginRequest() {
+    var data = {
+      name: this.state.branchForm.email,
+      phone_number: this.state.branchForm.password,
+    };
+
+    // Simple POST request with a JSON body using fetch
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+    fetch("http://127.0.0.1:5000/auth/branches", requestOptions)
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.status == 200) {
+          // succeeded:
+          this.props.handleSuccessfulBranchLogin(json);
+        } else {
+          // failed:
+          this.setState({ error: json.message });
+        }
+      });
+  }
+
+  // event handlers:
+
+  handleGuestNameChange = (e) => {
+    var guestForm = this.state.guestForm;
+    guestForm.name = e.target.value;
+    this.setState({ guestForm });
+  };
+
+  handleGuestPhoneNumberChange = (e) => {
+    var guestForm = this.state.guestForm;
+    guestForm.phoneNumber = e.target.value;
+    this.setState({ guestForm });
+  };
+
+  handleEstablishmentEmailChange = (e) => {
+    var establishmentForm = this.state.establishmentForm;
+    establishmentForm.email = e.target.value;
+    this.setState({ establishmentForm });
+  };
+
+  handleEstablishmentPasswordChange = (e) => {
+    var establishmentForm = this.state.establishmentForm;
+    establishmentForm.password = e.target.value;
+    this.setState({ establishmentForm });
+  };
+
+  handleBranchEmailChange = (e) => {
+    var branchForm = this.state.branchForm;
+    branchForm.email = e.target.value;
+    this.setState({ branchForm });
+  };
+
+  handleBranchPasswordChange = (e) => {
+    var branchForm = this.state.branchForm;
+    branchForm.password = e.target.value;
+    this.setState({ branchForm });
+  };
+
+  // click events:
+
+  handleGuestSignIn = () => {
+    this.setState({ error: "" });
+    this.sendGuestLoginRequest();
+  };
+
+  handleEstablishmentSignIn = () => {
+    this.setState({ error: "" });
+    this.sendEstablishmentLoginRequest();
+  };
+
+  handleBranchSignIn = () => {
+    this.setState({ error: "" });
+    this.sendBranchLoginRequest();
+  };
+
+  handleEstablishmentClick = () => {
+    this.setState({ showForm: true, isEstablishment: true, isBranch: false });
+  };
+
+  handleGuestClick = () => {
+    this.setState({ showForm: true, isEstablishment: false, isBranch: false });
+  };
+
+  handleBranchClick = () => {
+    this.setState({ showForm: true, isEstablishment: false, isBranch: true });
+  };
+
+  // renderers:
+
+  renderError() {
+    if (this.state.error != "") {
+      return (
+        <div>
+          <br />
+          <p className="error">{this.state.error}</p>
+        </div>
+      );
+    } else {
+      return <div></div>;
+    }
+  }
 
   renderForm() {
     if (this.state.isEstablishment) {
@@ -104,7 +272,7 @@ class LogIn extends Component {
             onChange={this.handleEstablishmentPasswordChange}
           />
           <MyVisibility />
-          <br />
+          {this.renderError()}
           <br />
           <MyButton
             class="circular-btn primary-btn-gradient"
@@ -123,7 +291,7 @@ class LogIn extends Component {
             class="secondary-input mx-2"
             type="email"
             placeholder="Email Address"
-            onChange={this.handleEstablishmentEmailChange}
+            onChange={this.handleBranchEmailChange}
           />
           <MyAlternateEmail />
           <br />
@@ -131,15 +299,15 @@ class LogIn extends Component {
             class="secondary-input mx-2"
             type="password"
             placeholder="Password"
-            onChange={this.handleEstablishmentPasswordChange}
+            onChange={this.handleBranchPasswordChange}
           />
           <MyVisibility />
-          <br />
+          {this.renderError()}
           <br />
           <MyButton
             class="circular-btn primary-btn-gradient"
             value="→"
-            onClick={this.handleEstablishmentSignIn}
+            onClick={this.handleBranchSignIn}
           ></MyButton>
         </div>
       );
@@ -164,7 +332,7 @@ class LogIn extends Component {
             onChange={this.handleGuestPhoneNumberChange}
           />
           <MyPhone />
-          <br />
+          {this.renderError()}
           <br />
           <MyButton
             class="circular-btn primary-btn-gradient"
@@ -205,93 +373,6 @@ class LogIn extends Component {
     ];
     return <ButtonsList buttons={buttons} />;
   }
-
-  handleGuestNameChange = (e) => {
-    var guestForm = this.state.guestForm;
-    guestForm.name = e.target.value;
-    this.setState({ guestForm });
-  };
-
-  handleGuestPhoneNumberChange = (e) => {
-    var guestForm = this.state.guestForm;
-    guestForm.phoneNumber = e.target.value;
-    this.setState({ guestForm });
-  };
-
-  handleEstablishmentEmailChange = (e) => {
-    var establishmentForm = this.state.establishmentForm;
-    establishmentForm.email = e.target.value;
-    this.setState({ establishmentForm });
-  };
-
-  handleEstablishmentPasswordChange = (e) => {
-    var establishmentForm = this.state.establishmentForm;
-    establishmentForm.password = e.target.value;
-    this.setState({ establishmentForm });
-  };
-
-  handleBranchEmailChange = (e) => {
-    var branchForm = this.state.branchForm;
-    branchForm.email = e.target.value;
-    this.setState({ branchForm });
-  };
-
-  handleBranchPasswordChange = (e) => {
-    var branchForm = this.state.branchForm;
-    branchForm.password = e.target.value;
-    this.setState({ branchForm });
-  };
-
-  handleGuestSignIn = () => {
-    var data = {
-      name: this.state.guestForm.name,
-      phone_number: this.state.guestForm.phoneNumber,
-    };
-    console.log(JSON.stringify(data));
-    // Simple POST request with a JSON body using fetch
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
-    fetch("http://127.0.0.1:5000/auth/guests", requestOptions)
-      .then((response) => console.log(response.json()))
-      .then((data) => console.log(data));
-  };
-
-  handleEstablishmentSignIn = () => {
-    var data = {
-      email: this.state.establishmentForm.email,
-      password: this.state.establishmentForm.password,
-    };
-    console.log(JSON.stringify(data));
-
-    // Simple POST request with a JSON body using fetch
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
-    fetch("http://127.0.0.1:5000/auth/establishments", requestOptions)
-      .then((response) => console.log(response.json()))
-      .then((data) => console.log(data));
-  };
-
-  handleEstablishmentClick = () => {
-    this.setState({ showForm: true, isEstablishment: true });
-  };
-
-  handleGuestClick = () => {
-    this.setState({ showForm: true, isEstablishment: false });
-  };
-
-  handleBranchClick = () => {
-    this.setState({ showForm: true, isBranch: true });
-  };
 
   render() {
     const { showButton } = this.state;
