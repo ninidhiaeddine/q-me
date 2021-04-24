@@ -31,7 +31,7 @@ class GNotifications extends Component {
   render() {
     return (
       <div>
-        <GNavBar></GNavBar>
+        <GNavBar handleGuestLogout={this.props.handleGuestLogout}></GNavBar>
         <h1 style={{ textAlign: "center" }}>Guest Notifications</h1>
         {this.renderNotifications()}
       </div>

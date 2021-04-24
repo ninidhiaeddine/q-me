@@ -5,6 +5,7 @@ import CameraAltOutlinedIcon from "@material-ui/icons/CameraAltOutlined";
 import "../components/guest.css";
 import QrReader from "react-qr-reader";
 import socketIOClient, { io } from "socket.io-client";
+import ls from "local-storage";
 
 // import Card from '@material-ui/core/Card';
 // import CardHeader from '@material-ui/core/CardHeader';
@@ -26,7 +27,8 @@ class Guest extends Component {
   // Helper Functions:
 
   pullGuestInfo() {
-    const guestId = this.props.guestId;
+    //const guestId = this.props.guestId;
+    const guestId = ls.get("guestId");
     this.sendGetGuestRequest(guestId);
   }
 
@@ -177,7 +179,7 @@ class Guest extends Component {
   render() {
     return (
       <div>
-        <GNavBar />
+        <GNavBar handleGuestLogout={this.props.handleGuestLogout} />
         <div style={{ textAlign: "center" }}>
           <br />
           <h1 class="hi">Hi, {this.state.guest.Name}. Welcome Back!</h1>

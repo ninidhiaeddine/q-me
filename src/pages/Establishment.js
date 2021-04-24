@@ -5,7 +5,9 @@ class Establishment extends Component {
   render() {
     return (
       <div style={{ textAlign: "center" }}>
-        <ENavBar />
+        <ENavBar
+          handleEstablishmentLogout={this.props.handleEstablishmentLogout}
+        />
         <br />
         <br />
         <br />

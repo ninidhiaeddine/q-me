@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import GNavBar from "../components/GNavBar";
 import Guest from "../components/Guest";
 import GuestBox from "../components/GuestBox";
+import ls from "local-storage";
 
 class GProfile extends Component {
   constructor(props) {
@@ -15,7 +16,8 @@ class GProfile extends Component {
   // Helper Functions:
 
   pullGuestInfo() {
-    const guestId = this.props.guestId;
+    //const guestId = this.props.guestId;
+    const guestId = ls.get("guestId");
     this.sendGetGuestRequest(guestId);
   }
 
@@ -45,7 +47,7 @@ class GProfile extends Component {
   render() {
     return (
       <div>
-        <GNavBar />
+        <GNavBar handleGuestLogout={this.props.handleGuestLogout} />
         <br />
         {this.renderGuest()}
       </div>

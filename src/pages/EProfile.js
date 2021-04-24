@@ -30,7 +30,9 @@ class EProfile extends Component {
   render() {
     return (
       <div>
-        <ENavBar />
+        <ENavBar
+          handleEstablishmentLogout={this.props.handleEstablishmentLogout}
+        />
 
         <br />
         {this.renderEstablishment()}

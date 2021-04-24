@@ -46,7 +46,11 @@ class ENavBar extends Component {
           </Nav.Link>
         </Nav>
         <Nav.Link className="right my-2" href="/" component={Home}>
-          <MyButton class="thin-rounded-btn primary-btn" value="Sign Out" />
+          <MyButton
+            class="thin-rounded-btn primary-btn"
+            value="Sign Out"
+            onClick={this.props.handleEstablishmentLogout}
+          />
         </Nav.Link>
       </Navbar>
     );

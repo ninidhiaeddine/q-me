@@ -8,11 +8,15 @@ class ENotifications extends Component {
   };
   render() {
     let branchID = this.state.BranchID;
-    let txtList = ["Branch with ID: " + branchID + " has been added successfully"];
+    let txtList = [
+      "Branch with ID: " + branchID + " has been added successfully",
+    ];
     return (
       <div>
         <div style={{ textAlign: "center" }}>
-          <ENavBar />
+          <ENavBar
+            handleEstablishmentLogout={this.props.handleEstablishmentLogout}
+          />
           <h1>Guest Notifications</h1>
           <br />
         </div>

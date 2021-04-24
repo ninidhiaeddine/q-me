@@ -5,7 +5,7 @@ class Branch extends Component {
   render() {
     return (
       <div style={{ textAlign: "center" }}>
-        <BNavBar />
+        <BNavBar handleBranchLogout={this.props.handleBranchLogout} />
         <br />
         <br />
         <br />

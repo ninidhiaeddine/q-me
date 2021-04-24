@@ -35,7 +35,7 @@ class GQueues extends Component {
   render() {
     return (
       <div>
-        <GNavBar></GNavBar>
+        <GNavBar handleGuestLogout={this.props.handleGuestLogout}></GNavBar>
         <br />
         {this.renderQueues()}
       </div>

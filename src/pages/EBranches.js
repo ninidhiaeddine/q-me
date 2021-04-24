@@ -178,7 +178,9 @@ class EBranches extends Component {
     const { setIsOpen } = this.state;
     return (
       <div>
-        <ENavBar />
+        <ENavBar
+          handleEstablishmentLogout={this.props.handleEstablishmentLogout}
+        />
         <br />
         <div>
           <div style={{ textAlign: "center" }}>
