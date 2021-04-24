@@ -8,7 +8,7 @@ class GuestBox extends Component {
 
     // variable declarations:
     let txtList = ["Name:", "Phone Number:"];
-    let valuesList = [guest.name, guest.phoneNumber];
+    let valuesList = [guest.Name, guest.PhoneNumber];
     let btnList = ["Edit Information"];
 
     // return the branch box after rendering:
