@@ -1,34 +1,44 @@
 import React, { Component } from "react";
 import GNavBar from "../components/GNavBar";
-import Box from "../components/Box";
+import Guest from "../components/Guest";
+import GuestBox from "../components/GuestBox";
 
 class GProfile extends Component {
-  state = {
-    name: "N/A",
-    phoneNumber: "N/A",
-    password: "N/A",
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+
+      guests: [
+        new Guest(
+          "Ahmad Ali",
+          "+3213213",
+        ),
+      ],
+
+    }
+  }
+
+  renderRows() {
+    let renderedGuests = [];
+    for (let index = 0; index < this.state.guests.length; index++) {
+      let GuestBox = (
+        <div>
+          <GuestBox guest={this.state.guests[index]}></GuestBox>
+          <br />
+        </div>
+      );
+      renderedGuests.push(GuestBox);
+    }
+    return renderedGuests;
+  }
 
   render() {
-    let txtList = ["Name:", "Phone Number:", "Password:"];
-    let valuesList = [
-      this.state.name,
-      this.state.phoneNumber,
-      this.state.password,
-    ];
-    let btnList = ["Change Information"];
-
     return (
       <div>
         <GNavBar />
         <br />
-        <Box
-          title="Your Profile"
-          txtList={txtList}
-          valuesList={valuesList}
-          btnList={btnList}
-          renderDivider={true}
-        />
+        {this.renderRows()}
       </div>
     );
   }

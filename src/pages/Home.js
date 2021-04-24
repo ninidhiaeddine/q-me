@@ -25,9 +25,9 @@ class Home extends Component {
       <div className="App">
         <MyNavBar navLinksList={navLinksList} />
         <br />
-        <Link to="/establishment">Establishment</Link>
+        <Link to="/ebranches">Establishment</Link>
         <Link to="/guest">Guest</Link>
-        <Link to="/branch">Branch</Link>
+        <Link to="/bqueues">Branch</Link>
         <br />
         <br />
         <div class="absolute">

@@ -1,20 +1,50 @@
 import React, { Component } from "react";
 import ENavBar from "../components/ENavBar";
-import ProfileInfo from "../components/ProfileInfo";
-import Grid from "@material-ui/core/Grid";
-import { Box } from "@material-ui/core";
+import EstablishmentBox from "../components/EstablishmentBox";
+import Establishment from "../components/Establishment";
 
 class EProfile extends Component {
-  state = {
-    name: "N/A",
-    type: "N/A",
-    phoneNumber: "N/A",
-    email: "N/A",
-    password: "N/A",
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+
+      establishments: [
+        new Establishment(
+          "12",
+          "Bank Audi",
+          "2, Bank",
+          "+3213213",
+          "Audi_123@Audi.lb",
+          "********"
+        ),
+      ],
+    }
+  }
+
+  renderRows() {
+    let renderedEstablishments = [];
+    for (let index = 0; index < this.state.establishments.length; index++) {
+      let establishmentBox = (
+        <div>
+          <EstablishmentBox establishment={this.state.establishments[index]}></EstablishmentBox>
+          <br />
+        </div>
+      );
+      renderedEstablishments.push(establishmentBox);
+    }
+    return renderedEstablishments;
+  }
 
   render() {
-    return <div></div>;
+    return (
+      <div>
+        <ENavBar />
+
+        <br />
+        {this.renderRows()}
+      </div>
+    );
   }
 }
 export default EProfile;

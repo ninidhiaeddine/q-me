@@ -5,6 +5,7 @@ import CameraAltOutlinedIcon from "@material-ui/icons/CameraAltOutlined";
 import "../components/guest.css";
 import QrReader from "react-qr-reader";
 import socketIOClient, { io } from "socket.io-client";
+
 // import Card from '@material-ui/core/Card';
 // import CardHeader from '@material-ui/core/CardHeader';
 

@@ -20,6 +20,7 @@ import GNotifications from "./pages/GNotifications";
 import Branch from "./pages/Branch";
 import BQueues from "./pages/BQueues";
 import BNotifications from "./pages/BNotifications";
+import PhoneVerification from "./pages/PhoneVerification";
 
 function App() {
   let location = useLocation();
@@ -53,7 +54,7 @@ function App() {
           <Route path="/bprofile" component={BProfile} />
           <Route path="/bqueues" component={BQueues} />
           <Route path="/bnotifications" component={BNotifications} />
-
+          <Route path="/phone-verification" component={PhoneVerification} />
         </Switch>
       </CSSTransition>
     </TransitionGroup>
