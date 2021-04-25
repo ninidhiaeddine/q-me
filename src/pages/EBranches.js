@@ -7,14 +7,6 @@ import "./css/e-branches.css";
 import Popup from "../components/Popup";
 import "../components/popup.css";
 import "../components/my-input.css";
-import Collapsible from "react-collapsible";
-import CollapsibleBox from "../components/CollapsibleBox";
-import Typography from "@material-ui/core/Typography";
-import Box from "../components/Box";
-import Button from "@material-ui/core/Button";
-import QueueOutlinedIcon from "@material-ui/icons/QueueOutlined";
-import Grid from "@material-ui/core/Grid";
-import Branch from "../components/Branch";
 import BranchBox from "../components/BranchBox";
 import ls from "local-storage";
 
@@ -27,122 +19,58 @@ class EBranches extends Component {
       isOpen: false,
       setIsOpen: false,
       branches: [],
+      error: "",
 
-      name: [],
       branchForm: {
+        address: "",
         email: "",
         password: "",
-        confirmedPassowrd: "",
+        confirmedPassword: "",
         phoneNumber: "",
       },
     };
   }
 
-  handleBranchSignUp = () => {
-    var password = this.state.branchForm.password;
-    var confirmedPassowrd = this.state.branchForm.confirmedPassowrd;
-
-    var data =
-      this.state.branchForm.phoneNumber == ""
-        ? {
-            name: this.state.branchForm.name,
-            email: this.state.branchForm.email,
-            password: password,
-          }
-        : {
-            name: this.state.branchForm.name,
-            email: this.state.branchForm.email,
-            password: password,
-            phone_number: this.state.branchForm.phoneNumber,
-          };
-
-    if (password == confirmedPassowrd) {
-      // Simple POST request with a JSON body using fetch
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      };
-      fetch("http://127.0.0.1:5000/branch", requestOptions)
-        .then((response) => console.log(response.json()))
-        .then((data) => console.log(data));
-    } else {
-      console.log("ERROR: Passwords are not matching!");
-    }
+  togglePopup = () => {
+    this.setState({ isOpen: !this.state.isOpen });
   };
 
   // event handlers:
 
-  handleBranchNameChange = (i, e) => {
-    var names = this.state.name;
-    names[i] = e.target.value;
-    this.setState({
-      name: names,
-    });
+  handleBranchAddressChange = (e) => {
+    var branchForm = this.state.branchForm;
+    branchForm.address = e.target.value;
+    this.setState({ branchForm: branchForm });
   };
 
   handleBranchEmailChange = (e) => {
     var branchForm = this.state.branchForm;
     branchForm.email = e.target.value;
-    this.setState({ branchForm });
+    this.setState({ branchForm: branchForm });
   };
 
   handleBranchPasswordChange = (e) => {
     var branchForm = this.state.branchForm;
     branchForm.password = e.target.value;
-    this.setState({ branchForm });
+    this.setState({ branchForm: branchForm });
   };
 
   handleBranchConfirmedPasswordChange = (e) => {
     var branchForm = this.state.branchForm;
-    branchForm.confirmedPassowrd = e.target.value;
-    this.setState({ branchForm });
+    branchForm.confirmedPassword = e.target.value;
+    this.setState({ branchForm: branchForm });
   };
 
   handleBranchPhoneNumberChange = (e) => {
     var branchForm = this.state.branchForm;
     branchForm.phoneNumber = e.target.value;
-    this.setState({ branchForm });
+    this.setState({ branchForm: branchForm });
   };
 
-  togglePopup = () => {
-    this.setState({ isOpen: !this.state.isOpen });
+  handleAddBranchClick = () => {
+    const establishmentId = ls.get("establishmentId");
+    this.sendAddBranchRequest(establishmentId);
   };
-
-  updateMessage(event) {
-    var names = this.state.name;
-    names.push(event.target.value);
-    this.setState({
-      name: names,
-    });
-  }
-
-  handleClick() {
-    var branches = this.state.branches;
-
-    // this.handleBranchSignUp();
-  }
-
-  handleItemChanged(i, event) {
-    var items = this.state.items;
-    items[i] = event.target.value;
-
-    this.setState({
-      items: items,
-    });
-  }
-
-  handleItemDeleted(i) {
-    var items = this.state.items;
-
-    items.splice(i, 1);
-
-    this.setState({
-      items: items,
-    });
-  }
 
   // Helper function:
 
@@ -164,6 +92,49 @@ class EBranches extends Component {
       });
   }
 
+  sendAddBranchRequest(establishmentId) {
+    let password = this.state.branchForm.password;
+    let confirmedPassword = this.state.branchForm.confirmedPassword;
+
+    if (password == confirmedPassword) {
+      let data =
+        this.state.branchForm.phoneNumber == ""
+          ? {
+              address: this.state.branchForm.address,
+              email: this.state.branchForm.email,
+              password: password,
+            }
+          : {
+              address: this.state.branchForm.address,
+              email: this.state.branchForm.email,
+              password: password,
+              phone_number: this.state.branchForm.phoneNumber,
+            };
+
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      const endpoint =
+        "http://127.0.0.1:5000/establishments/" + establishmentId + "/branches";
+      fetch(endpoint, requestOptions)
+        .then((response) => response.json())
+        .then((json) => {
+          if (json.status != 200) {
+            this.setState({ error: json.message });
+          } else {
+            this.togglePopup();
+            this.pullBranchesInfo();
+          }
+        });
+    } else {
+      this.setState({ error: "Passwords are not matching!" });
+    }
+  }
+
   // component related functions:
 
   componentDidMount() {
@@ -174,17 +145,35 @@ class EBranches extends Component {
 
   renderBranchBoxes() {
     let branches = this.state.branches;
-    let renderedBranches = [];
-    for (let index = 0; index < branches.length; index++) {
-      let branchBox = (
+
+    if (typeof branches != "string") {
+      let renderedBranches = [];
+      for (let index = 0; index < branches.length; index++) {
+        let branchBox = (
+          <div>
+            <BranchBox branch={branches[index]}></BranchBox>
+            <br />
+          </div>
+        );
+        renderedBranches.push(branchBox);
+      }
+      return renderedBranches;
+    } else {
+      return <div></div>;
+    }
+  }
+
+  renderError() {
+    if (this.state.error != "") {
+      return (
         <div>
-          <BranchBox branch={branches[index]}></BranchBox>
           <br />
+          <p className="error">{this.state.error}</p>
         </div>
       );
-      renderedBranches.push(branchBox);
+    } else {
+      return <div></div>;
     }
-    return renderedBranches;
   }
 
   render() {
@@ -215,10 +204,10 @@ class EBranches extends Component {
                   <br />
                   <br />
                   <input
-                    class="secondary-input black-input-color mx-2 mt-3"
-                    type="name"
-                    placeholder="Branch Name"
-                    onChange={this.updateMessage.bind(this)}
+                    class="secondary-input black-input-color mx-2"
+                    type="text"
+                    placeholder="Address"
+                    onChange={this.handleBranchAddressChange}
                   />
                   <br />
                   <input
@@ -230,21 +219,28 @@ class EBranches extends Component {
                   <br />
                   <input
                     class="secondary-input black-input-color mx-2"
-                    type="tel"
-                    placeholder="Phone Number"
-                    onChange={this.handleBranchPhoneNumberChange}
-                  />
-                  <br />
-                  <input
-                    class="secondary-input black-input-color mx-2"
                     type="password"
                     placeholder="Password"
                     onChange={this.handleBranchPasswordChange}
                   />
+                  <input
+                    class="secondary-input black-input-color mx-2"
+                    type="password"
+                    placeholder="Confirm Password"
+                    onChange={this.handleBranchConfirmedPasswordChange}
+                  />
+                  <br />
+                  <input
+                    class="secondary-input black-input-color mx-2"
+                    type="tel"
+                    placeholder="Phone Number (Optional)"
+                    onChange={this.handleBranchPhoneNumberChange}
+                  />
+                  {this.renderError()}
                   <MyButton
                     class="circular-btn primary-btn-inverse addBranchButton"
                     value="+"
-                    onClick={this.handleClick.bind(this)}
+                    onClick={this.handleAddBranchClick}
                   />
                 </>
               }
@@ -255,7 +251,7 @@ class EBranches extends Component {
         <div>
           <table className="">
             <br />
-            {/* <tbody>{this.renderBranchBoxes()}</tbody> */}
+            <tbody>{this.renderBranchBoxes()}</tbody>
           </table>
           <hr />
         </div>

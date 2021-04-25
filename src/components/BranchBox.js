@@ -4,8 +4,10 @@ import Box from "./Box";
 class BranchBox extends Component {
   render() {
     // props we have are: {branch}
-    // variable declarations:
+
     let branch = this.props.branch;
+
+    // variable declarations:
     let txtList = [
       "Address:",
       "Phone Number:",
@@ -15,12 +17,12 @@ class BranchBox extends Component {
       "Longitude:",
     ];
     let valuesList = [
-      branch.address,
-      branch.phoneNumber,
-      branch.email,
+      branch.Address,
+      branch.PhoneNumber,
+      branch.Email,
       "******",
-      branch.latitude,
-      branch.longitude,
+      branch.Latitude,
+      branch.Longitude,
     ];
     let btnList = ["Delete Branch"];
 
