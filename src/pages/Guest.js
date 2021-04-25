@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import CameraAltOutlinedIcon from "@material-ui/icons/CameraAltOutlined";
 import "../components/guest.css";
 import QrReader from "react-qr-reader";
-import socketIOClient, { io } from "socket.io-client";
+import socketIOClient from "socket.io-client";
 import ls from "local-storage";
 
 // import Card from '@material-ui/core/Card';
@@ -131,14 +131,14 @@ class Guest extends Component {
 
   componentDidMount() {
     this.pullGuestInfo();
-    //this.socketListener();
+    this.socketListener();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.state.apiMsg !== prevState.apiMsg) {
       // pull updated queue info whenever api message changes:
       console.log("New api message received: " + this.setState); // for debugging
-      // this.pullUpdatedQueueInfo();
+      this.pullUpdatedQueueInfo();
     }
   }
 

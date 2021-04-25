@@ -11,12 +11,14 @@ import ls from "local-storage";
 import Queue from "../components/Queue";
 import Popup from "../components/Popup";
 import MyButton from "../components/MyButton";
+import socketIOClient from "socket.io-client";
 
 class BQueues extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      apiMsg: "",
       branch: {},
       queues: [],
       queueForm: { name: "", time: "" },
@@ -197,13 +199,6 @@ class BQueues extends Component {
       });
   };
 
-  // component related functions:
-
-  componentDidMount() {
-    this.pullBranchInfo();
-    this.pullQueuesInfo();
-  }
-
   // event handlers:
 
   handleQueueNameChange = (e) => {
@@ -222,6 +217,36 @@ class BQueues extends Component {
     let branchId = ls.get("branchId");
     this.sendAddQueueRequest(branchId);
   };
+
+  socketListener() {
+    // open socket connection with the server:
+
+    const endpoint = "http://127.0.0.1:5000/"; // for debugging
+    const socket = socketIOClient(endpoint);
+
+    // listen to changes on the "dequeue" event
+    socket.on("dequeue", (json) => {
+      this.setState({ apiMsg: json });
+    });
+  }
+
+  // component related functions:
+
+  componentDidMount() {
+    this.pullBranchInfo();
+    this.pullQueuesInfo();
+
+    // socket listener:
+    this.socketListener();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.apiMsg !== prevState.apiMsg) {
+      // pull updated queues info whenever api message changes:
+      console.log("New api message received: " + this.setState); // for debugging
+      this.pullQueuesInfo();
+    }
+  }
 
   // renderers:
 
