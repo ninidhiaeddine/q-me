@@ -82,8 +82,12 @@ class EBranches extends Component {
   // HTTP Request:
 
   sendGetBranchesRequest(establishmentId) {
+    const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
     const endpoint =
-      "http://127.0.0.1:5000/establishments/" + establishmentId + "/branches";
+      REACT_APP_BACKEND_URL +
+      "/establishments/" +
+      establishmentId +
+      "/branches";
     fetch(endpoint)
       .then((response) => response.json())
       .then((json) => {
@@ -118,8 +122,12 @@ class EBranches extends Component {
         },
         body: JSON.stringify(data),
       };
+      const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
       const endpoint =
-        "http://127.0.0.1:5000/establishments/" + establishmentId + "/branches";
+        REACT_APP_BACKEND_URL +
+        "/establishments/" +
+        establishmentId +
+        "/branches";
       fetch(endpoint, requestOptions)
         .then((response) => response.json())
         .then((json) => {

@@ -101,7 +101,11 @@ class LogIn extends Component {
       },
       body: JSON.stringify(data),
     };
-    fetch("http://127.0.0.1:5000/auth/guests", requestOptions)
+
+    const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    const endpoint = REACT_APP_BACKEND_URL + "/auth/guests";
+
+    fetch(endpoint, requestOptions)
       .then((response) => response.json())
       .then((json) => {
         if (json.status == 200) {
@@ -128,7 +132,11 @@ class LogIn extends Component {
       },
       body: JSON.stringify(data),
     };
-    fetch("http://127.0.0.1:5000/auth/establishments", requestOptions)
+
+    const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    const endpoint = REACT_APP_BACKEND_URL + "/auth/establishments";
+
+    fetch(endpoint, requestOptions)
       .then((response) => response.json())
       .then((json) => {
         if (json.status == 200) {
@@ -155,7 +163,11 @@ class LogIn extends Component {
       },
       body: JSON.stringify(data),
     };
-    fetch("http://127.0.0.1:5000/auth/branches", requestOptions)
+
+    const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    const endpoint = REACT_APP_BACKEND_URL + "/auth/branches";
+
+    fetch(endpoint, requestOptions)
       .then((response) => response.json())
       .then((json) => {
         if (json.status == 200) {

@@ -50,7 +50,10 @@ class Guest extends Component {
   // HTTP Requests:
 
   sendGetGuestRequest(guestId) {
-    fetch("http://127.0.0.1:5000/guests/" + guestId)
+    const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    const endpoint = REACT_APP_BACKEND_URL + "/guests/" + guestId;
+
+    fetch(endpoint)
       .then((response) => response.json())
       .then((json) => {
         let guest = json.message;
@@ -118,7 +121,8 @@ class Guest extends Component {
   socketListener() {
     // open socket connection with the server:
 
-    const endpoint = "http://127.0.0.1:5000/"; // for debugging
+    const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    const endpoint = REACT_APP_BACKEND_URL;
     const socket = socketIOClient(endpoint);
 
     // listen to changes on the "dequeue" event

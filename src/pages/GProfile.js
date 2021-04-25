@@ -24,7 +24,10 @@ class GProfile extends Component {
   // HTTP Requests:
 
   sendGetGuestRequest(guestId) {
-    fetch("http://127.0.0.1:5000/guests/" + guestId)
+    const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    const endpoint = REACT_APP_BACKEND_URL + "/guests/" + guestId;
+
+    fetch(endpoint)
       .then((response) => response.json())
       .then((json) => {
         let guest = json.message;

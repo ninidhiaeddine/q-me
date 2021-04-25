@@ -100,7 +100,11 @@ class SignUp extends Component {
       },
       body: JSON.stringify(data),
     };
-    fetch("http://127.0.0.1:5000/registration/guests", requestOptions)
+
+    const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    const endpoint = REACT_APP_BACKEND_URL + "/registration/guests";
+
+    fetch(endpoint, requestOptions)
       .then((response) => response.json())
       .then((json) => {
         if (json.status == 200) {
@@ -138,7 +142,11 @@ class SignUp extends Component {
       },
       body: JSON.stringify(data),
     };
-    fetch("http://127.0.0.1:5000/registration/establishments", requestOptions)
+
+    const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    const endpoint = REACT_APP_BACKEND_URL + "/registration/establishments";
+
+    fetch(endpoint, requestOptions)
       .then((response) => response.json())
       .then((json) => {
         if (json.status == 200) {

@@ -35,7 +35,11 @@ class PhoneVerification extends Component {
       },
       body: JSON.stringify(data),
     };
-    fetch("http://127.0.0.1:5000/otp/check", requestOptions)
+
+    const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    const endpoint = REACT_APP_BACKEND_URL + "/otp/check";
+
+    fetch(endpoint, requestOptions)
       .then((response) => response.json())
       .then((json) => {
         if (json.status == 200) {

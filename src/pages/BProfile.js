@@ -23,7 +23,11 @@ class BProfile extends Component {
   // HTTP Request:
 
   sendGetBranchRequest(branchId) {
-    fetch("http://127.0.0.1:5000/establishments/" + 0 + "/branches/" + branchId)
+    const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    const endpoint =
+      REACT_APP_BACKEND_URL + "/establishments/" + 0 + "/branches/" + branchId;
+
+    fetch(endpoint)
       .then((response) => response.json())
       .then((json) => {
         if (json.status == 200) {

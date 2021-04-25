@@ -22,7 +22,11 @@ class EProfile extends Component {
   // HTTP Request:
 
   sendGetEstablishmentRequest(establishmentId) {
-    fetch("http://127.0.0.1:5000/establishments/" + establishmentId)
+    const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    const endpoint =
+      REACT_APP_BACKEND_URL + "/establishments/" + establishmentId;
+
+    fetch(endpoint)
       .then((response) => response.json())
       .then((json) => {
         let establishment = json.message;
