@@ -15,8 +15,8 @@ class GNavBar extends Component {
   render() {
     return (
       <Navbar className="my-nav-bar" variant="dark">
-        <Navbar.Brand className="my-nav-bar" href="/bqueues" component={Branch}>
-          <span class="home">HOME</span>
+        <Navbar.Brand className="my-nav-bar" href="/branch" component={Branch}>
+          <span class="home">Home</span>
         </Navbar.Brand>
         <Nav className="mr-auto mx-7">
           <Nav.Link

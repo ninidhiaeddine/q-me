@@ -146,7 +146,7 @@ class EBranches extends Component {
   renderBranchBoxes() {
     let branches = this.state.branches;
 
-    if (typeof branches != "string") {
+    if (typeof branches != "string" && branches.length > 0) {
       let renderedBranches = [];
       for (let index = 0; index < branches.length; index++) {
         let branchBox = (
@@ -159,7 +159,9 @@ class EBranches extends Component {
       }
       return renderedBranches;
     } else {
-      return <div></div>;
+      <h1 style={{ textAlign: "center" }}>
+        You have not created any Branch yet!
+      </h1>;
     }
   }
 

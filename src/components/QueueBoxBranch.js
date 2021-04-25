@@ -9,17 +9,22 @@ class QueueBox extends Component {
   render() {
     let txtList = [
       "Queue Name:",
-      "Establishment Name:",
+      "Approximate Time of Service:",
       "Status:",
       "Number of enqueuees:",
     ];
     let valuesList = [
-      this.props.queueName,
-      this.props.establishmentName,
-      this.props.status,
-      this.props.NumberofEnqueuees,
+      this.props.queue.Name,
+      this.props.queue.ApproximateTimeOfService,
+      "HARDCODED FOR NOW",
+      "HARDCODED FOR NOW",
     ];
-    let btnList = ["Next Guest", "Close Queue"];
+    let btnList = [
+      "Next Guest",
+      "Close Queue",
+      "Generate QR Code",
+      "Display QR Code",
+    ];
 
     return (
       <div>

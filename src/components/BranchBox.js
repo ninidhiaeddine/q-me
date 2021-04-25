@@ -24,7 +24,7 @@ class BranchBox extends Component {
       branch.Latitude,
       branch.Longitude,
     ];
-    let btnList = ["Delete Branch"];
+    let btnList = ["Edit Branch Information"];
 
     // return the branch box after rendering:
     return (

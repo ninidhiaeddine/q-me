@@ -79,7 +79,7 @@ export default function SimpleCard({
           <Button
             className={classes.actions}
             style={{ textAlign: "center" }}
-            class="rounded-btn-card primary-btn-inverse mb-2"
+            class="rounded-btn-card primary-btn-gradient mb-2"
           >
             {btnList[index]}
           </Button>
