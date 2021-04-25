@@ -13,18 +13,27 @@ import Popup from "../components/Popup";
 import MyButton from "../components/MyButton";
 
 class BQueues extends Component {
-  state = {
-    queues: [],
-    queueForm: { name: "", time: "" },
-    error: "",
-    isOpen: false,
-  };
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      branch: {},
+      queues: [],
+      queueForm: { name: "", time: "" },
+      error: "",
+      isOpen: false,
+    };
+  }
   // Helper function:
 
   togglePopup = () => {
     this.setState({ isOpen: !this.state.isOpen });
   };
+
+  pullBranchInfo() {
+    const branchId = ls.get("branchId");
+    this.sendGetBranchRequest(branchId);
+  }
 
   pullQueuesInfo() {
     const branchId = ls.get("branchId");
@@ -32,6 +41,17 @@ class BQueues extends Component {
   }
 
   // HTTP Requests:
+
+  sendGetBranchRequest(branchId) {
+    fetch("http://127.0.0.1:5000/establishments/" + 0 + "/branches/" + branchId)
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.status == 200) {
+          let branch = json.message;
+          this.setState({ branch: branch });
+        }
+      });
+  }
 
   sendGetQueuesRequest(branchId) {
     const endpoint =
@@ -83,9 +103,104 @@ class BQueues extends Component {
       });
   }
 
+  sendServeGuestRequest = (queueId) => {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const endpoint =
+      "http://127.0.0.1:5000/establishments/" +
+      0 +
+      "/branches/" +
+      0 +
+      "/queues/" +
+      queueId +
+      "/tokens/serve";
+
+    fetch(endpoint, requestOptions)
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.status != 200) {
+          let error = json.message;
+
+          this.setState({ error: error });
+          alert(error);
+        } else {
+          this.pullQueuesInfo();
+        }
+      });
+  };
+
+  sendDequeueGuestRequest = (queueId) => {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const endpoint =
+      "http://127.0.0.1:5000/establishments/" +
+      0 +
+      "/branches/" +
+      0 +
+      "/queues/" +
+      queueId +
+      "/tokens/dequeue";
+
+    fetch(endpoint, requestOptions)
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.status != 200) {
+          let error = json.message;
+
+          this.setState({ error: error });
+          alert(error);
+        } else {
+          this.pullQueuesInfo();
+        }
+      });
+  };
+
+  sendGenerateQrCodeRequest = (branchId, queueId) => {
+    // find establishmentId:
+    let establishmentId = this.state.branch.FK_Establishment;
+
+    // send request:
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const endpoint =
+      "http://127.0.0.1:5000/establishments/" +
+      establishmentId +
+      "/branches/" +
+      branchId +
+      "/queues/" +
+      queueId +
+      "/qr";
+
+    fetch(endpoint, requestOptions)
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.status != 200) {
+          let error = json.message;
+
+          this.setState({ error: error });
+          alert(error);
+        } else {
+          this.pullQueuesInfo();
+        }
+      });
+  };
+
   // component related functions:
 
   componentDidMount() {
+    this.pullBranchInfo();
     this.pullQueuesInfo();
   }
 
@@ -170,7 +285,12 @@ class BQueues extends Component {
       for (let index = 0; index < queues.length; index++) {
         let queueBox = (
           <div>
-            <QueueBoxBranch queue={queues[index]}></QueueBoxBranch>
+            <QueueBoxBranch
+              queue={queues[index]}
+              sendServeGuestRequest={this.sendServeGuestRequest}
+              sendDequeueGuestRequest={this.sendDequeueGuestRequest}
+              sendGenerateQrCodeRequest={this.sendGenerateQrCodeRequest}
+            ></QueueBoxBranch>
             <br />
           </div>
         );

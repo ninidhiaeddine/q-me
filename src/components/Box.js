@@ -42,7 +42,10 @@ export default function SimpleCard({
   txtList,
   valuesList,
   btnList,
+  onClickList,
   renderDivider,
+  doRenderImage,
+  base64,
 }) {
   const classes = useStyles();
 
@@ -71,27 +74,56 @@ export default function SimpleCard({
   //   return valuesListHtml;
   // }
 
-  function renderButtons(btnList) {
+  function renderButtons(btnList, onClickList) {
     let btnListHtml = [];
-    for (let index = 0; index < btnList.length; index++) {
-      btnListHtml.push(
-        <Grid container justify="center">
-          <Button
-            className={classes.actions}
-            style={{ textAlign: "center" }}
-            class="rounded-btn-card primary-btn-gradient mb-2"
-          >
-            {btnList[index]}
-          </Button>
-        </Grid>
-      );
+
+    if (onClickList.length > 0) {
+      for (let index = 0; index < btnList.length; index++) {
+        btnListHtml.push(
+          <Grid container justify="center">
+            <Button
+              className={classes.actions}
+              style={{ textAlign: "center" }}
+              class="rounded-btn-card primary-btn-gradient mb-2"
+              onClick={onClickList[index]}
+            >
+              {btnList[index]}
+            </Button>
+          </Grid>
+        );
+      }
+    } else {
+      for (let index = 0; index < btnList.length; index++) {
+        btnListHtml.push(
+          <Grid container justify="center">
+            <Button
+              className={classes.actions}
+              style={{ textAlign: "center" }}
+              class="rounded-btn-card primary-btn-gradient mb-2"
+            >
+              {btnList[index]}
+            </Button>
+          </Grid>
+        );
+      }
     }
+
     return btnListHtml;
   }
 
   function renderDivider(renderDivider) {
     if (renderDivider) {
       return <hr class="divider"></hr>;
+    }
+  }
+
+  function renderImage(doRenderImage, base64) {
+    if (doRenderImage) {
+      let src =
+        "data:image/png;base64," + base64;
+        return <img src={src}></img>;
+    } else {
+      return <div></div>;
     }
   }
 
@@ -110,7 +142,8 @@ export default function SimpleCard({
           <br />
           {renderTexts(txtList, valuesList)}
           {renderDivider(renderDivider)}
-          {renderButtons(btnList)}
+          {renderButtons(btnList, onClickList)}
+          {renderImage(doRenderImage, base64)}
         </CardContent>
       </Card>
     </Grid>

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Box from "./Box";
 
 class BranchBox extends Component {
+  handleEditClick = () => {};
+
   render() {
     // props we have are: {branch}
 
@@ -25,6 +27,7 @@ class BranchBox extends Component {
       branch.Longitude,
     ];
     let btnList = ["Edit Branch Information"];
+    let onClickList = [this.handleEditClick];
 
     // return the branch box after rendering:
     return (
@@ -33,6 +36,7 @@ class BranchBox extends Component {
         txtList={txtList}
         valuesList={valuesList}
         btnList={btnList}
+        onClickList={onClickList}
         renderDivider={true}
       />
     );
