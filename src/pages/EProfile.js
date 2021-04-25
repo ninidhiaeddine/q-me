@@ -1,48 +1,65 @@
 import React, { Component } from "react";
 import ENavBar from "../components/ENavBar";
 import EstablishmentBox from "../components/EstablishmentBox";
-import Establishment from "../components/Establishment";
+import ls from "local-storage";
 
 class EProfile extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-
-      establishments: [
-        new Establishment(
-          "12",
-          "Bank Audi",
-          "2, Bank",
-          "+3213213",
-          "Audi_123@Audi.lb",
-          "********"
-        ),
-      ],
-    }
+      establishment: {},
+    };
   }
 
-  renderRows() {
-    let renderedEstablishments = [];
-    for (let index = 0; index < this.state.establishments.length; index++) {
-      let establishmentBox = (
-        <div>
-          <EstablishmentBox establishment={this.state.establishments[index]}></EstablishmentBox>
-          <br />
-        </div>
-      );
-      renderedEstablishments.push(establishmentBox);
-    }
-    return renderedEstablishments;
+  // Helper function:
+
+  pullEstablishmentInfo() {
+    const establishmentId = ls.get("establishmentId");
+    this.sendGetEstablishmentRequest(establishmentId);
+  }
+
+  // HTTP Request:
+
+  sendGetEstablishmentRequest(establishmentId) {
+    const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    const endpoint =
+      REACT_APP_BACKEND_URL + "/establishments/" + establishmentId;
+
+    fetch(endpoint)
+      .then((response) => response.json())
+      .then((json) => {
+        let establishment = json.message;
+        this.setState({ establishment: establishment });
+      });
+  }
+
+  // component related functions:
+
+  componentDidMount() {
+    this.pullEstablishmentInfo();
+  }
+
+  // renderers:
+
+  renderEstablishment() {
+    return (
+      <EstablishmentBox
+        establishmentTypes={this.props.establishmentTypes}
+        establishment={this.state.establishment}
+      ></EstablishmentBox>
+    );
   }
 
   render() {
     return (
       <div>
-        <ENavBar />
+        <ENavBar
+          handleEstablishmentLogout={this.props.handleEstablishmentLogout}
+        />
 
         <br />
-        {this.renderRows()}
+        {this.renderEstablishment()}
       </div>
     );
   }

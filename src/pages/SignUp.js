@@ -20,11 +20,6 @@ import Link from "@material-ui/core/Link";
 // import IconButton from "@material-ui/core/IconButton";
 // import { TextField } from "@material-ui/core";
 
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-
 import Features from "./Features";
 import About from "./About";
 import ContactUs from "./ContactUs";
@@ -51,12 +46,15 @@ const MyBusiness = styled(Business)({
 });
 
 class SignUp extends Component {
+  // props here are: 'establishmentTypes'
   constructor(props) {
     super(props);
+
     this.state = {
       showButton: true,
       showForm: false,
       isEstablishment: false,
+      error: "",
 
       guestForm: {
         name: "",
@@ -65,7 +63,7 @@ class SignUp extends Component {
 
       establishmentForm: {
         name: "",
-        type: 0,
+        type: -1,
         email: "",
         password: "",
         confirmedPassowrd: "",
@@ -73,45 +71,12 @@ class SignUp extends Component {
       },
     };
   }
+
+  // toggle:
+
   toggleButton = () => {
     this.setState({ showButton: !this.state.showButton });
   };
-
-  // state = {
-  //   showForm: false,
-  //   isEstablishment: false,
-
-  //   guestForm: {
-  //     name: "",
-  //     phoneNumber: "",
-  //   },
-
-  //   establishmentForm: {
-  //     name: "",
-  //     type: 0,
-  //     email: "",
-  //     password: "",
-  //     confirmedPassowrd: "",
-  //     phoneNumber: "",
-  //   },
-  // };
-
-  // formatRadioButtons() {
-  //   let result = [];
-  //   for (var i = 0; i < this.props.typesOfEstablishments.length; i++) {
-  //     result.push(
-  //       <div style={{ marginTop: "10px", marginBottom: "10px" }}>
-  //         <Form.Check
-  //           className="my-switch"
-  //           type="switch"
-  //           id={"custom-switch" + i}
-  //           label={this.props.typesOfEstablishments[i]}
-  //         />
-  //       </div>
-  //     );
-  //   }
-  //   return result;
-  // }
 
   /* When the user clicks on the button, 
   toggle between hiding and showing the dropdown content */
@@ -119,81 +84,107 @@ class SignUp extends Component {
     document.getElementById("myDropdown").classList.toggle("show");
   }
 
-  handleEsablishmentSignUp = () => {
-    var password = this.state.establishmentForm.password;
-    var confirmedPassowrd = this.state.establishmentForm.confirmedPassowrd;
+  // HTTP Requests:
 
+  sendGuestSignUpRequest() {
+    var data = {
+      name: this.state.guestForm.name,
+      phone_number: this.state.guestForm.phoneNumber,
+    };
+
+    // Simple POST request with a JSON body using fetch
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+
+    const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    const endpoint = REACT_APP_BACKEND_URL + "/registration/guests";
+
+    fetch(endpoint, requestOptions)
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.status == 200) {
+          // succeeded:
+          this.props.handleSuccessfulGuestSignUp(json);
+        } else {
+          // failed:
+          this.setState({ error: json.message });
+        }
+      });
+  }
+
+  sendEstablishmentSignUpRequest() {
     var data =
       this.state.establishmentForm.phoneNumber == ""
         ? {
             name: this.state.establishmentForm.name,
             type: this.state.establishmentForm.type,
             email: this.state.establishmentForm.email,
-            password: password,
+            password: this.state.establishmentForm.password,
           }
         : {
             name: this.state.establishmentForm.name,
             type: this.state.establishmentForm.type,
             email: this.state.establishmentForm.email,
-            password: password,
+            password: this.state.establishmentForm.password,
             phone_number: this.state.establishmentForm.phoneNumber,
           };
 
+    // Simple POST request with a JSON body using fetch
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+
+    const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    const endpoint = REACT_APP_BACKEND_URL + "/registration/establishments";
+
+    fetch(endpoint, requestOptions)
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.status == 200) {
+          // succeeded:
+          this.props.handleSuccessfulEstablishmentSignUp(json);
+        } else {
+          // failed:
+          this.setState({ error: json.message });
+        }
+      });
+  }
+
+  // Event handlers:
+
+  handleGuestSignUp = () => {
+    this.setState({ error: "" });
+    this.sendGuestSignUpRequest();
+  };
+
+  handleEsablishmentSignUp = () => {
+    var password = this.state.establishmentForm.password;
+    var confirmedPassowrd = this.state.establishmentForm.confirmedPassowrd;
+
     if (password == confirmedPassowrd) {
-      // Simple POST request with a JSON body using fetch
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      };
-      fetch("http://127.0.0.1:5000/establishments", requestOptions)
-        .then((response) => console.log(response))
-        .then((data) => console.log(data));
+      this.setState({ error: "" });
+      this.sendEstablishmentSignUpRequest();
     } else {
-      console.log("ERROR: Passwords are not matching!");
+      this.setState({ error: "Passwords are not matching!" });
     }
   };
 
-  handleGuestSignUp = () => {
-    // var data = {
-    //   name: this.state.guestForm.name,
-    //   phone_number: this.state.guestForm.phoneNumber,
-    // };
-    // // Simple POST request with a JSON body using fetch
-    // const requestOptions = {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(data),
-    // };
-    // console.log("Calling the API...");
-    // // fetch("http://127.0.0.1:5000/register/guests", requestOptions)
-    // //   .then((response) => console.log(response.json()))
-    // //   .then((data) => console.log(data));
-    // fetch("http://127.0.0.1:5000/register/test", requestOptions)
-    //   .then((response) => this.setState({ response: response.json() }))
-    //   .then((data) => this.setState({ data: data }));
-    // console.log("Finished calling the API...");
+  handleEstablishmentClick = () => {
+    this.setState({ showForm: true, isEstablishment: true });
   };
 
-  // Close the dropdown if the user clicks outside of it
-  renderDropDown() {
-    window.onclick = function (event) {
-      if (!event.target.matches(".dropbtn")) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains("show")) {
-            openDropdown.classList.remove("show");
-          }
-        }
-      }
-    };
-  }
+  handleGuestClick = () => {
+    this.setState({ showForm: true, isEstablishment: false });
+  };
 
   handleGuestNameChange = (e) => {
     var guestForm = this.state.guestForm;
@@ -239,32 +230,81 @@ class SignUp extends Component {
 
   handleEstablishmentEstablishmentTypeChange = (e) => {
     var establishmentForm = this.state.establishmentForm;
-    switch (e.target.value) {
-      // TODO: Remove hardcoding from this part:
-      case "Restaurant":
-        establishmentForm.type = 0;
-        break;
 
-      case "Hotel":
-        establishmentForm.type = 1;
-        break;
+    // find index:
+    let optionsProps = this.props.establishmentTypes;
+    let targetIndex = optionsProps.indexOf(e.target.value);
 
-      case "Bank":
-        establishmentForm.type = 2;
-        break;
+    // set index:
+    establishmentForm.type = targetIndex;
 
-      case "Supermarket":
-        establishmentForm.type = 3;
-        break;
-    }
-    this.setState({ establishmentForm });
+    // update state:
+    this.setState({ establishmentForm: establishmentForm });
   };
+
+  // Renderers:
+
+  renderError() {
+    if (this.state.error != "") {
+      return (
+        <div>
+          <br />
+          <p className="error">{this.state.error}</p>
+        </div>
+      );
+    } else {
+      return <div></div>;
+    }
+  }
+
+  renderOptions() {
+    let optionsProps = this.props.establishmentTypes;
+    let optionsList = [];
+    for (let index = 0; index < optionsProps.length; index++) {
+      optionsList.push(
+        <option value={optionsProps[index]}>{optionsProps[index]}</option>
+      );
+    }
+    return optionsList;
+  }
+
+  // Close the dropdown if the user clicks outside of it
+  renderDropDown() {
+    // on click down:
+    window.onclick = function (event) {
+      if (!event.target.matches(".dropbtn")) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains("show")) {
+            openDropdown.classList.remove("show");
+          }
+        }
+      }
+    };
+
+    // render:
+    return (
+      <select
+        name="establishments"
+        id="establishments"
+        class="search_categories"
+        onChange={this.handleEstablishmentEstablishmentTypeChange}
+      >
+        <option value="" selected>
+          Establishment Type
+        </option>
+        {this.renderOptions()}
+      </select>
+    );
+  }
 
   renderForm() {
     if (this.state.isEstablishment) {
       return (
         <div style={{ textAlign: "center" }}>
-          <h1 class="welcome">Host Registration</h1>
+          <h1 class="welcome">Establishment Registration</h1>
           <h2>Welcome! Sign up to get started.</h2>
           <br />
           <input
@@ -314,35 +354,9 @@ class SignUp extends Component {
           <MyPhone />
           <br />
           <br />
-          {/* <FormControl>
-            <InputLabel id="demo-simple-select-label">Age</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value="Type of Establishment"
-              //onChange={handleChange}
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl> */}
-          <div>
-            <select
-              name="establishments"
-              id="establishments"
-              class="search_categories"
-              onChange={this.handleEstablishmentEstablishmentTypeChange}
-            >
-              <option value="" selected>
-                Establishment Type
-              </option>
-              <option value="Restaurant">Restaurant</option>
-              <option value="Hotel">Hotel</option>
-              <option value="Bank">Bank</option>
-              <option value="Supermarket">Supermarket</option>
-            </select>
-          </div>
+          <div>{this.renderDropDown()}</div>
+          <br />
+          {this.renderError()}
           <br />
           <MyButton
             class="rounded-btn primary-btn-gradient"
@@ -374,14 +388,8 @@ class SignUp extends Component {
           />
           <MyPhone />
           <br />
+          {this.renderError()}
           <br />
-          {/* <Link href="/phone-verification">
-            <MyButton
-              class="rounded-btn primary-btn-gradient"
-              value="Sign Up as a Guest"
-              onClick={this.handleGuestSignUp}
-            ></MyButton>
-          </Link> */}
           <MyButton
             class="rounded-btn primary-btn-gradient"
             value="Sign Up as a Guest"
@@ -418,14 +426,6 @@ class SignUp extends Component {
       </div>
     );
   }
-
-  handleEstablishmentClick = () => {
-    this.setState({ showForm: true, isEstablishment: true });
-  };
-
-  handleGuestClick = () => {
-    this.setState({ showForm: true, isEstablishment: false });
-  };
 
   render() {
     let navLinksList = [

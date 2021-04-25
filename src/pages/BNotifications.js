@@ -19,7 +19,9 @@ class GNotifications extends Component {
       for (let index = 0; index < 2; index++) {
         notifBoxes.push(
           <div>
-            <NotificationBoxBranch valuesList={valuesList}></NotificationBoxBranch>
+            <NotificationBoxBranch
+              valuesList={valuesList}
+            ></NotificationBoxBranch>
             <br />
           </div>
         );
@@ -31,7 +33,7 @@ class GNotifications extends Component {
   render() {
     return (
       <div>
-        <BNavBar></BNavBar>
+        <BNavBar handleBranchLogout={this.props.handleBranchLogout}></BNavBar>
         <h1 style={{ textAlign: "center" }}>Branch Notifications</h1>
         {this.renderNotifications()}
       </div>

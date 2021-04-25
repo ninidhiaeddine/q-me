@@ -2,10 +2,14 @@ import React, { Component } from "react";
 import Box from "./Box";
 
 class BranchBox extends Component {
+  handleEditClick = () => {};
+
   render() {
     // props we have are: {branch}
-    // variable declarations:
+
     let branch = this.props.branch;
+
+    // variable declarations:
     let txtList = [
       "Address:",
       "Phone Number:",
@@ -15,14 +19,15 @@ class BranchBox extends Component {
       "Longitude:",
     ];
     let valuesList = [
-      branch.address,
-      branch.phoneNumber,
-      branch.email,
+      branch.Address,
+      branch.PhoneNumber,
+      branch.Email,
       "******",
-      branch.latitude,
-      branch.longitude,
+      branch.Latitude,
+      branch.Longitude,
     ];
-    let btnList = ["Delete Branch"];
+    let btnList = ["Edit Branch Information"];
+    let onClickList = [this.handleEditClick];
 
     // return the branch box after rendering:
     return (
@@ -31,6 +36,7 @@ class BranchBox extends Component {
         txtList={txtList}
         valuesList={valuesList}
         btnList={btnList}
+        onClickList={onClickList}
         renderDivider={true}
       />
     );

@@ -1,39 +1,98 @@
 import React, { Component } from "react";
 import Box from "./Box";
 
-class QueueBox extends Component {
-  constructor(props) {
-    super(props);
-  }
+class QueueBoxBranch extends Component {
+  state = {
+    renderQr: false,
+  };
+
+  // Queue box click events:
+
+  handleServeGuestClick = (e) => {
+    let queueId = this.props.queue.PK_Queue;
+    this.props.sendServeGuestRequest(queueId);
+  };
+
+  handleDequeueGuestClick = (e) => {
+    let queueId = this.props.queue.PK_Queue;
+    this.props.sendDequeueGuestRequest(queueId);
+  };
+
+  handleGenerateQrCodeClick = (e) => {
+    let queueId = this.props.queue.PK_Queue;
+    let branchId = this.props.queue.FK_Branch;
+
+    this.props.sendGenerateQrCodeRequest(branchId, queueId);
+  };
+
+  handleDisplayQrCodeClick = (e) => {
+    if (this.props.queue.QrCode != null) {
+      this.setState({ renderQr: !this.state.renderQr });
+    }
+  };
+
+  // renderer:
 
   render() {
+    // props we have are: {queue, sendServeGuestRequest, sendDequeueGuestRequest, sendGenerateQrCodeRequest}
+    let queue = this.props.queue;
+
+    let onClickList = [
+      this.handleServeGuestClick,
+      this.handleDequeueGuestClick,
+      this.handleGenerateQrCodeClick,
+      this.handleDisplayQrCodeClick,
+    ];
+
     let txtList = [
       "Queue Name:",
-      "Establishment Name:",
-      "Status:",
-      "Number of enqueuees:",
+      "Approximate Time of Service:",
+      "Number of Enqueuees:",
     ];
     let valuesList = [
-      this.props.queueName,
-      this.props.establishmentName,
-      this.props.status,
-      this.props.NumberofEnqueuees,
+      queue.Name,
+      queue.ApproximateTimeOfService + " minutes",
+      queue.NumberOfPeopleEnqueuing,
     ];
-    let btnList = ["Next Guest", "Close Queue"];
+    let btnList = [
+      "Serve Next Guest",
+      "Dequeue Guest",
+      "Generate QR Code",
+      "Display QR Code",
+    ];
 
-    return (
-      <div>
-        <Box
-          title="Your Queue"
-          txtList={txtList}
-          valuesList={valuesList}
-          btnList={btnList}
-          renderDivider={true}
-        />
-        <br />
-      </div>
-    );
+    if (queue.QrCode != null) {
+      return (
+        <div>
+          <Box
+            title="My Queue"
+            txtList={txtList}
+            valuesList={valuesList}
+            btnList={btnList}
+            onClickList={onClickList}
+            renderDivider={true}
+            doRenderImage={this.state.renderQr}
+            base64={queue.QrCode}
+          />
+          <br />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Box
+            title="My Queue"
+            txtList={txtList}
+            valuesList={valuesList}
+            btnList={btnList}
+            onClickList={onClickList}
+            renderDivider={true}
+          />
+          <br />
+        </div>
+      );
+    }
   }
 }
 
-export default QueueBox;
+export default QueueBoxBranch;

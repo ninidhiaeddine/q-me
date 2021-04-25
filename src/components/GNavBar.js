@@ -15,12 +15,8 @@ class GNavBar extends Component {
   render() {
     return (
       <Navbar className="my-nav-bar" variant="dark">
-        <Navbar.Brand
-          className="my-nav-bar"
-          href="/guest"
-          component={Guest}
-        >
-          <span class="home">HOME</span>
+        <Navbar.Brand className="my-nav-bar" href="/guest" component={Guest}>
+          <span class="home">Home</span>
         </Navbar.Brand>
         <Nav className="mr-auto mx-7">
           <Nav.Link
@@ -46,7 +42,11 @@ class GNavBar extends Component {
           </Nav.Link>
         </Nav>
         <Nav.Link className="right my-2" href="/" component={Home}>
-          <MyButton class="thin-rounded-btn primary-btn" value="Sign Out" />
+          <MyButton
+            class="thin-rounded-btn primary-btn"
+            value="Sign Out"
+            onClick={this.props.handleGuestLogout}
+          />
         </Nav.Link>
       </Navbar>
     );

@@ -18,16 +18,13 @@ class Home extends Component {
       new NavLinkItem(false, "Log In", "/login", { LogIn }),
       new NavLinkItem(false, "Features", "/features", { Features }),
       new NavLinkItem(false, "About", "/about", { About }),
-      new NavLinkItem(false, "Contact Us", "/contactus", { ContactUs }),
+      new NavLinkItem(false, "Contact Us", "/contact-us", { ContactUs }),
     ];
 
     return (
       <div className="App">
         <MyNavBar navLinksList={navLinksList} />
         <br />
-        <Link to="/ebranches">Establishment</Link>
-        <Link to="/guest">Guest</Link>
-        <Link to="/bqueues">Branch</Link>
         <br />
         <br />
         <div class="absolute">
@@ -39,11 +36,14 @@ class Home extends Component {
           <br />
           <br />
           <Link to="/login">
-            <MyButton class="rounded-btn primary-btn-inverse" value="Log In" />
+            <MyButton class="rounded-btn primary-btn-gradient" value="Log In" />
           </Link>
           <br />
           <Link to="/signup">
-            <MyButton class="rounded-btn primary-btn" value="Sign Up" />
+            <MyButton
+              class="rounded-btn primary-btn-gradient"
+              value="Sign Up"
+            />
           </Link>
         </div>
         <img class="photo border-gradient border-gradient-purple" src={home} />

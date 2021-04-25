@@ -4,22 +4,17 @@ import Box from "./Box";
 class GuestBox extends Component {
   render() {
     // props we have are: {branch}
-    // variable declarations:
     let guest = this.props.guest;
-    let txtList = [
-      "Name:",
-      "Phone Number:",
-    ];
-    let valuesList = [
-      guest.name,
-      guest.phoneNumber,
-    ];
+
+    // variable declarations:
+    let txtList = ["Name:", "Phone Number:"];
+    let valuesList = [guest.Name, guest.PhoneNumber];
     let btnList = ["Edit Information"];
 
     // return the branch box after rendering:
     return (
       <Box
-        title="Guest"
+        title="Guest Profile"
         txtList={txtList}
         valuesList={valuesList}
         btnList={btnList}

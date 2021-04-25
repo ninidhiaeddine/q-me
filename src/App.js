@@ -1,11 +1,5 @@
 import "./App.css";
-import {
-  useLocation,
-  Route,
-  Switch,
-  Redirect,
-  useHistory,
-} from "react-router-dom";
+import { useLocation, Route, Switch, useHistory } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import Home from "./pages/Home";
@@ -27,7 +21,9 @@ import Branch from "./pages/Branch";
 import BQueues from "./pages/BQueues";
 import BNotifications from "./pages/BNotifications";
 import PhoneVerification from "./pages/PhoneVerification";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+import ls from "local-storage";
 
 function App() {
   // state:
@@ -38,20 +34,69 @@ function App() {
   // hooks:
   let location = useLocation();
   let history = useHistory();
+  useEffect(() => {
+    setGuestId(ls.get("guestId") || -1);
+    setEstablishmentId(ls.get("establishmentId") || -1);
+    setBranchId(ls.get("branchId") || -1);
+  }, []);
 
   // event handlers:
 
+  //#region Log In:
   function handleSuccessfulGuestLogin(json) {
-    // store guestId:
+    // store guestId in state:
     const guestId = json.message.guest_id;
     setGuestId(guestId);
+
+    // store guestId in Local Storage:
+    ls.set("guestId", guestId);
 
     // redirect:
     history.push("/guest");
   }
 
   function handleSuccessfulEstablishmentLogin(json) {
-    // store establishmentId:
+    // store establishmentId in state:
+    const establishmentId = json.message.establishment_id;
+    setEstablishmentId(establishmentId);
+
+    // store establishmentId in Local Storage:
+    ls.set("establishmentId", establishmentId);
+
+    // redirect:
+    history.push("/establishment");
+  }
+
+  function handleSuccessfulBranchLogin(json) {
+    // store branchId in state:
+    const branchId = json.message.branch_id;
+    setBranchId(branchId);
+
+    // store branchId in Local Storage:
+    ls.set("branchId", branchId);
+
+    // redirect:
+    history.push("/branch");
+  }
+  //#endregion
+
+  //#region Sign Up:
+  function handleSuccessfulGuestSignUp(json) {
+    // store guestId:
+    const guestId = json.message.guest_id;
+    setGuestId(guestId);
+
+    // redirect:
+    history.push("/phone-verification");
+  }
+
+  function handleSuccessfulOtpCheck(json) {
+    // redirect:
+    history.push("/guest");
+  }
+
+  function handleSuccessfulEstablishmentSignUp(json) {
+    // store guestId:
     const establishmentId = json.message.establishment_id;
     setEstablishmentId(establishmentId);
 
@@ -59,14 +104,34 @@ function App() {
     history.push("/establishment");
   }
 
-  function handleSuccessfulBranchLogin(json) {
-    // store branchId:
-    const branchId = json.message.branch_id;
-    setBranchId(branchId);
+  //#endregion
 
-    // redirect:
-    history.push("/branch");
+  //#region logout:
+  function handleGuestLogout() {
+    // clear local storage:
+    ls.remove("guestId");
+    ls.remove("queueId");
+
+    // update state:
+    setGuestId(-1);
   }
+
+  function handleEstablishmentLogout() {
+    // clear local storage:
+    ls.remove("establishmentId");
+
+    // update state:
+    setEstablishmentId(-1);
+  }
+
+  function handleBranchLogout() {
+    // clear local storage:
+    ls.remove("branchId");
+
+    // update state:
+    setBranchId(-1);
+  }
+  //#endregion
 
   return (
     <TransitionGroup>
@@ -90,7 +155,16 @@ function App() {
             path="/signup"
             render={(props) => (
               <SignUp
-                typesOfEstablishments={["Resturant", "Bank", "Hospital"]}
+                establishmentTypes={[
+                  "Resturant",
+                  "Bank",
+                  "Hospital",
+                  "Supermarket",
+                ]}
+                handleSuccessfulGuestSignUp={handleSuccessfulGuestSignUp}
+                handleSuccessfulEstablishmentSignUp={
+                  handleSuccessfulEstablishmentSignUp
+                }
               />
             )}
           />
@@ -100,54 +174,118 @@ function App() {
           <Route
             path="/establishment"
             render={(props) => (
-              <Establishment {...props} establishmentId={establishmentId} />
+              <Establishment
+                {...props}
+                establishmentId={establishmentId}
+                handleEstablishmentLogout={handleEstablishmentLogout}
+              />
             )}
           />
           <Route
             path="/eprofile"
             render={(props) => (
-              <EProfile {...props} establishmentId={establishmentId} />
+              <EProfile
+                establishmentTypes={[
+                  "Resturant",
+                  "Bank",
+                  "Hospital",
+                  "Supermarket",
+                ]}
+                {...props}
+                establishmentId={establishmentId}
+                handleEstablishmentLogout={handleEstablishmentLogout}
+              />
             )}
           />
           <Route
             path="/ebranches"
             render={(props) => (
-              <EBranches {...props} establishmentId={establishmentId} />
+              <EBranches
+                {...props}
+                establishmentId={establishmentId}
+                handleEstablishmentLogout={handleEstablishmentLogout}
+              />
             )}
           />
           <Route
             path="/enotifications"
             render={(props) => (
-              <ENotifications {...props} establishmentId={establishmentId} />
+              <ENotifications
+                {...props}
+                establishmentId={establishmentId}
+                handleEstablishmentLogout={handleEstablishmentLogout}
+              />
             )}
           />
           <Route
             path="/guest"
-            render={(props) => <Guest {...props} guestId={guestId} />}
+            render={(props) => (
+              <Guest
+                {...props}
+                guestId={guestId}
+                handleGuestLogout={handleGuestLogout}
+              />
+            )}
           />
           <Route
             path="/gprofile"
-            render={(props) => <GProfile {...props} guestId={guestId} />}
+            render={(props) => (
+              <GProfile
+                {...props}
+                guestId={guestId}
+                handleGuestLogout={handleGuestLogout}
+              />
+            )}
           />
           <Route
             path="/gqueues"
-            render={(props) => <GQueues {...props} guestId={guestId} />}
+            render={(props) => (
+              <GQueues
+                {...props}
+                guestId={guestId}
+                handleGuestLogout={handleGuestLogout}
+              />
+            )}
           />
           <Route
             path="/gnotifications"
-            render={(props) => <GNotifications {...props} guestId={guestId} />}
+            render={(props) => (
+              <GNotifications
+                {...props}
+                guestId={guestId}
+                handleGuestLogout={handleGuestLogout}
+              />
+            )}
           />
           <Route
             path="/branch"
-            render={(props) => <Branch {...props} branchId={branchId} />}
+            render={(props) => (
+              <Branch
+                {...props}
+                branchId={branchId}
+                handleBranchLogout={handleBranchLogout}
+              />
+            )}
           />
           <Route
             path="/bprofile"
-            render={(props) => <BProfile {...props} branchId={branchId} />}
+            render={(props) => (
+              <BProfile
+                {...props}
+                branchId={branchId}
+                handleBranchLogout={handleBranchLogout}
+              />
+            )}
           />
           <Route
             path="/bqueues"
-            render={(props) => <BQueues {...props} branchId={branchId} />}
+            render={(props) => (
+              <BQueues
+                {...props}
+                branchId={branchId}
+                handleBranchLogout={handleBranchLogout}
+              />
+            )}
           />
           <Route
             path="/bnotifications"
@@ -155,7 +293,16 @@ function App() {
               <BNotifications {...props} branchId={branchId} />
             )}
           />
-          <Route path="/phone-verification" component={PhoneVerification} />
+          <Route
+            path="/phone-verification"
+            render={(props) => (
+              <PhoneVerification
+                {...props}
+                guestId={guestId}
+                handleSuccessfulOtpCheck={handleSuccessfulOtpCheck}
+              />
+            )}
+          />
         </Switch>
       </CSSTransition>
     </TransitionGroup>

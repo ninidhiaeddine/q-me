@@ -2,8 +2,15 @@ import React, { Component } from "react";
 import Box from "./Box";
 
 class EstablishmentBox extends Component {
+  formatType(typeIndex) {
+    // expects an integer type parameter
+
+    let establishmentTypes = this.props.establishmentTypes;
+    return establishmentTypes[typeIndex];
+  }
+
   render() {
-    // props we have are: {branch}
+    // props we have are: {establishment}
     // variable declarations:
     let establishment = this.props.establishment;
     let txtList = [
@@ -12,15 +19,15 @@ class EstablishmentBox extends Component {
       "Type:",
       "Phone Number:",
       "Email:",
-      "password:",
+      "Password:",
     ];
     let valuesList = [
-        establishment.id,
-        establishment.name,
-        establishment.type,
-        establishment.phoneNumber,
-        establishment.email,
-        establishment.password,
+      establishment.PK_Establishment,
+      establishment.Name,
+      this.formatType(establishment.Type),
+      establishment.PhoneNumber,
+      establishment.Email,
+      "**********",
     ];
     let btnList = ["Edit Information"];
 

@@ -1,20 +1,24 @@
-.scan-btn{
-    height:auto;
-    width:auto;
-    color:aliceblue;
-    font-weight: lighter;
+.scan-btn {
+  height: auto;
+  width: auto;
+  color: aliceblue;
+  font-weight: lighter;
 }
 
-h5.desc{
-    color:aliceblue;
-    font-family: var(--secondary-font);
+h5.desc {
+  color: aliceblue;
+  font-family: var(--secondary-font);
 }
 
-h1.hi{
-    color:aliceblue;
+h1.hi {
+  color: aliceblue;
 }
 
-hr.divider{
-    border-top: 3px solid var(--primary-color);
-    width: 90%;
+h1.name {
+  color: var(--primary-color);
+}
+
+hr.divider {
+  border-top: 3px solid var(--primary-color);
+  width: 90%;
 }

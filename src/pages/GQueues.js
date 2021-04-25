@@ -7,6 +7,8 @@ class GQueues extends Component {
     queues: [],
   };
 
+  // renderers:
+
   renderQueues() {
     if (this.state.queues.length == 0) {
       return (
@@ -33,7 +35,8 @@ class GQueues extends Component {
   render() {
     return (
       <div>
-        <GNavBar></GNavBar>
+        <GNavBar handleGuestLogout={this.props.handleGuestLogout}></GNavBar>
+        <br />
         {this.renderQueues()}
       </div>
     );
