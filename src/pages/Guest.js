@@ -17,33 +17,43 @@ class Guest extends Component {
     apiMsg: "",
     guest: {},
     queueInfo: {
-      queueId: -1,
       positionInLine: -1,
       timeRemaining: -1,
       count: -1,
     },
+    beingServed: false,
+    dequeued: false,
   };
 
   // Helper Functions:
 
   pullGuestInfo() {
-    //const guestId = this.props.guestId;
     const guestId = ls.get("guestId");
-    this.sendGetGuestRequest(guestId);
+
+    if (guestId != -1) {
+      this.sendGetGuestRequest(guestId);
+    }
+  }
+
+  pullQueueInfo() {
+    const guestId = ls.get("guestId");
+    const queueId = ls.get("queueId");
+
+    if (guestId != -1 && queueId != -1) {
+      this.sendGetInfoRequest(guestId, queueId);
+    }
   }
 
   pullUpdatedQueueInfo() {
-    let currentQueueId = this.state.queueInfo.queue_id;
+    let currentQueueId = ls.get("queueId");
     let changedQueueId = this.state.apiMsg.message.queue_id;
 
     // only pull the updated info when the changes
     // occured within the queue this guest is in:
     if (currentQueueId == changedQueueId) {
-      // retrieve the endpoint from the state:
-      const endpoint = this.state.scannerResult;
-
-      // post a request to get the updated info:
-      this.sendGetInfoRequest(endpoint);
+      // send a request to get the updated info:
+      const guestId = ls.get("guestId");
+      this.sendGetInfoRequest(guestId, currentQueueId);
     }
   }
 
@@ -61,7 +71,7 @@ class Guest extends Component {
       });
   }
 
-  sendGetInfoRequest(guestId, endpoint) {
+  sendGetInfoRequest(guestId, queueId) {
     const data = {
       guest_id: guestId,
     };
@@ -75,13 +85,35 @@ class Guest extends Component {
       body: JSON.stringify(data),
     };
 
-    fetch("https://q-me.azurewebsites.net" + endpoint, requestOptions)
-      .then((response) => console.log(response.json()))
-      .then((data) => console.log(data.json()));
+    const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    const endpoint =
+      REACT_APP_BACKEND_URL +
+      "/establishments/" +
+      0 +
+      "/branches/" +
+      0 +
+      "/queues/" +
+      queueId +
+      "/tokens/info";
+
+    fetch(endpoint, requestOptions)
+      .then((response) => response.json())
+      .then((json) => {
+        // get queue info from state:
+        let queueInfo = this.state.queueInfo;
+
+        // set new values obtained from API:
+        queueInfo.positionInLine = json.message.pos_in_line;
+        queueInfo.timeRemaining = json.message.time_remaining;
+        queueInfo.count = json.message.number_of_people_enqueuing;
+
+        // update state:
+        this.setState({ queueInfo: queueInfo });
+      });
   }
 
-  sendAddTokenRequest(guestId, endpoint) {
-    const data = {
+  sendAddTokenRequest(guestId, endpointToAddToken) {
+    let data = {
       guest_id: guestId,
     };
 
@@ -94,9 +126,22 @@ class Guest extends Component {
       body: JSON.stringify(data),
     };
 
-    fetch("https://q-me.azurewebsites.net" + endpoint, requestOptions)
-      .then((response) => console.log(response.json()))
-      .then((data) => console.log(data.json()));
+    const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+    const endpoint = REACT_APP_BACKEND_URL + endpointToAddToken;
+
+    fetch(endpoint, requestOptions)
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.status == 200) {
+          // store queueId in Local Storage:
+          ls.set("queueId", json.message.queue_id);
+
+          // pull queue info:
+          this.pullQueueInfo();
+        } else {
+          alert(json.message);
+        }
+      });
   }
 
   // Event Handlers:
@@ -108,9 +153,12 @@ class Guest extends Component {
 
   handleScan = (data) => {
     if (data) {
+      // ('data' is the endpoint that the guest must send the request to)
       this.setState({ scannerResult: data, showScanner: false });
-      // post request to get queued up:
-      // this.postAddTokenRequest(data)
+
+      // send request to get queued up:
+      const guestId = ls.get("guestId");
+      this.sendAddTokenRequest(guestId, data);
     }
   };
 
@@ -120,28 +168,52 @@ class Guest extends Component {
 
   socketListener() {
     // open socket connection with the server:
-
     const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
     const endpoint = REACT_APP_BACKEND_URL;
     const socket = socketIOClient(endpoint);
 
     // listen to changes on the "dequeue" event
+    socket.on("serve", (json) => {
+      this.setState({ apiMsg: json });
+
+      // check if this specific guest is being served:
+      let servedGuestId = json.message.guest_id;
+      let currentGuestId = ls.get("guestId");
+
+      if (servedGuestId == currentGuestId) {
+        this.setState({ beingServed: true, dequeued: false });
+      }
+    });
+
+    // listen to changes on the "dequeue" event
     socket.on("dequeue", (json) => {
       this.setState({ apiMsg: json });
+
+      // check if this specific guest has been dequeued:
+      let dequeuedGuestId = json.message.guest_id;
+      let currentGuestId = ls.get("guestId");
+
+      if (dequeuedGuestId == currentGuestId) {
+        this.setState({ beingServed: false, dequeued: true });
+      }
     });
   }
 
   // component events:
 
   componentDidMount() {
+    // pull info upon startup:
     this.pullGuestInfo();
+    this.pullQueueInfo();
+
+    // socket listener:
     this.socketListener();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.state.apiMsg !== prevState.apiMsg) {
+    if (this.state.apiMsg != prevState.apiMsg) {
       // pull updated queue info whenever api message changes:
-      console.log("New api message received: " + this.setState); // for debugging
+      console.log("New api message received: " + this.state.apiMsg); // for debugging
       this.pullUpdatedQueueInfo();
     }
   }
@@ -164,15 +236,22 @@ class Guest extends Component {
   }
 
   renderQueueInfo() {
-    let queueInfo = this.state.queueInfo;
+    let queueId = ls.get("queueId");
 
     // only render when queue info are available
-    if (queueInfo.queueId != -1) {
+    if (this.state.beingServed) {
+      return <h2>You are being Served right now!</h2>;
+    } else if (this.state.dequeued) {
+      return <h2>You have been Served and Dequeued. Thank you!</h2>;
+    } else if (queueId && queueId != -1) {
+      let queueInfo = this.state.queueInfo;
       return (
         <div>
           <h2>Position In Line: {queueInfo.positionInLine}</h2>
-          <h2>Estimated Time Remaining: {queueInfo.timeRemaining}</h2>
-          <h2>Number of People in Queue: {queueInfo.count}</h2>
+          <h2>
+            Estimated Time Remaining: {queueInfo.timeRemaining} minutes...
+          </h2>
+          <h2>Number of People in Queue: ({queueInfo.count})</h2>
         </div>
       );
     } else {

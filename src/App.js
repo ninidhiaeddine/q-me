@@ -110,6 +110,7 @@ function App() {
   function handleGuestLogout() {
     // clear local storage:
     ls.remove("guestId");
+    ls.remove("queueId");
 
     // update state:
     setGuestId(-1);
